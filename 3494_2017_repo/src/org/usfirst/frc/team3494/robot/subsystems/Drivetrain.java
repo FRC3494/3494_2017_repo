@@ -16,12 +16,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @since 0.0.0
  */
 public class Drivetrain extends Subsystem {
+	/**
+	 * Master drive talon, left side. Setting this should set all the talons on the left side of the drive train.
+	 */ 
 	private CANTalon driveLeftMaster;
+	/**
+	 * Follower talon on left side.
+	 */
 	private CANTalon driveLeftFollower_One;
+	/**
+	 * Follower talon on left side.
+	 */
 	private CANTalon driveLeftFollower_Two;
-	
+	/**
+	 * Master drive talon, right side. Setting this should set all the talons on the left side of the drive train.
+	 */ 
 	private CANTalon driveRightMaster;
+	/**
+	 * Follower talon on right side.
+	 */
 	private CANTalon driveRightFollower_One;
+	/**
+	 * Follower talon on right side.
+	 */
 	private CANTalon driveRightFollower_Two;
 	/**
 	 * Instance of wpiDrive for using WPI's driving code. Should <em>not</em> be
