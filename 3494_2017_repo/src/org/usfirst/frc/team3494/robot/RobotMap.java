@@ -24,6 +24,6 @@ public class RobotMap {
 	public static final int rightTalonOne = 13;
 	public static final int rightTalonTwo = 14;
 	public static final int rightTalonThree = 15;
-	
+
 	public static final double DRIVE_TOLERANCE = 0.1;
 }
