@@ -19,7 +19,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-	public static final Drivetrain driveTrain = new Drivetrain();
+	public static Drivetrain driveTrain;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -33,6 +33,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		driveTrain = new Drivetrain();
+		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 

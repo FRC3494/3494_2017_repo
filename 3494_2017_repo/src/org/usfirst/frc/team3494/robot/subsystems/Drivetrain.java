@@ -23,6 +23,13 @@ public class Drivetrain extends Subsystem {
 	private CANTalon driveRightMaster;
 	private CANTalon driveRightFollower_One;
 	private CANTalon driveRightFollower_Two;
+	/**
+	 * Instance of wpiDrive for using WPI's driving code. Should <em>not</em> be
+	 * used for tank driving (use {@link Drivetrain#TankDrive} instead.)
+	 * 
+	 * @since 0.0.0
+	 */
+	public RobotDrive wpiDrive;
 	public Drivetrain() {
 		super("Drivetrain");
 
@@ -43,14 +50,9 @@ public class Drivetrain extends Subsystem {
 		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
 		this.driveRightFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
+
+		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 	}
-	/**
-	 * Instance of wpiDrive for using WPI's driving code. Should <em>not</em> be
-	 * used for tank driving (use {@link Drivetrain#TankDrive} instead.)
-	 * 
-	 * @since 0.0.0
-	 */
-	public RobotDrive wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
