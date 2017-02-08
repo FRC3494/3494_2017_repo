@@ -1,0 +1,34 @@
+package org.usfirst.frc.team3494.robot.subsystems;
+
+import org.usfirst.frc.team3494.robot.RobotMap;
+
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+/**
+ * Intake subsystem.
+ */
+public class Intake extends Subsystem {
+	private CANTalon inMotor;
+
+	public Intake() {
+		super("Intake");
+		this.inMotor = new CANTalon(RobotMap.INTAKE_MOTOR);
+	}
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void runIntake(double speed) {
+		this.inMotor.set(speed);
+	}
+
+	public void stopIntake() {
+		this.inMotor.set(0);
+	}
+}

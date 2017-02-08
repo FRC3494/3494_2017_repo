@@ -26,4 +26,6 @@ public class RobotMap {
 	public static final int rightTalonThree = 15;
 
 	public static final double DRIVE_TOLERANCE = 0.1;
+	// intake
+	public static final int INTAKE_MOTOR = 60;
 }
