@@ -7,11 +7,14 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * Intake subsystem.
+ * Intake subsystem. Contains methods for controlling the ball intake.
+ * 
+ * @since 0.0.0
  */
 public class Intake extends Subsystem {
 	/**
 	 * Talon that controls the intake. Thankfully there's only one.
+	 * 
 	 * @see RobotMap
 	 */
 	private CANTalon inMotor;
