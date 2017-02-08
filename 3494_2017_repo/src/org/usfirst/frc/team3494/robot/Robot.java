@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 	 *
 	 * You can add additional auto modes by adding additional commands to the
 	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * to the switch structure below with additional strings &amp; commands.
 	 */
 	@Override
 	public void autonomousInit() {
