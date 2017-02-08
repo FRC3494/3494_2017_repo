@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Intake subsystem.
  */
 public class Intake extends Subsystem {
+	/**
+	 * Talon that controls the intake. Thankfully there's only one.
+	 * @see RobotMap
+	 */
 	private CANTalon inMotor;
 
 	public Intake() {
