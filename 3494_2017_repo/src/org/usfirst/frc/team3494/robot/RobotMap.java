@@ -24,8 +24,13 @@ public class RobotMap {
 	public static final int rightTalonOne = 13;
 	public static final int rightTalonTwo = 14;
 	public static final int rightTalonThree = 15;
-
+	/**
+	 * Minumum drive speed. Make sure you never drive at a speed less than this.
+	 */
 	public static final double DRIVE_TOLERANCE = 0.1;
+	// encoders
+	public static final int ENCODER_RIGHT_A = 0;
+	public static final int ENCODER_RIGHT_B = 1;
 	// intake
 	public static final int INTAKE_MOTOR = 60;
 }
