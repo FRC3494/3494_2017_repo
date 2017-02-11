@@ -13,5 +13,5 @@ public interface IMotorizedSubsystem {
 	/**
 	 * Sets all motors on a subsystem to a given speed. (Example use: driving forward)
 	 */
-	public void setAll();
+	public void setAll(double speed);
 }
