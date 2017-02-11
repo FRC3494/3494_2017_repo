@@ -108,16 +108,6 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		driveRightMaster.set(right);
 	}
 
-	/**
-	 * Stops all drive motors. Does not require re-enabling motors after use.
-	 * 
-	 * @since 0.0.0
-	 */
-	public void StopDrive() {
-		driveLeftMaster.set(0);
-		driveRightMaster.set(0);
-	}
-
 	public double getRightDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
 		if (unit.equals(UnitTypes.INCHES)) {
@@ -140,7 +130,6 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 	@Override
 	public void setAll(double speed) {
-		// TODO Auto-generated method stub
 		this.TankDrive(speed, speed);
 	}
 }

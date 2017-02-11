@@ -43,13 +43,13 @@ public class DistanceDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveTrain.StopDrive();
+		Robot.driveTrain.stopAll();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.driveTrain.StopDrive();
+		Robot.driveTrain.stopAll();
 	}
 }
