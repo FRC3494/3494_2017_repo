@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks
  * (commands for auto moving coming soon<sup>tm</sup>)
+ * 
+ * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
  */
 public class Drive extends Command {
 
