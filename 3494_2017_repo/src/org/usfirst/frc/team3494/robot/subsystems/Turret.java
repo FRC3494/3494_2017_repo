@@ -21,12 +21,14 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon shooterUpper;
 	private CANTalon shooterLower;
 	private CANTalon turretRing;
+
 	public Turret() {
 		super("Turret");
 		this.turretRing = new CANTalon(RobotMap.TURRET_RING);
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
 	}
+
 	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.

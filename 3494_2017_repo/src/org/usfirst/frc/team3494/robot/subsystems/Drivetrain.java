@@ -103,6 +103,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		driveLeftMaster.set(left);
 		driveRightMaster.set(right);
 	}
+
 	public void adjustedTankDrive(double left, double right) {
 		driveLeftMaster.set(-left);
 		driveRightMaster.set(right);
