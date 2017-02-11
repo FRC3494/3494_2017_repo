@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * 
  * @since 0.0.0
  */
-public class Drivetrain extends Subsystem {
+public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	/**
 	 * Master drive talon, left side. Setting this should set all the talons on
 	 * the left side of the drive train.
@@ -129,5 +129,16 @@ public class Drivetrain extends Subsystem {
 
 	public void resetRight() {
 		this.encRight.reset();
+	}
+
+	@Override
+	public void stopAll() {
+		this.TankDrive(0, 0);
+	}
+
+	@Override
+	public void setAll(double speed) {
+		// TODO Auto-generated method stub
+		this.TankDrive(speed, speed);
 	}
 }
