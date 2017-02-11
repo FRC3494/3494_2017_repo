@@ -1,6 +1,9 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,4 +37,8 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
+	public OI() {
+		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
+	}
 }
