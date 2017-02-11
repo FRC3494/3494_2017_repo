@@ -100,10 +100,12 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		if (left > RobotMap.DRIVE_TOLERANCE && right > RobotMap.DRIVE_TOLERANCE) {
-			driveLeftMaster.set(left);
-			driveRightMaster.set(right);
-		}
+		driveLeftMaster.set(left);
+		driveRightMaster.set(right);
+	}
+	public void adjustedTankDrive(double left, double right) {
+		driveLeftMaster.set(-left);
+		driveRightMaster.set(right);
 	}
 
 	/**
