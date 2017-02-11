@@ -52,6 +52,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public RobotDrive wpiDrive;
 	private Encoder encRight;
+
 	public Drivetrain() {
 		super("Drivetrain");
 
@@ -74,9 +75,9 @@ public class Drivetrain extends Subsystem {
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
-		
+
 		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
-		this.encRight.setDistancePerPulse(1/1440);
+		this.encRight.setDistancePerPulse(1 / 1440);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -114,13 +115,18 @@ public class Drivetrain extends Subsystem {
 		driveLeftMaster.set(0);
 		driveRightMaster.set(0);
 	}
+
 	public double getRightDistance(UnitTypes unit) {
+		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
 		if (unit.equals(UnitTypes.INCHES)) {
-			return (Math.PI * 4) * (1/this.encRight.getDistance());
+			return (Math.PI * 4) * (1 / this.encRight.getDistance());
+		} else if (unit.equals(UnitTypes.FEET)) {
+			return inches / 12;
 		} else {
 			return this.encRight.getDistance();
 		}
 	}
+
 	public void resetRight() {
 		this.encRight.reset();
 	}
