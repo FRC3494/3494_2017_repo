@@ -14,25 +14,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem {
 	private CANTalon motor;
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 	public Climber() {
 		super("Climber");
 		motor = new CANTalon(RobotMap.CLIMBER_MOTOR);
 	}
-    @Override
+
+	@Override
 	public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
-    public void climb(DriveDirections dir) {
-    	if (dir.equals(DriveDirections.UP)) {
-    		motor.set(0.4);
-    	} else if (dir.equals(DriveDirections.DOWN)) {
-    		motor.set(-0.4);
-    	}
-    }
-    public void stopClimber() {
-    	motor.set(0);
-    }
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void climb(DriveDirections dir) {
+		if (dir.equals(DriveDirections.UP)) {
+			motor.set(0.4);
+		} else if (dir.equals(DriveDirections.DOWN)) {
+			motor.set(-0.4);
+		}
+	}
+
+	public void stopClimber() {
+		motor.set(0);
+	}
 }
