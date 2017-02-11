@@ -38,6 +38,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
+
 	public OI() {
 		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
 	}

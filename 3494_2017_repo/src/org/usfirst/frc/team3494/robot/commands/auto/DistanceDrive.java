@@ -11,38 +11,39 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DistanceDrive extends Command {
 	double dist = 0;
 	UnitTypes unit;
-    public DistanceDrive(double distance, UnitTypes unitType) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	super("DistanceDrive");
-    	requires(Robot.driveTrain);
-    	this.dist = distance;
-    	this.unit = unitType;
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.driveTrain.resetRight();
-    }
+	public DistanceDrive(double distance, UnitTypes unitType) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		super("DistanceDrive");
+		requires(Robot.driveTrain);
+		this.dist = distance;
+		this.unit = unitType;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.driveTrain.TankDrive(0.2, 0.2);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.driveTrain.resetRight();
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Robot.driveTrain.getRightDistance(UnitTypes.INCHES) >= 8;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		Robot.driveTrain.TankDrive(0.2, 0.2);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.driveTrain.StopDrive();
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return Robot.driveTrain.getRightDistance(UnitTypes.INCHES) >= 8;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	Robot.driveTrain.StopDrive();
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.driveTrain.StopDrive();
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		Robot.driveTrain.StopDrive();
+	}
 }
