@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	public static Preferences prefs;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -37,7 +39,10 @@ public class Robot extends IterativeRobot {
 		driveTrain = new Drivetrain();
 		oi = new OI();
 		climber = new Climber();
+		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
+		// get preferences
+		prefs = Preferences.getInstance();
 	}
 
 	/**
