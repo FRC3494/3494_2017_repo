@@ -22,27 +22,32 @@ public class DistanceDrive extends Command {
 	}
 
 	// Called just before this Command runs the first time
+	@Override
 	protected void initialize() {
 		Robot.driveTrain.resetRight();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
+	@Override
 	protected void execute() {
 		Robot.driveTrain.TankDrive(0.2, 0.2);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
+	@Override
 	protected boolean isFinished() {
 		return Robot.driveTrain.getRightDistance(UnitTypes.INCHES) >= 8;
 	}
 
 	// Called once after isFinished returns true
+	@Override
 	protected void end() {
 		Robot.driveTrain.StopDrive();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
+	@Override
 	protected void interrupted() {
 		Robot.driveTrain.StopDrive();
 	}
