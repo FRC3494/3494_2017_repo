@@ -34,6 +34,15 @@ public class Drive extends Command {
 		} else {
 			Robot.driveTrain.TankDrive(Robot.oi.leftStick.getY(), Robot.oi.rightStick.getY());
 		}
+		if (Robot.oi.xbox.getPOV() == 0) {
+			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
+		} else if (Robot.oi.xbox.getPOV() == 90) {
+			Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
+		} else if (Robot.oi.xbox.getPOV() == 180) {
+			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
+		} else if (Robot.oi.xbox.getPOV() == 270) {
+			Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
