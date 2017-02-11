@@ -1,10 +1,12 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
+import org.usfirst.frc.team3494.robot.UnitTypes;
 import org.usfirst.frc.team3494.robot.commands.drive.Drive;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -49,7 +51,7 @@ public class Drivetrain extends Subsystem {
 	 * @since 0.0.0
 	 */
 	public RobotDrive wpiDrive;
-
+	private Encoder encRight;
 	public Drivetrain() {
 		super("Drivetrain");
 
@@ -72,6 +74,9 @@ public class Drivetrain extends Subsystem {
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
+		
+		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
+		this.encRight.setDistancePerPulse(1/1440);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -108,5 +113,12 @@ public class Drivetrain extends Subsystem {
 	public void StopDrive() {
 		driveLeftMaster.set(0);
 		driveRightMaster.set(0);
+	}
+	public double getRightDistance(UnitTypes unit) {
+		if (unit.equals(UnitTypes.INCHES)) {
+			return (Math.PI * 4) * (1/this.encRight.getDistance());
+		} else {
+			return this.encRight.getDistance();
+		}
 	}
 }
