@@ -121,4 +121,7 @@ public class Drivetrain extends Subsystem {
 			return this.encRight.getDistance();
 		}
 	}
+	public void resetRight() {
+		this.encRight.reset();
+	}
 }
