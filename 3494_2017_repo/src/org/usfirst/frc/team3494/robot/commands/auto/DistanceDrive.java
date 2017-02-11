@@ -24,6 +24,7 @@ public class DistanceDrive extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.driveTrain.stopAll();
 		Robot.driveTrain.resetRight();
 	}
 
