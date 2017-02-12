@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
+import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -18,9 +19,14 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private Encoder turretRingEnc;
 	private Encoder shooterEnc_lower;
 	private Encoder shooterEnc_upper;
+
 	private CANTalon shooterUpper;
 	private CANTalon shooterLower;
 	private CANTalon turretRing;
+	/**
+	 * Constant for the turret ring speed. Placed here for easy editing.
+	 */
+	private static double turretTurnPower = 0.4;
 
 	public Turret() {
 		super("Turret");
@@ -56,6 +62,21 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 			return this.shooterEnc_lower.getDistance();
 		} else {
 			return this.shooterEnc_upper.getDistance();
+		}
+	}
+
+	/**
+	 * Turns the turret at a hardcoded speed in the specified direction.
+	 * 
+	 * @param dir
+	 *            The direction to turn in. Defaults to right if you put in
+	 *            something stupid like {@link DriveDirections#UP}.
+	 */
+	public void turnTurret(DriveDirections dir) {
+		if (dir.equals(DriveDirections.LEFT)) {
+			this.turretRing.set(turretTurnPower);
+		} else {
+			this.turretRing.set(-turretTurnPower);
 		}
 	}
 }
