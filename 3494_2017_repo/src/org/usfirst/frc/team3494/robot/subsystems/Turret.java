@@ -48,4 +48,14 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		this.shooterUpper.set(speed);
 		this.turretRing.set(speed);
 	}
+
+	public double getDistance(TurretEncoders enc) {
+		if (enc.equals(TurretEncoders.RING)) {
+			return this.turretRingEnc.getDistance();
+		} else if (enc.equals(TurretEncoders.BOTTOM)) {
+			return this.shooterEnc_lower.getDistance();
+		} else {
+			return this.shooterEnc_upper.getDistance();
+		}
+	}
 }
