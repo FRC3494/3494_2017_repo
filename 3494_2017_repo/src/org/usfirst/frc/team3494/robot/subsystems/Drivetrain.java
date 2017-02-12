@@ -90,7 +90,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 	/**
 	 * Drives the drivetrain tank drive style. The drivetrain will continue to
-	 * run until stopped with a method like {@link Drivetrain#StopDrive()}.
+	 * run until stopped with a method like {@link Drivetrain#stopAll()}.
 	 * 
 	 * @param left
 	 *            The power to drive the left side. Should be a {@code double}
