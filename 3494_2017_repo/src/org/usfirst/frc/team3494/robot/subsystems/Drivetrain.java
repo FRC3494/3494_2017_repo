@@ -104,6 +104,11 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		driveRightMaster.set(right);
 	}
 
+	/**
+	 * Drives the drivetrain, with the value passed in for left inverted. This
+	 * corrects for the left side being inverted hardware side.<br>
+	 * It works if you don't think about it too hard.
+	 */
 	public void adjustedTankDrive(double left, double right) {
 		driveLeftMaster.set(-left);
 		driveRightMaster.set(right);
