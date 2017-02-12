@@ -16,7 +16,8 @@ public interface IMotorizedSubsystem {
 	 * Sets all motors on a subsystem to a given speed. (Example use: driving
 	 * forward)
 	 * 
-	 * @param speed The speed to set the motors to.
+	 * @param speed
+	 *            The speed to set the motors to.
 	 */
 	public void setAll(double speed);
 }
