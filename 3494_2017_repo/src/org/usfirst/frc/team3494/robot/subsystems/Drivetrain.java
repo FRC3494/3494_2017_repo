@@ -108,6 +108,13 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 * Drives the drivetrain, with the value passed in for left inverted. This
 	 * corrects for the left side being inverted hardware side.<br>
 	 * It works if you don't think about it too hard.
+	 * 
+	 * @param left
+	 *            The power to set the left side to. This will be multiplied by
+	 *            -1 before getting to the Talons.
+	 * @param right
+	 *            The power to set the right side to. Just goes straight to the
+	 *            Talons.
 	 */
 	public void adjustedTankDrive(double left, double right) {
 		driveLeftMaster.set(-left);
