@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks
  * (commands for auto moving coming soon<sup>tm</sup>)
+ * 
+ * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
  */
 public class Drive extends Command {
 
@@ -26,7 +28,21 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * -1, Robot.oi.xbox.getX(Hand.kLeft) * -1);
+		if (Robot.prefs.getBoolean("xcontrol", true)) {
+			Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * -1,
+					Robot.oi.xbox.getX(Hand.kLeft) * -1);
+		} else {
+			Robot.driveTrain.TankDrive(Robot.oi.leftStick.getY(), Robot.oi.rightStick.getY());
+		}
+		if (Robot.oi.xbox.getPOV() == 0) {
+			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
+		} else if (Robot.oi.xbox.getPOV() == 90) {
+			Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
+		} else if (Robot.oi.xbox.getPOV() == 180) {
+			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
+		} else if (Robot.oi.xbox.getPOV() == 270) {
+			Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -1,4 +1,6 @@
 org.usfirst.frc.team3494.robot
+org.usfirst.frc.team3494.robot.commands
 org.usfirst.frc.team3494.robot.commands.auto
+org.usfirst.frc.team3494.robot.commands.climb
 org.usfirst.frc.team3494.robot.commands.drive
 org.usfirst.frc.team3494.robot.subsystems
