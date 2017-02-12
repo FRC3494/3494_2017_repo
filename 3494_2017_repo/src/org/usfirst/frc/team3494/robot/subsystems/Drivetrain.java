@@ -90,7 +90,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 	/**
 	 * Drives the drivetrain tank drive style. The drivetrain will continue to
-	 * run until stopped with a method like {@link Drivetrain#StopDrive()}.
+	 * run until stopped with a method like {@link Drivetrain#stopAll()}.
 	 * 
 	 * @param left
 	 *            The power to drive the left side. Should be a {@code double}
@@ -104,11 +104,31 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		driveRightMaster.set(right);
 	}
 
+	/**
+	 * Drives the drivetrain, with the value passed in for left inverted. This
+	 * corrects for the left side being inverted hardware side.<br>
+	 * It works if you don't think about it too hard.
+	 * 
+	 * @param left
+	 *            The power to set the left side to. This will be multiplied by
+	 *            -1 before getting to the Talons.
+	 * @param right
+	 *            The power to set the right side to. Just goes straight to the
+	 *            Talons.
+	 */
 	public void adjustedTankDrive(double left, double right) {
 		driveLeftMaster.set(-left);
 		driveRightMaster.set(right);
 	}
 
+	/**
+	 * Gets the distance the right encoder has counted in the specified unit.
+	 * 
+	 * @param unit
+	 *            The unit type to get the distance in.
+	 * @return The distance the right encoder has counted, in the specified
+	 *         unit.
+	 */
 	public double getRightDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
 		if (unit.equals(UnitTypes.INCHES)) {
@@ -120,6 +140,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	/**
+	 * Resets the encoder on the right side of the drivetrain.
+	 */
 	public void resetRight() {
 		this.encRight.reset();
 	}
