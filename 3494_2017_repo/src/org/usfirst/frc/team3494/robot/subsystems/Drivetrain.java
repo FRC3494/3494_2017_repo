@@ -21,27 +21,39 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	/**
 	 * Master drive talon, left side. Setting this should set all the talons on
 	 * the left side of the drive train.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftMaster;
 	/**
 	 * Follower talon on left side.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftFollower_One;
 	/**
 	 * Follower talon on left side.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftFollower_Two;
 	/**
 	 * Master drive talon, right side. Setting this should set all the talons on
 	 * the left side of the drive train.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveRightMaster;
 	/**
 	 * Follower talon on right side.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveRightFollower_One;
 	/**
 	 * Follower talon on right side.
+	 * 
+	 * @since 0.0.0
 	 */
 	private CANTalon driveRightFollower_Two;
 	/**
