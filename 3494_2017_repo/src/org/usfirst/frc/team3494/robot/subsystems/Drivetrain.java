@@ -100,20 +100,13 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		if (left > RobotMap.DRIVE_TOLERANCE && right > RobotMap.DRIVE_TOLERANCE) {
-			driveLeftMaster.set(left);
-			driveRightMaster.set(right);
-		}
+		driveLeftMaster.set(left);
+		driveRightMaster.set(right);
 	}
 
-	/**
-	 * Stops all drive motors. Does not require re-enabling motors after use.
-	 * 
-	 * @since 0.0.0
-	 */
-	public void StopDrive() {
-		driveLeftMaster.set(0);
-		driveRightMaster.set(0);
+	public void adjustedTankDrive(double left, double right) {
+		driveLeftMaster.set(-left);
+		driveRightMaster.set(right);
 	}
 
 	public double getRightDistance(UnitTypes unit) {
@@ -138,7 +131,6 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 	@Override
 	public void setAll(double speed) {
-		// TODO Auto-generated method stub
 		this.TankDrive(speed, speed);
 	}
 }
