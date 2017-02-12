@@ -121,6 +121,12 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		driveRightMaster.set(right);
 	}
 
+	/**
+	 * Gets the distance the right encoder has counted in the specified unit.
+	 * 
+	 * @param unit
+	 *            The unit type to get the distance in.
+	 */
 	public double getRightDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
 		if (unit.equals(UnitTypes.INCHES)) {
@@ -132,6 +138,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	/**
+	 * Resets the encoder on the right side of the drivetrain.
+	 */
 	public void resetRight() {
 		this.encRight.reset();
 	}
