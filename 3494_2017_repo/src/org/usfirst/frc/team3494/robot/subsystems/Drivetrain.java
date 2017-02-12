@@ -126,6 +126,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 * 
 	 * @param unit
 	 *            The unit type to get the distance in.
+	 * @return The distance the right encoder has counted, in the specified
+	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
