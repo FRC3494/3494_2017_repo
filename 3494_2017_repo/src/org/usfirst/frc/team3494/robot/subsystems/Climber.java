@@ -3,8 +3,7 @@ package org.usfirst.frc.team3494.robot.subsystems;
 import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
-import com.ctre.CANTalon;
-
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,13 +12,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @since 0.0.0
  */
 public class Climber extends Subsystem {
-	private CANTalon motor;
+	private TalonSRX motor;
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Climber() {
 		super("Climber");
-		motor = new CANTalon(RobotMap.CLIMBER_MOTOR);
+		motor = new TalonSRX(RobotMap.CLIMBER_MOTOR);
 	}
 
 	@Override
