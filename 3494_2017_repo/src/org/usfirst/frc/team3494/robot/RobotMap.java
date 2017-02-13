@@ -33,10 +33,13 @@ public class RobotMap {
 	public static final int ENCODER_RIGHT_B = 1;
 	// intake
 	public static final int INTAKE_MOTOR = 60;
+	public static final int UP_MOTOR = 65;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
 	// turret
 	public static final int TURRET_RING = 62;
 	public static final int TURRET_LOWER = 63;
 	public static final int TURRET_UPPER = 64;
+	// compressor
+	public static final int COMPRESSOR = 0;
 }
