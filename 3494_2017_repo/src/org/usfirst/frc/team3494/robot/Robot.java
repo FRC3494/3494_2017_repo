@@ -2,6 +2,7 @@ package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain driveTrain;
 	public static Climber climber;
 	public static Turret turret;
+	public static Kompressor kompressor;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -42,6 +44,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		climber = new Climber();
 		turret = new Turret();
+		kompressor = new Kompressor();
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
