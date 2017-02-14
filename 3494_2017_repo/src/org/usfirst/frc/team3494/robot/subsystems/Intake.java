@@ -24,7 +24,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon upMotor;
 	// pistons push
 	private DoubleSolenoid piston;
-	private boolean isDeployed;
+	public boolean isDeployed;
 
 	public Intake() {
 		super("Intake");
