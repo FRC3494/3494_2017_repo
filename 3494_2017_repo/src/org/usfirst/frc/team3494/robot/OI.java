@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
-import org.usfirst.frc.team3494.robot.commands.intake.Deploy;
+import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -48,6 +48,6 @@ public class OI {
 
 	public OI() {
 		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
-		xbox_b.whenPressed(new Deploy());
+		xbox_b.whenPressed(new SwitchPosition());
 	}
 }
