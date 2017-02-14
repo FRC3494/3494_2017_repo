@@ -24,12 +24,14 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon upMotor;
 	// pistons push
 	private DoubleSolenoid piston;
+	private boolean isDeployed;
 
 	public Intake() {
 		super("Intake");
 		this.inMotor = new TalonSRX(RobotMap.INTAKE_MOTOR);
 		this.upMotor = new CANTalon(RobotMap.UP_MOTOR);
 		this.piston = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
+		this.isDeployed = false;
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -67,9 +69,20 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 
 	public void pushForward() {
 		this.piston.set(DoubleSolenoid.Value.kForward);
+		this.isDeployed = true;
+	}
+
+	public void retract() {
+		this.piston.set(DoubleSolenoid.Value.kReverse);
+		this.isDeployed = false;
 	}
 
 	public void setPiston(DoubleSolenoid.Value position) {
 		this.piston.set(position);
+		if (position.equals(DoubleSolenoid.Value.kForward)) {
+			this.isDeployed = true;
+		} else {
+			this.isDeployed = true;
+		}
 	}
 }
