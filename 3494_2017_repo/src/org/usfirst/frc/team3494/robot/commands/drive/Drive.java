@@ -29,8 +29,12 @@ public class Drive extends Command {
 	@Override
 	protected void execute() {
 		if (Robot.prefs.getBoolean("xcontrol", true)) {
-			Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * -1,
-					Robot.oi.xbox.getX(Hand.kLeft) * -1);
+			if (Robot.prefs.getBoolean("arcade", true)) {
+				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * -1,
+						Robot.oi.xbox.getX(Hand.kLeft) * -1);
+			} else {
+				Robot.driveTrain.TankDrive(Robot.oi.xbox.getY(Hand.kLeft), Robot.oi.xbox.getY(Hand.kRight));
+			}
 		} else {
 			Robot.driveTrain.TankDrive(Robot.oi.leftStick.getY(), Robot.oi.rightStick.getY());
 		}
