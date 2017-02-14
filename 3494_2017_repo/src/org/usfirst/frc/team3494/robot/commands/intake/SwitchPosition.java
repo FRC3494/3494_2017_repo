@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  * @see org.usfirst.frc.team3494.robot.subsystems.Intake
  */
-public class Deploy extends Command {
+public class SwitchPosition extends Command {
 
-	public Deploy() {
+	public SwitchPosition() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.intake);
