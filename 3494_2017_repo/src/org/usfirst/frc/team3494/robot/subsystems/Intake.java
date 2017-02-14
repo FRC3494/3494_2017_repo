@@ -8,6 +8,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Intake subsystem. Contains methods for controlling the ball intake.
@@ -84,5 +85,6 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 		} else {
 			this.isDeployed = true;
 		}
+		SmartDashboard.putBoolean("Intake Deployed", this.isDeployed);
 	}
 }

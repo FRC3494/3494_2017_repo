@@ -3,6 +3,7 @@ package org.usfirst.frc.team3494.robot.commands.intake;
 import org.usfirst.frc.team3494.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Deploys the intake for the start of teleop.
@@ -28,6 +29,7 @@ public class SwitchPosition extends Command {
 		} else {
 			Robot.intake.retract();
 		}
+		SmartDashboard.putBoolean("Intake Deployed", Robot.intake.isDeployed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
