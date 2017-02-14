@@ -10,17 +10,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Kompressor extends Subsystem {
 	public Compressor compress;
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 	public Kompressor() {
 		super("Kompressor");
 		this.compress = new Compressor(RobotMap.COMPRESSOR);
 		this.compress.setClosedLoopControl(true);
 	}
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
 }
-
