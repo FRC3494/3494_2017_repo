@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
+import org.usfirst.frc.team3494.robot.commands.intake.RunIntake;
 
 import com.ctre.CANTalon;
 
@@ -37,6 +38,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		this.setDefaultCommand(new RunIntake());
 	}
 
 	public void runIntake(double speed) {
