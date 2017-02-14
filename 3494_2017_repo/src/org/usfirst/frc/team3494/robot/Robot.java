@@ -43,11 +43,11 @@ public class Robot extends IterativeRobot {
 		// chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		driveTrain = new Drivetrain();
-		oi = new OI();
 		climber = new Climber();
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
+		oi = new OI();
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
