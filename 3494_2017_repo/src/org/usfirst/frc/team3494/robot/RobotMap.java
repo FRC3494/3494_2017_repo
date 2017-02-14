@@ -32,7 +32,7 @@ public class RobotMap {
 	public static final int ENCODER_RIGHT_A = 0;
 	public static final int ENCODER_RIGHT_B = 1;
 	// intake
-	public static final int INTAKE_MOTOR = 60;
+	public static final int INTAKE_MOTOR = 0;
 	public static final int UP_MOTOR = 65;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
