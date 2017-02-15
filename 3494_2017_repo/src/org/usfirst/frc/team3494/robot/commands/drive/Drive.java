@@ -32,7 +32,7 @@ public class Drive extends Command {
 			if (Robot.prefs.getBoolean("arcade", true)) {
 				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), Robot.oi.xbox.getX(Hand.kLeft));
 			} else {
-				Robot.driveTrain.TankDrive(Robot.oi.xbox.getY(Hand.kRight), Robot.oi.xbox.getY(Hand.kLeft));
+				Robot.driveTrain.TankDrive(Robot.oi.xbox.getY(Hand.kRight), -Robot.oi.xbox.getY(Hand.kLeft));
 			}
 		} else {
 			Robot.driveTrain.TankDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());

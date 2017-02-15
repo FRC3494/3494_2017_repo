@@ -6,12 +6,16 @@ import org.usfirst.frc.team3494.robot.subsystems.Intake;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Turret turret;
 	public static Intake intake;
 	public static Kompressor kompressor;
+	public static AHRS ahrs;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -47,6 +52,7 @@ public class Robot extends IterativeRobot {
 		kompressor = new Kompressor();
 		intake = new Intake();
 		oi = new OI();
+		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// put chooser on DS
 		// SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
@@ -119,6 +125,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
 	}
 
 	/**

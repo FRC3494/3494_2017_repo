@@ -3,8 +3,6 @@ package org.usfirst.frc.team3494.robot.subsystems;
 import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.commands.intake.RunIntake;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +20,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	 * @see RobotMap
 	 */
 	private TalonSRX inMotor;
-	private CANTalon upMotor;
+	private TalonSRX upMotor;
 	// pistons push
 	private DoubleSolenoid piston;
 	public boolean isDeployed;
@@ -30,7 +28,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	public Intake() {
 		super("Intake");
 		this.inMotor = new TalonSRX(RobotMap.INTAKE_MOTOR);
-		this.upMotor = new CANTalon(RobotMap.UP_MOTOR);
+		this.upMotor = new TalonSRX(RobotMap.UP_MOTOR);
 		this.piston = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
 		this.isDeployed = false;
 	}
@@ -46,14 +44,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 
 	public void runIntake(double speed) {
 		this.inMotor.set(speed);
-		if (speed > 0) {
-			this.upMotor.set(speed - 0.3);
-		} else if (speed < 0) {
-			this.upMotor.set(speed + 0.3);
-		} else {
-			// no
-			this.stopAll();
-		}
+		this.upMotor.set(speed);
 	}
 
 	@Override
