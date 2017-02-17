@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.CartesianTurnDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
@@ -45,9 +46,11 @@ public class OI {
 	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
 	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
 	public JoystickButton xbox_b = new JoystickButton(xbox, 2);
+	public JoystickButton xbox_x = new JoystickButton(xbox, 4);
 
 	public OI() {
 		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
 		xbox_b.whenPressed(new SwitchPosition());
+		xbox_x.whenPressed(new CartesianTurnDrive(24, 48));
 	}
 }
