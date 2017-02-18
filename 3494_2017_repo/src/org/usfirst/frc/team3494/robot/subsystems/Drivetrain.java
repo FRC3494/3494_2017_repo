@@ -65,7 +65,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	public RobotDrive wpiDrive;
 	private Encoder encRight;
 	
-	private static double RAMP = 0.1;
+	private static double RAMP = 3/5;
 
 	public Drivetrain() {
 		super("Drivetrain");
@@ -75,8 +75,10 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveLeftMaster.setVoltageRampRate(RAMP);
 		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
 		this.driveLeftFollower_One.enableBrakeMode(true);
+		this.driveLeftFollower_One.setVoltageRampRate(RAMP);
 		this.driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
 		this.driveLeftFollower_Two.enableBrakeMode(true);
+		this.driveLeftFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
 		this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
@@ -88,8 +90,10 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveRightMaster.setVoltageRampRate(RAMP);
 		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
 		this.driveRightFollower_One.enableBrakeMode(true);
+		this.driveRightFollower_One.setVoltageRampRate(RAMP);
 		this.driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
-		this.driveLeftFollower_Two.enableBrakeMode(true);
+		this.driveRightFollower_Two.enableBrakeMode(true);
+		this.driveRightFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
 		this.driveRightFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
