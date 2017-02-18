@@ -9,6 +9,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Turret;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Kompressor kompressor;
 	public static AHRS ahrs;
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -126,6 +128,14 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
+
+		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
+		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
+		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
+
+		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
+		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
+		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 	}
 
 	/**
