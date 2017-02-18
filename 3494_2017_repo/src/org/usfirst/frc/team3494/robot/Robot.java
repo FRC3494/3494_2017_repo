@@ -8,6 +8,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -58,6 +59,7 @@ public class Robot extends IterativeRobot {
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
+		intake.setPiston(Value.kReverse);
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// put chooser on DS
