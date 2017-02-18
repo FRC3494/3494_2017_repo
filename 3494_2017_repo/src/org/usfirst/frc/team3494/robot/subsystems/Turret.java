@@ -79,7 +79,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 			this.turretRing.set(-turretTurnPower);
 		}
 	}
-	
+
 	public void shoot(double power) {
 		this.shooterUpper.set(power);
 		this.shooterLower.set(power);
