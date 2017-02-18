@@ -25,14 +25,9 @@ public class RunIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (Robot.oi.xbox_lt.get()) {
-			this.speed = 1;
-			this.running = !this.running;
+			Robot.intake.runIntake(0.75);
 		} else if (Robot.oi.xbox_rt.get()) {
-			this.speed = -1;
-			this.running = !this.running;
-		}
-		if (running) {
-			Robot.intake.runIntake(this.speed);
+			Robot.intake.runIntake(-0.75);
 		} else {
 			Robot.intake.stopAll();
 		}
