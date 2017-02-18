@@ -6,11 +6,15 @@ import org.usfirst.frc.team3494.robot.UnitTypes;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives a given distance.
+ * Drives a given distance. Currently suffering from encoder issues.
+ * 
+ * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
+ * @since 0.0.2
  */
 public class DistanceDrive extends Command {
-	double dist = 0;
-	UnitTypes unit;
+
+	private double dist;
+	private UnitTypes unit;
 
 	public DistanceDrive(double distance, UnitTypes unitType) {
 		// Use requires() here to declare subsystem dependencies
@@ -24,20 +28,21 @@ public class DistanceDrive extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.stopAll();
 		Robot.driveTrain.resetRight();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.driveTrain.TankDrive(0.2, 0.2);
+		System.out.println("Driving forward: " + this.dist);
+		Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
+		System.out.println("Right distance: " + Robot.driveTrain.getRightDistance(this.unit));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.driveTrain.getRightDistance(UnitTypes.INCHES) >= 8;
+		return (Robot.driveTrain.getRightDistance(this.unit) >= this.dist);
 	}
 
 	// Called once after isFinished returns true

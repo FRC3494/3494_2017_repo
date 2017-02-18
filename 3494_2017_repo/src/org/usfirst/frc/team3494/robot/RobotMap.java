@@ -17,7 +17,7 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	// drivetrain left
-	public static final int leftTalonOne = 0;
+	public static final int leftTalonOne = 17;
 	public static final int leftTalonTwo = 1;
 	public static final int leftTalonThree = 2;
 	// drivetrain right
@@ -32,8 +32,8 @@ public class RobotMap {
 	public static final int ENCODER_RIGHT_A = 0;
 	public static final int ENCODER_RIGHT_B = 1;
 	// intake
-	public static final int INTAKE_MOTOR = 60;
-	public static final int UP_MOTOR = 65;
+	public static final int INTAKE_MOTOR = 0;
+	public static final int UP_MOTOR = 2;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
 	// turret
@@ -42,4 +42,6 @@ public class RobotMap {
 	public static final int TURRET_UPPER = 64;
 	// compressor
 	public static final int COMPRESSOR = 0;
+	public static final int INTAKE_PISTON_CHONE = 2;
+	public static final int INTAKE_PISTON_CHTWO = 3;
 }

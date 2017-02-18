@@ -69,8 +69,11 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		super("Drivetrain");
 
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
+		this.driveLeftMaster.enableBrakeMode(true);
 		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
+		this.driveLeftFollower_One.enableBrakeMode(true);
 		this.driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
+		this.driveLeftFollower_Two.enableBrakeMode(true);
 		// master follower
 		this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
@@ -78,8 +81,11 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
 
 		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
+		this.driveRightMaster.enableBrakeMode(true);
 		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
+		this.driveRightFollower_One.enableBrakeMode(true);
 		this.driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
+		this.driveLeftFollower_Two.enableBrakeMode(true);
 		// master follower
 		this.driveRightFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
@@ -88,8 +94,10 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 
-		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
+		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false,
+				Encoder.EncodingType.k4X);
 		this.encRight.setDistancePerPulse(1 / 1440);
+		this.encRight.reset();
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -142,13 +150,18 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
-		double inches = (Math.PI * 4) * (1 / this.encRight.getDistance());
+		double inches;
+		try {
+			inches = ((Math.PI * 4) * (this.encRight.get() / 1440) * 360);
+		} catch (ArithmeticException e) {
+			inches = 0;
+		}
 		if (unit.equals(UnitTypes.INCHES)) {
-			return (Math.PI * 4) * (1 / this.encRight.getDistance());
+			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
 			return inches / 12;
 		} else {
-			return this.encRight.getDistance();
+			return this.encRight.get();
 		}
 	}
 

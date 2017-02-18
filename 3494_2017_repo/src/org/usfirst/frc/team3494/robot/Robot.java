@@ -2,11 +2,16 @@ package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team3494.robot.subsystems.Intake;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -26,7 +31,15 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain driveTrain;
 	public static Climber climber;
 	public static Turret turret;
+	public static Intake intake;
 	public static Kompressor kompressor;
+	/**
+	 * The gyro board mounted to the RoboRIO.
+	 * 
+	 * @since 0.0.2
+	 */
+	public static AHRS ahrs;
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -41,12 +54,14 @@ public class Robot extends IterativeRobot {
 		// chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		driveTrain = new Drivetrain();
-		oi = new OI();
 		climber = new Climber();
 		turret = new Turret();
 		kompressor = new Kompressor();
+		intake = new Intake();
+		oi = new OI();
+		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// put chooser on DS
-		SmartDashboard.putData("Auto mode", chooser);
+		// SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 	}
@@ -94,7 +109,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during autonomous
+	 * This function is called periodically during autonomous.
 	 */
 	@Override
 	public void autonomousPeriodic() {
@@ -112,11 +127,20 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during operator control
+	 * This function is called periodically during operator control.
 	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
+
+		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
+		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
+		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
+
+		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
+		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
+		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 	}
 
 	/**

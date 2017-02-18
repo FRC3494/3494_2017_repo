@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
+import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -41,8 +43,15 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
+	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
+	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
+	public JoystickButton xbox_b = new JoystickButton(xbox, 2);
+	public JoystickButton xbox_y = new JoystickButton(xbox, 4);
+	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
 
 	public OI() {
-		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
+		xbox_b.whenPressed(new SwitchPosition());
+		xbox_y.whenPressed(new AngleTurn(90));
+		xbox_x.whenPressed(new DistanceDrive(2, UnitTypes.FEET));
 	}
 }
