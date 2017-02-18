@@ -143,9 +143,14 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
-		double inches = (Math.PI * 4) * (1 / this.encRight.get());
+		double inches;
+		try {
+			inches = ((Math.PI * 4) * (this.encRight.get() / 1440) * 360);
+		} catch (ArithmeticException e) {
+			inches = 0;
+		}
 		if (unit.equals(UnitTypes.INCHES)) {
-			return (Math.PI * 4) * (1 / this.encRight.get());
+			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
 			return inches / 12;
 		} else {
