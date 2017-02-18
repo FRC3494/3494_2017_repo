@@ -39,7 +39,7 @@ public class DistanceDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return !(Robot.driveTrain.getRightDistance(this.unit) >= this.dist);
+		return (Robot.driveTrain.getRightDistance(this.unit) >= this.dist);
 	}
 
 	// Called once after isFinished returns true

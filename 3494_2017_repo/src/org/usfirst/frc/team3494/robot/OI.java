@@ -50,9 +50,8 @@ public class OI {
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
 
 	public OI() {
-		xbox_a.whenPressed(new DistanceDrive(8.0, UnitTypes.INCHES));
 		xbox_b.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new DistanceDrive(2, UnitTypes.FEET));
+		xbox_x.whenPressed(new DistanceDrive(200, UnitTypes.RAWCOUNT));
 	}
 }
