@@ -16,6 +16,15 @@ public class DistanceDrive extends Command {
 	private double dist;
 	private UnitTypes unit;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param distance
+	 *            The distance to drive.
+	 * @param unitType
+	 *            The unit that the distance is in.
+	 * @see org.usfirst.frc.team3494.robot.UnitTypes
+	 */
 	public DistanceDrive(double distance, UnitTypes unitType) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);

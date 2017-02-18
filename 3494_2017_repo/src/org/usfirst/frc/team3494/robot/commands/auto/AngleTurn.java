@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Turns the robot using the gyro board mounted to the RoboRIO. The angle to
- * turn by must be specified in the constructor.
+ * turn by must be specified in the constructor. Angle tolerance is specified by
+ * Robot.prefs (key {@code angle tolerance}.)
  * 
  * @since 0.0.2
  * @see org.usfirst.frc.team3494.robot.Robot
@@ -17,6 +18,12 @@ public class AngleTurn extends Command {
 	private double angle;
 	private static double tolerance;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param angle
+	 *            The number of degrees to turn.
+	 */
 	public AngleTurn(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
