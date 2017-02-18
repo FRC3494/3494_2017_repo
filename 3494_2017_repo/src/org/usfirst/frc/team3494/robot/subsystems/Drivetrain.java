@@ -64,6 +64,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public RobotDrive wpiDrive;
 	private Encoder encRight;
+	private Encoder encLeft;
 
 	private static double RAMP = 0.6;
 
@@ -102,10 +103,13 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 
-		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false,
-				Encoder.EncodingType.k4X);
-		this.encRight.setDistancePerPulse(1 / 1440);
+		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
+		this.encRight.setDistancePerPulse(1 / 360);
 		this.encRight.reset();
+		
+		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, true);
+		this.encLeft.setDistancePerPulse(1 / 360);
+		this.encLeft.reset();
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -158,21 +162,27 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
-		double inches;
-		try {
-			inches = ((Math.PI * 4) * (this.encRight.get() / 1440) * 360);
-		} catch (ArithmeticException e) {
-			inches = 0;
-		}
+		double inches = (Math.PI * 4) * (this.encRight.get() / 360);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
-			return inches / 12;
+			return inches / 12.0D;
 		} else {
 			return this.encRight.get();
 		}
 	}
-
+	
+	public double getLeftDistance(UnitTypes unit) {
+		double inches = (Math.PI * 4) * (this.encLeft.get() / 360.0D);
+		if (unit.equals(UnitTypes.INCHES)) {
+			return inches;
+		} else if (unit.equals(UnitTypes.FEET)) {
+			return inches / 12.0D;
+		} else {
+			return this.encLeft.get();
+		}
+	}
+	
 	/**
 	 * Resets the encoder on the right side of the drivetrain.
 	 */
