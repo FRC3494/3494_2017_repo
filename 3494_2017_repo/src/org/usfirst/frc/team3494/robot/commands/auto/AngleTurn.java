@@ -5,7 +5,8 @@ import org.usfirst.frc.team3494.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Turns the robot using the gyro board mounted to the RoboRIO. The angle to turn by must be specified in the constructor.
+ * Turns the robot using the gyro board mounted to the RoboRIO. The angle to
+ * turn by must be specified in the constructor.
  * 
  * @since 0.0.2
  * @see org.usfirst.frc.team3494.robot.Robot
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AngleTurn extends Command {
 
 	private double angle;
+	private static double tolerance = Robot.prefs.getDouble("angle tolerance", 2.5);
 
 	public AngleTurn(double angle) {
 		// Use requires() here to declare subsystem dependencies
@@ -29,7 +31,7 @@ public class AngleTurn extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (!((Robot.ahrs.getAngle() > this.angle - 2.5) && (Robot.ahrs.getAngle() < this.angle + 2.5))) {
+		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
 			System.out.println(this.angle);
 			if (this.angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
@@ -47,7 +49,7 @@ public class AngleTurn extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return ((Robot.ahrs.getAngle() > this.angle - 10) && (Robot.ahrs.getAngle() < this.angle + 10));
+		return ((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance));
 	}
 
 	// Called once after isFinished returns true
