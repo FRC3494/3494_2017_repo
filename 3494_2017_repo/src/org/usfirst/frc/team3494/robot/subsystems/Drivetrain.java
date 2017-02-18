@@ -94,7 +94,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 
-		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false, Encoder.EncodingType.k4X);
+		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B, false,
+				Encoder.EncodingType.k4X);
 		this.encRight.setDistancePerPulse(1 / 1440);
 		this.encRight.reset();
 	}
