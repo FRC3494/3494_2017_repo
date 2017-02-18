@@ -64,12 +64,15 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public RobotDrive wpiDrive;
 	private Encoder encRight;
+	
+	private static double RAMP = 0.1;
 
 	public Drivetrain() {
 		super("Drivetrain");
 
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
 		this.driveLeftMaster.enableBrakeMode(true);
+		this.driveLeftMaster.setVoltageRampRate(RAMP);
 		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
 		this.driveLeftFollower_One.enableBrakeMode(true);
 		this.driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
@@ -82,6 +85,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
 		this.driveRightMaster.enableBrakeMode(true);
+		this.driveRightMaster.setVoltageRampRate(RAMP);
 		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
 		this.driveRightFollower_One.enableBrakeMode(true);
 		this.driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
