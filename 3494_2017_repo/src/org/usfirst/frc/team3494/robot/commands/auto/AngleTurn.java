@@ -5,7 +5,11 @@ import org.usfirst.frc.team3494.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Turns the robot using the gyro board mounted to the RoboRIO. The angle to turn by must be specified in the constructor.
+ * 
+ * @since 0.0.2
+ * @see org.usfirst.frc.team3494.robot.Robot
+ * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
  */
 public class AngleTurn extends Command {
 
