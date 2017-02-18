@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntake extends Command {
 
+	boolean running = false;
+	double speed;
+
 	public RunIntake() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -22,9 +25,14 @@ public class RunIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (Robot.oi.xbox_lt.get()) {
-			Robot.intake.runIntake(1);
+			this.speed = 1;
+			this.running = !this.running;
 		} else if (Robot.oi.xbox_rt.get()) {
-			Robot.intake.runIntake(-1);
+			this.speed = -1;
+			this.running = !this.running;
+		}
+		if (running) {
+			Robot.intake.runIntake(this.speed);
 		} else {
 			Robot.intake.stopAll();
 		}
