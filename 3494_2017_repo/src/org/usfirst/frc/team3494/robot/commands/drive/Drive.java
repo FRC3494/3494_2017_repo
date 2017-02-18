@@ -37,14 +37,15 @@ public class Drive extends Command {
 		} else {
 			Robot.driveTrain.TankDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());
 		}
+		double throttle = Robot.oi.xbox.getTriggerAxis(Hand.kRight);
 		if (Robot.oi.xbox.getPOV() == 0) {
-			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
+			Robot.driveTrain.adjustedTankDrive(throttle, throttle);
 		} else if (Robot.oi.xbox.getPOV() == 90) {
-			Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
+			Robot.driveTrain.adjustedTankDrive(-throttle, throttle);
 		} else if (Robot.oi.xbox.getPOV() == 180) {
-			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
+			Robot.driveTrain.adjustedTankDrive(-throttle, -throttle);
 		} else if (Robot.oi.xbox.getPOV() == 270) {
-			Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
+			Robot.driveTrain.adjustedTankDrive(throttle, -throttle);
 		}
 	}
 
