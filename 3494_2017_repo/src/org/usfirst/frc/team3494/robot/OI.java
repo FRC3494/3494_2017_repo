@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
-import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -52,6 +52,6 @@ public class OI {
 	public OI() {
 		xbox_b.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new DistanceDrive(2, UnitTypes.FEET));
+		xbox_x.whenPressed(new XYDrive(12, 24));
 	}
 }
