@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.UnitTypes;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
@@ -37,20 +38,7 @@ public class CartesianTurnDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (!((Robot.ahrs.getAngle() > this.angle - 10) && (Robot.ahrs.getAngle() < this.angle + 10))) {
-			System.out.println(this.angle);
-			if (this.angle > 0) {
-				Robot.driveTrain.adjustedTankDrive(-0.3, 0.3);
-				Robot.driveTrain.resetRight();
-				return;
-			} else if (this.angle < 0) {
-				Robot.driveTrain.adjustedTankDrive(0.3, -0.3);
-				Robot.driveTrain.resetRight();
-				return;
-			} else {
-				Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
-			}
-		}
+		Scheduler.getInstance().add(new AngleTurn(this.angle));
 		Robot.driveTrain.resetRight();
 		if (Robot.driveTrain.getRightDistance(UnitTypes.INCHES) > this.hypot) {
 			Robot.driveTrain.adjustedTankDrive(0.3, 0.3);

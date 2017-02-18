@@ -1,57 +1,57 @@
 package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
-import org.usfirst.frc.team3494.robot.UnitTypes;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives a given distance.
+ *
  */
-public class DistanceDrive extends Command {
-	
-	private double dist;
-	private UnitTypes unit;
+public class AngleTurn extends Command {
 
-	public DistanceDrive(double distance, UnitTypes unitType) {
+	private double angle;
+
+	public AngleTurn(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		super("DistanceDrive");
 		requires(Robot.driveTrain);
-		this.dist = distance;
-		this.unit = unitType;
+		this.angle = angle;
 	}
 
 	// Called just before this Command runs the first time
-	@Override
 	protected void initialize() {
-		Robot.driveTrain.resetRight();
+		Robot.ahrs.reset();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	@Override
 	protected void execute() {
-		System.out.println("Driving forward: " + this.dist);
-		Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
-		System.out.println("Right distance: " + Robot.driveTrain.getRightDistance(this.unit));
+		if (!((Robot.ahrs.getAngle() > this.angle - 10) && (Robot.ahrs.getAngle() < this.angle + 10))) {
+			System.out.println(this.angle);
+			if (this.angle > 0) {
+				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
+				Robot.driveTrain.resetRight();
+				return;
+			} else if (this.angle < 0) {
+				Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
+				Robot.driveTrain.resetRight();
+				return;
+			} else {
+				Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
+			}
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	@Override
 	protected boolean isFinished() {
-		return !(Robot.driveTrain.getRightDistance(this.unit) >= this.dist);
+		return ((Robot.ahrs.getAngle() > this.angle - 10) && (Robot.ahrs.getAngle() < this.angle + 10));
 	}
 
 	// Called once after isFinished returns true
-	@Override
 	protected void end() {
-		Robot.driveTrain.stopAll();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
-	@Override
 	protected void interrupted() {
-		Robot.driveTrain.stopAll();
 	}
 }
