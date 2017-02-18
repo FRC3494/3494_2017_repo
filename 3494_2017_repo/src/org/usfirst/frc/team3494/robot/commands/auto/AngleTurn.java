@@ -25,7 +25,7 @@ public class AngleTurn extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (!((Robot.ahrs.getAngle() > this.angle - 10) && (Robot.ahrs.getAngle() < this.angle + 10))) {
+		if (!((Robot.ahrs.getAngle() > this.angle - 2.5) && (Robot.ahrs.getAngle() < this.angle + 2.5))) {
 			System.out.println(this.angle);
 			if (this.angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
