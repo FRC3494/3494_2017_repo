@@ -6,5 +6,5 @@ package org.usfirst.frc.team3494.robot;
  * @since 0.0.0
  */
 public enum UnitTypes {
-	INCHES, MILLIMETERS, FEET, RAWCOUNT;
+	INCHES, MILLIMETERS, FEET, RAWCOUNT, ROTATIONS;
 }
