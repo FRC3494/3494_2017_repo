@@ -15,13 +15,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AngleTurn extends Command {
 
 	private double angle;
-	private static double tolerance = Robot.prefs.getDouble("angle tolerance", 2.5);
+	private static double tolerance;
 
 	public AngleTurn(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
 		this.angle = angle;
+		try {
+			tolerance = Robot.prefs.getDouble("angle tolerance", 2.5);
+		} catch (NullPointerException e) {
+			tolerance = 2.5;
+		}
 	}
 
 	// Called just before this Command runs the first time
@@ -32,7 +37,6 @@ public class AngleTurn extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
-			System.out.println(this.angle);
 			if (this.angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
 				Robot.driveTrain.resetRight();
