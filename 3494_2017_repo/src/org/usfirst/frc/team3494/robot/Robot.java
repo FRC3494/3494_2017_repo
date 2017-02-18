@@ -33,6 +33,11 @@ public class Robot extends IterativeRobot {
 	public static Turret turret;
 	public static Intake intake;
 	public static Kompressor kompressor;
+	/**
+	 * The gyro board mounted to the RoboRIO.
+	 * 
+	 * @since 0.0.2
+	 */
 	public static AHRS ahrs;
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
@@ -104,7 +109,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during autonomous
+	 * This function is called periodically during autonomous.
 	 */
 	@Override
 	public void autonomousPeriodic() {
@@ -122,7 +127,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * This function is called periodically during operator control
+	 * This function is called periodically during operator control.
 	 */
 	@Override
 	public void teleopPeriodic() {

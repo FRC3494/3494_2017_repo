@@ -7,7 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
- *
+ * WIP coordinate drive system.
+ * 
+ * @see org.usfirst.frc.team3494.robot.commands.auto.AngleTurn
+ * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive
+ * @since 0.0.2
  */
 public class CartesianTurnDrive extends Command {
 
