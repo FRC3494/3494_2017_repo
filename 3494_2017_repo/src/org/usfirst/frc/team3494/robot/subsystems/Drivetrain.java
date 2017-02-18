@@ -69,6 +69,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		super("Drivetrain");
 
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
+		this.driveLeftMaster.enableBrakeMode(true);
 		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
 		this.driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
 		// master follower
@@ -78,6 +79,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
 
 		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
+		this.driveRightMaster.enableBrakeMode(true);
 		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
 		this.driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
 		// master follower
