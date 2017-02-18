@@ -65,7 +65,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	public RobotDrive wpiDrive;
 	private Encoder encRight;
 	
-	private static double RAMP = 3/5;
+	private static double RAMP = 0.6;
 
 	public Drivetrain() {
 		super("Drivetrain");
