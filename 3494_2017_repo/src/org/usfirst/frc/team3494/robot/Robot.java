@@ -139,6 +139,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
+		SmartDashboard.putNumber("distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
 
 		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
