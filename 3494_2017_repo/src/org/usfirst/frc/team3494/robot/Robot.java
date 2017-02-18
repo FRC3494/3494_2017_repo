@@ -8,6 +8,8 @@ import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -62,6 +64,7 @@ public class Robot extends IterativeRobot {
 		intake.setPiston(Value.kReverse);
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
 		// SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
