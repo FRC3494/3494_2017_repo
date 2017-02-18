@@ -66,7 +66,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	}
 
 	/**
-	 * Turns the turret at a hardcoded speed in the specified direction.
+	 * Turns the turret at a hard-coded speed in the specified direction.
 	 * 
 	 * @param dir
 	 *            The direction to turn in. Defaults to right if you put in
@@ -78,5 +78,10 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		} else {
 			this.turretRing.set(-turretTurnPower);
 		}
+	}
+	
+	public void shoot(double power) {
+		this.shooterUpper.set(power);
+		this.shooterLower.set(power);
 	}
 }
