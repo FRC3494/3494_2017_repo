@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 		intake.setPiston(Value.kReverse);
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		@SuppressWarnings("unused")
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
 		// SmartDashboard.putData("Auto mode", chooser);
