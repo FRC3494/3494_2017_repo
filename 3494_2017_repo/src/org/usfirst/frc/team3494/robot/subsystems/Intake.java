@@ -4,7 +4,7 @@ import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.commands.intake.RunIntake;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,16 +19,16 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 	 * 
 	 * @see RobotMap
 	 */
-	private TalonSRX inMotor;
-	private TalonSRX upMotor;
+	private Talon inMotor;
+	private Talon upMotor;
 	// pistons push
 	private DoubleSolenoid piston;
 	public boolean isDeployed;
 
 	public Intake() {
 		super("Intake");
-		this.inMotor = new TalonSRX(RobotMap.INTAKE_MOTOR);
-		this.upMotor = new TalonSRX(RobotMap.UP_MOTOR);
+		this.inMotor = new Talon(RobotMap.INTAKE_MOTOR);
+		this.upMotor = new Talon(RobotMap.UP_MOTOR);
 		this.piston = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
 		this.isDeployed = false;
 	}
