@@ -3,7 +3,7 @@ package org.usfirst.frc.team3494.robot.subsystems;
 import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,13 +12,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @since 0.0.0
  */
 public class Climber extends Subsystem implements IMotorizedSubsystem {
-	private TalonSRX motor;
+	
+	private Talon motor;
+	private boolean driveTrainMode;
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Climber() {
 		super("Climber");
-		motor = new TalonSRX(RobotMap.CLIMBER_MOTOR);
+		this.motor = new Talon(RobotMap.CLIMBER_MOTOR);
+		this.driveTrainMode = false;
 	}
 
 	@Override
