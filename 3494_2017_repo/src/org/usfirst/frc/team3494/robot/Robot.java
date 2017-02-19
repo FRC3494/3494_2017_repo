@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.Intake;
@@ -54,8 +55,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Default Auto", new XYDrive(24, 24));
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		turret = new Turret();
@@ -102,16 +102,22 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		// String autoSelected = SmartDashboard.getString("Auto Selector",
+		// "Default");
+		// switch (autoSelected) {
+		// case "My Auto":
+		// autonomousCommand = new MyAutoCommand();
+		// break;
+		// case "Default Auto":
+		// default:
+		// autonomousCommand = new ExampleCommand();
+		// break;
+		// }
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -128,8 +134,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 	}
 
 	/**
