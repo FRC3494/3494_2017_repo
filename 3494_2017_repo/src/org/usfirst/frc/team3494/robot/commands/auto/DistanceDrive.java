@@ -44,9 +44,7 @@ public class DistanceDrive extends Command {
 	@Override
 	protected void execute() {
 		if (this.dist > Robot.driveTrain.getRightDistance(this.unit)) {
-			System.out.println("Driving forward: " + this.dist);
 			Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
-			System.out.println("Right distance: " + Robot.driveTrain.getRightDistance(this.unit));
 		} else {
 			return;
 		}
