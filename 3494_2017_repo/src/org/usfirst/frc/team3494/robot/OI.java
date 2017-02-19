@@ -52,6 +52,6 @@ public class OI {
 	public OI() {
 		xbox_b.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new XYDrive(12, 24));
+		xbox_x.whenPressed(new XYDrive(24, 24));
 	}
 }
