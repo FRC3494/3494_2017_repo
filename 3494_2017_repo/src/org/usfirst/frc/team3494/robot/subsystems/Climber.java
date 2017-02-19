@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @since 0.0.0
  */
 public class Climber extends Subsystem implements IMotorizedSubsystem {
-	
+
 	private Talon motor;
 	private boolean driveTrainMode;
 
