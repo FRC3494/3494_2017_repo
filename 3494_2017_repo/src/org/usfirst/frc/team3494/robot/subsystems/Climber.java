@@ -39,9 +39,9 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	 *            will stop the climber.
 	 */
 	public void climb(DriveDirections dir) {
-		if (dir.equals(DriveDirections.UP)) {
+		if (dir.equals(DriveDirections.UP) && !this.driveTrainMode) {
 			motor.set(0.4);
-		} else if (dir.equals(DriveDirections.DOWN)) {
+		} else if (dir.equals(DriveDirections.DOWN) && !this.driveTrainMode) {
 			motor.set(-0.4);
 		} else {
 			// stop the climber
