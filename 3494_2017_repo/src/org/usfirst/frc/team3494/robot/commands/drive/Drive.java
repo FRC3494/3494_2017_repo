@@ -6,10 +6,13 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command to run drivetrain. Only takes input in the form of joysticks
- * (commands for auto moving coming soon<sup>tm</sup>)
+ * Command to run drivetrain. Only takes input in the form of joysticks.
  * 
- * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
+ * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain Drivetrain
+ * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive Distance
+ *      Driving (auto)
+ * @see org.usfirst.frc.team3494.robot.commands.auto.AngleTurn Angle Driving
+ *      (auto)
  */
 public class Drive extends Command {
 

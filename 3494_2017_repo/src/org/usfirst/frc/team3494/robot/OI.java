@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
-import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
+	// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
-	//// joystick.
+	// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 	// Joystick stick = new Joystick(port);
@@ -52,6 +52,6 @@ public class OI {
 	public OI() {
 		xbox_b.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new DistanceDrive(2, UnitTypes.FEET));
+		xbox_x.whenPressed(new XYDrive(24, 24));
 	}
 }

@@ -16,6 +16,15 @@ public class DistanceDrive extends Command {
 	private double dist;
 	private UnitTypes unit;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param distance
+	 *            The distance to drive.
+	 * @param unitType
+	 *            The unit that the distance is in.
+	 * @see org.usfirst.frc.team3494.robot.UnitTypes
+	 */
 	public DistanceDrive(double distance, UnitTypes unitType) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -34,9 +43,11 @@ public class DistanceDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		System.out.println("Driving forward: " + this.dist);
-		Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
-		System.out.println("Right distance: " + Robot.driveTrain.getRightDistance(this.unit));
+		if (this.dist > Robot.driveTrain.getRightDistance(this.unit)) {
+			Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
+		} else {
+			return;
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

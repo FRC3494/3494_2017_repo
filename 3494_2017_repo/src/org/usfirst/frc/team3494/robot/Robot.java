@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.Intake;
@@ -8,6 +10,9 @@ import org.usfirst.frc.team3494.robot.subsystems.Turret;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -51,17 +56,21 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
+		intake.setPiston(Value.kReverse);
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		// Auto programs come after all subsystems are created
+		chooser.addDefault("Default Auto", new XYDrive(24, 24));
+		chooser.addObject("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		@SuppressWarnings("unused")
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
-		// SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 	}
@@ -96,16 +105,22 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		// String autoSelected = SmartDashboard.getString("Auto Selector",
+		// "Default");
+		// switch (autoSelected) {
+		// case "My Auto":
+		// autonomousCommand = new MyAutoCommand();
+		// break;
+		// case "Default Auto":
+		// default:
+		// autonomousCommand = new ExampleCommand();
+		// break;
+		// }
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -122,8 +137,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 	}
 
 	/**
@@ -133,6 +149,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
+		SmartDashboard.putNumber("distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
 
 		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));

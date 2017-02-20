@@ -31,6 +31,8 @@ public class RobotMap {
 	// encoders
 	public static final int ENCODER_RIGHT_A = 0;
 	public static final int ENCODER_RIGHT_B = 1;
+	public static final int ENCODER_LEFT_A = 2;
+	public static final int ENCODER_LEFT_B = 3;
 	// intake
 	public static final int INTAKE_MOTOR = 0;
 	public static final int UP_MOTOR = 2;

@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Turns the robot using the gyro board mounted to the RoboRIO. The angle to
- * turn by must be specified in the constructor.
+ * turn by must be specified in the constructor. Angle tolerance is specified by
+ * Robot.prefs (key {@code angle tolerance}.)
  * 
  * @since 0.0.2
  * @see org.usfirst.frc.team3494.robot.Robot
@@ -15,13 +16,24 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AngleTurn extends Command {
 
 	private double angle;
-	private static double tolerance = Robot.prefs.getDouble("angle tolerance", 2.5);
+	private static double tolerance;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param angle
+	 *            The number of degrees to turn.
+	 */
 	public AngleTurn(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
 		this.angle = angle;
+		try {
+			tolerance = Robot.prefs.getDouble("angle tolerance", 2.5);
+		} catch (NullPointerException e) {
+			tolerance = 2.5;
+		}
 	}
 
 	// Called just before this Command runs the first time
@@ -32,7 +44,6 @@ public class AngleTurn extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
-			System.out.println(this.angle);
 			if (this.angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
 				Robot.driveTrain.resetRight();
