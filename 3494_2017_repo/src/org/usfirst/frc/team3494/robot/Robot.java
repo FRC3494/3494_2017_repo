@@ -55,7 +55,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", new XYDrive(24, 24));
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		turret = new Turret();
@@ -64,10 +63,13 @@ public class Robot extends IterativeRobot {
 		intake.setPiston(Value.kReverse);
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		// Auto programs come after all subsystems are created
+		chooser.addDefault("Default Auto", new XYDrive(24, 24));
+		chooser.addObject("Command Group", null);
 		@SuppressWarnings("unused")
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
-		// SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 	}
