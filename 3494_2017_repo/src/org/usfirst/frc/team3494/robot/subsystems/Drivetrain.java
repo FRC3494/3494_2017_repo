@@ -167,6 +167,10 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
 			return inches / 12.0D;
+		} else if (unit.equals(UnitTypes.MILLIMETERS)) {
+			return inches * 25.400;
+		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
+			return inches * 2.540;
 		} else {
 			return this.encRight.get();
 		}
