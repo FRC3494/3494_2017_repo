@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot.commands.auto;
 
-import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.UnitTypes;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -16,7 +15,7 @@ public class XYDrive extends CommandGroup {
 	private double angle;
 
 	/**
-	 * Default (and only) constructor.
+	 * Constructor.
 	 * 
 	 * @param rise
 	 *            The distance along the Y axis that the point is from the
