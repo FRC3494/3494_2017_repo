@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
@@ -65,7 +66,7 @@ public class Robot extends IterativeRobot {
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Default Auto", new XYDrive(24, 24));
-		chooser.addObject("Command Group", null);
+		chooser.addObject("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		@SuppressWarnings("unused")
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
