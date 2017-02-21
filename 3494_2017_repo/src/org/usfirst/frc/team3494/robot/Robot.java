@@ -148,9 +148,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Gyro Z", ahrs.getAngle());
-		SmartDashboard.putNumber("distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
-		SmartDashboard.putNumber("distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
+		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
 
 		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
@@ -159,6 +161,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
+
 	}
 
 	/**

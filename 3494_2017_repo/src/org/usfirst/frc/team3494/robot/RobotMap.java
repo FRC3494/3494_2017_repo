@@ -34,8 +34,8 @@ public class RobotMap {
 	public static final int ENCODER_LEFT_A = 2;
 	public static final int ENCODER_LEFT_B = 3;
 	// intake
-	public static final int INTAKE_MOTOR = 0;
-	public static final int UP_MOTOR = 2;
+	public static final int INTAKE_MOTOR = 5;
+	public static final int UP_MOTOR = 4;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
 	// turret
