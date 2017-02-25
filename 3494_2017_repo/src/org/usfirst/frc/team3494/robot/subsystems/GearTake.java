@@ -27,6 +27,7 @@ public class GearTake extends Subsystem {
 	 * The solenoid that holds the gear or drops it.
 	 */
 	private DoubleSolenoid openandclose;
+	private Value state;
 
 	public GearTake() {
 		super();
@@ -50,6 +51,7 @@ public class GearTake extends Subsystem {
 
 	public void setGrasp(Value value) {
 		this.openandclose.set(value);
+		this.state = value;
 	}
 
 	public void releaseGear() {
@@ -62,5 +64,9 @@ public class GearTake extends Subsystem {
 	
 	public Value getRampState() {
 		return this.ramp_state;
+	}
+	
+	public Value getGearState() {
+		return this.state;
 	}
 }
