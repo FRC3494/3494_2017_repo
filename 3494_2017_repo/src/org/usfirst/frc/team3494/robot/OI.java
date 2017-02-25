@@ -5,8 +5,8 @@ import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
+import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -46,16 +46,21 @@ public class OI {
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
 	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
 	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
+	public JoystickButton xbox_rt_2 = new JoystickButton(xbox_2, 6);
 	public JoystickButton xbox_b = new JoystickButton(xbox, 2);
 	public JoystickButton xbox_b_2 = new JoystickButton(xbox_2, 2);
 	public JoystickButton xbox_y = new JoystickButton(xbox, 4);
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
 
 	public OI() {
+		// Ready Player One
 		xbox_b.whileHeld(new Climb(DriveDirections.UP));
 		xbox_b.whenReleased(new StopClimber());
-		xbox_b_2.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
 		xbox_x.whenPressed(new XYDrive(24, 24));
+		// Ready Player Two
+		xbox_b_2.whenPressed(new SwitchPosition());
+		xbox_rt_2.whenPressed(new Shoot());
+		xbox_rt_2.whenReleased(new Shoot(0));
 	}
 }
