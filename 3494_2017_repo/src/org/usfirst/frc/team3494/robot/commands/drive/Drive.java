@@ -31,15 +31,12 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.prefs.getBoolean("xcontrol", true)) {
-			if (Robot.prefs.getBoolean("arcade", true)) {
-				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getX(Hand.kLeft));
-			} else {
-				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getY(Hand.kRight));
-			}
+		if (Robot.prefs.getBoolean("arcade", true)) {
+			Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getX(Hand.kLeft));
 		} else {
-			Robot.driveTrain.TankDrive(-Robot.oi.leftStick.getY(), -Robot.oi.rightStick.getY());
+			Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getY(Hand.kRight));
 		}
+
 		double throttle = Robot.oi.xbox.getTriggerAxis(Hand.kRight);
 		if (Robot.oi.xbox.getPOV() == 0) {
 			Robot.driveTrain.adjustedTankDrive(throttle, throttle);

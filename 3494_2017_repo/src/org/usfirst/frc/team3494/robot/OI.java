@@ -2,6 +2,8 @@ package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
+import org.usfirst.frc.team3494.robot.commands.climb.Climb;
+import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,9 +22,8 @@ public class OI {
 	// number it is.
 	// Joystick stick = new Joystick(port);
 	// Button button = new JoystickButton(stick, buttonNumber);
-	public final Joystick leftStick = new Joystick(0);
-	public final Joystick rightStick = new Joystick(1);
-	public final XboxController xbox = new XboxController(2);
+	public final XboxController xbox = new XboxController(RobotMap.XBOX_ONE);
+	public final XboxController xbox_2 = new XboxController(RobotMap.XBOX_TWO);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
@@ -46,11 +47,14 @@ public class OI {
 	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
 	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
 	public JoystickButton xbox_b = new JoystickButton(xbox, 2);
+	public JoystickButton xbox_b_2 = new JoystickButton(xbox_2, 2);
 	public JoystickButton xbox_y = new JoystickButton(xbox, 4);
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
 
 	public OI() {
-		xbox_b.whenPressed(new SwitchPosition());
+		xbox_b.whileHeld(new Climb(DriveDirections.UP));
+		xbox_b.whenReleased(new StopClimber());
+		xbox_b_2.whenPressed(new SwitchPosition());
 		xbox_y.whenPressed(new AngleTurn(90));
 		xbox_x.whenPressed(new XYDrive(24, 24));
 	}
