@@ -59,4 +59,8 @@ public class GearTake extends Subsystem {
 	public void closeHolder() {
 		this.setGrasp(Value.kReverse);
 	}
+	
+	public Value getRampState() {
+		return this.ramp_state;
+	}
 }
