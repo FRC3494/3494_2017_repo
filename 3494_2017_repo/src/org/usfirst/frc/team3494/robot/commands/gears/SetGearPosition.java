@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Sets the gear holder position to what it is not.
  */
 public class SetGearPosition extends Command {
 	public SetGearPosition() {

@@ -35,26 +35,57 @@ public class GearTake extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
+	/**
+	 * Sets the position of the intake ramp.
+	 * 
+	 * @param value
+	 *            The position to set the ramp to.
+	 */
 	public void setRamp(Value value) {
 		this.rampenoid.set(value);
 	}
 
+	/**
+	 * Sets the position of the actual gear holder.
+	 * 
+	 * @param value
+	 *            The position to set the holder to.
+	 */
 	public void setGrasp(Value value) {
 		this.openandclose.set(value);
 	}
 
+	/**
+	 * Releases the gear with a call to {@link GearTake#setGrasp(Value)}.
+	 */
 	public void releaseGear() {
 		this.setGrasp(Value.kForward);
 	}
 
+	/**
+	 * Closes the gear holder with a call to {@link GearTake#setGrasp(Value)}.
+	 */
 	public void closeHolder() {
 		this.setGrasp(Value.kReverse);
 	}
 
+	/**
+	 * Gets the state of the intake ramp solenoid. Equivalent to
+	 * {@code this.rampenoid.get()}, but {@link GearTake#rampenoid} is private.
+	 * 
+	 * @return The value of {@code this.rampenoid.get()}.
+	 */
 	public Value getRampState() {
 		return this.rampenoid.get();
 	}
 
+	/**
+	 * Gets the state of the gear holder. Equivalent to
+	 * {@code this.openandclose.get()}, but {@link GearTake#openandclose} is
+	 * private.
+	 * 
+	 * @return The value of {@code this.openandclose.get()}.
+	 */
 	public Value getGearState() {
 		return this.openandclose.get();
 	}
