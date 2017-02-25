@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team3494.robot.subsystems.GearTake;
 import org.usfirst.frc.team3494.robot.subsystems.Intake;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static Turret turret;
 	public static Intake intake;
 	public static Kompressor kompressor;
+	public static GearTake gearTake;
 	/**
 	 * The gyro board mounted to the RoboRIO.
 	 * 
