@@ -20,14 +20,9 @@ public class GearTake extends Subsystem {
 	 */
 	private DoubleSolenoid rampenoid;
 	/**
-	 * The state of {@link GearTake#rampenoid rampenoid}.
-	 */
-	private Value ramp_state;
-	/**
 	 * The solenoid that holds the gear or drops it.
 	 */
 	private DoubleSolenoid openandclose;
-	private Value state;
 
 	public GearTake() {
 		super();
@@ -41,17 +36,11 @@ public class GearTake extends Subsystem {
 	}
 
 	public void setRamp(Value value) {
-		if (!this.ramp_state.equals(value)) {
-			this.rampenoid.set(value);
-			this.ramp_state = value;
-		} else {
-			return;
-		}
+		this.rampenoid.set(value);
 	}
 
 	public void setGrasp(Value value) {
 		this.openandclose.set(value);
-		this.state = value;
 	}
 
 	public void releaseGear() {
@@ -63,10 +52,10 @@ public class GearTake extends Subsystem {
 	}
 	
 	public Value getRampState() {
-		return this.ramp_state;
+		return this.rampenoid.get();
 	}
 	
 	public Value getGearState() {
-		return this.state;
+		return this.openandclose.get();
 	}
 }
