@@ -56,14 +56,14 @@ public class GearTake extends Subsystem {
 	}
 
 	/**
-	 * Releases the gear with a call to {@link GearTake#setGrasp(Value)}.
+	 * Releases the gear with a call to {@link GearTake#setGrasp}.
 	 */
 	public void releaseGear() {
 		this.setGrasp(Value.kForward);
 	}
 
 	/**
-	 * Closes the gear holder with a call to {@link GearTake#setGrasp(Value)}.
+	 * Closes the gear holder with a call to {@link GearTake#setGrasp}.
 	 */
 	public void closeHolder() {
 		this.setGrasp(Value.kReverse);
