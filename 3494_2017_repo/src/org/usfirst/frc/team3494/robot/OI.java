@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
-import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
+import org.usfirst.frc.team3494.robot.commands.gears.SetGearPosition;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
@@ -62,7 +62,7 @@ public class OI {
 		xbox_b.whileHeld(new Climb(DriveDirections.UP));
 		xbox_b.whenReleased(new StopClimber());
 		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new XYDrive(24, 24));
+		xbox_x.whenPressed(new SetGearPosition());
 		// Ready Player Two
 		xbox_b_2.whenPressed(new SwitchPosition());
 		xbox_rt_2.whenPressed(new Shoot());
