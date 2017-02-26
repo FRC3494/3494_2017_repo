@@ -55,4 +55,6 @@ public class RobotMap {
 	public static final int GEAR_RAMP_CHTWO = 11;
 	public static final int GEAR_GRASP_CHONE = 12;
 	public static final int GEAR_GRASP_CHTWO = 13;
+	// conveyer
+	public static final int CONVEYER_M = 14;
 }
