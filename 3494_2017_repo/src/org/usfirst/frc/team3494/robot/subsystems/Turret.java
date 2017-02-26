@@ -95,7 +95,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	public void stopHood() {
 		this.setHood(0);
 	}
-	
+
 	public void stopTurret() {
 		this.turretRing.set(0);
 	}
