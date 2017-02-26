@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.gears.SetGearPosition;
+import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
@@ -54,6 +55,7 @@ public class OI {
 	public JoystickButton xbox_b_2 = new JoystickButton(xbox_2, 2);
 
 	public JoystickButton xbox_y = new JoystickButton(xbox, 4);
+	public JoystickButton xbox_y_2 = new JoystickButton(xbox_2, 4);
 
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
 
@@ -65,6 +67,7 @@ public class OI {
 		xbox_x.whenPressed(new SetGearPosition());
 		// Ready Player Two
 		xbox_b_2.whenPressed(new SwitchPosition());
+		xbox_y_2.whenPressed(new ToggleGearRamp());
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
 	}
