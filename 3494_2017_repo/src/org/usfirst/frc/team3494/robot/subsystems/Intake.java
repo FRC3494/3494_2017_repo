@@ -29,6 +29,7 @@ public class Intake extends Subsystem implements IMotorizedSubsystem {
 		super("Intake");
 		this.inMotor = new Talon(RobotMap.INTAKE_MOTOR);
 		this.upMotor = new Talon(RobotMap.UP_MOTOR);
+		this.upMotor.setInverted(true);
 		this.piston = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
 		this.isDeployed = false;
 	}

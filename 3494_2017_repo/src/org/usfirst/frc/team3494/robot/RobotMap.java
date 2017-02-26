@@ -16,6 +16,9 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
+	// Joystick Numbers
+	public static final int XBOX_ONE = 0;
+	public static final int XBOX_TWO = 1;
 	// drivetrain left
 	public static final int leftTalonOne = 17;
 	public static final int leftTalonTwo = 1;
@@ -34,8 +37,8 @@ public class RobotMap {
 	public static final int ENCODER_LEFT_A = 2;
 	public static final int ENCODER_LEFT_B = 3;
 	// intake
-	public static final int INTAKE_MOTOR = 0;
-	public static final int UP_MOTOR = 2;
+	public static final int INTAKE_MOTOR = 5;
+	public static final int UP_MOTOR = 4;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
 	// turret
@@ -44,6 +47,14 @@ public class RobotMap {
 	public static final int TURRET_UPPER = 64;
 	// compressor
 	public static final int COMPRESSOR = 0;
+	// intake pistons
 	public static final int INTAKE_PISTON_CHONE = 2;
 	public static final int INTAKE_PISTON_CHTWO = 3;
+	// gear holder pistons
+	public static final int GEAR_RAMP_CHONE = 10;
+	public static final int GEAR_RAMP_CHTWO = 11;
+	public static final int GEAR_GRASP_CHONE = 12;
+	public static final int GEAR_GRASP_CHTWO = 13;
+	// conveyer
+	public static final int CONVEYER_M = 14;
 }

@@ -37,11 +37,13 @@ public class AngleTurn extends Command {
 	}
 
 	// Called just before this Command runs the first time
+	@Override
 	protected void initialize() {
 		Robot.ahrs.reset();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
+	@Override
 	protected void execute() {
 		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
 			if (this.angle > 0) {
@@ -59,16 +61,19 @@ public class AngleTurn extends Command {
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
+	@Override
 	protected boolean isFinished() {
 		return ((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance));
 	}
 
 	// Called once after isFinished returns true
+	@Override
 	protected void end() {
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
+	@Override
 	protected void interrupted() {
 	}
 }

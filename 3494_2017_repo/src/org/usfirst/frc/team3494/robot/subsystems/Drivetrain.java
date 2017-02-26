@@ -66,7 +66,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private Encoder encRight;
 	private Encoder encLeft;
 
-	private static double RAMP = 1.173; // lowest possible ramp
+	private static double RAMP = 1.1730125; // lowest possible ramp
 
 	public Drivetrain() {
 		super("Drivetrain");
@@ -107,7 +107,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.encRight.setDistancePerPulse(1 / 360);
 		this.encRight.reset();
 
-		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, true);
+		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B);
 		this.encLeft.setDistancePerPulse(1 / 360);
 		this.encLeft.reset();
 	}
@@ -117,7 +117,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new Drive());
+		this.setDefaultCommand(new Drive());
 	}
 
 	/**
@@ -176,14 +176,25 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	/**
+	 * Gets the distance the left encoder has counted in the specified unit.
+	 * 
+	 * @param unit
+	 *            The unit type to get the distance in.
+	 * @return The distance the left encoder has counted, in the specified unit.
+	 */
 	public double getLeftDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (this.encLeft.get() / 360.0D);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
 			return inches / 12.0D;
+		} else if (unit.equals(UnitTypes.MILLIMETERS)) {
+			return inches * 25.400;
+		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
+			return inches * 2.540;
 		} else {
-			return this.encLeft.get();
+			return this.encRight.get();
 		}
 	}
 
