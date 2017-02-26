@@ -6,6 +6,7 @@ import org.usfirst.frc.team3494.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -23,6 +24,8 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon shooterUpper;
 	private CANTalon shooterLower;
 	private CANTalon turretRing;
+
+	private Talon turretHood;
 	/**
 	 * Constant for the turret ring speed. Placed here for easy editing.
 	 */
@@ -83,5 +86,17 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	public void shoot(double power) {
 		this.shooterUpper.set(power);
 		this.shooterLower.set(power);
+	}
+
+	public void setHood(double power) {
+		this.turretHood.set(power);
+	}
+
+	public void stopHood() {
+		this.setHood(0);
+	}
+	
+	public void stopTurret() {
+		this.turretRing.set(0);
 	}
 }
