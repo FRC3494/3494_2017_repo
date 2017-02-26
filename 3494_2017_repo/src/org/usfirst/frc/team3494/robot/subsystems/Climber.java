@@ -87,4 +87,8 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	public void engagePTO() {
 		this.setPTO(Value.kReverse);
 	}
+
+	public boolean getState() {
+		return this.driveTrainMode;
+	}
 }
