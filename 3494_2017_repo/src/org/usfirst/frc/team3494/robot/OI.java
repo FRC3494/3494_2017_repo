@@ -67,7 +67,6 @@ public class OI {
 		// Ready Player One
 		xbox_b.whileHeld(new Climb(DriveDirections.UP));
 		xbox_b.whenReleased(new StopClimber());
-		xbox_y.whenPressed(new AngleTurn(90));
 		xbox_x.whenPressed(new SetGearPosition());
 		// Ready Player Two
 		xbox_b_2.whenPressed(new SwitchPosition());
