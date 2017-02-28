@@ -13,7 +13,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -63,7 +62,7 @@ public class Robot extends IterativeRobot {
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
-		intake.setPiston(Value.kReverse);
+		gearTake = new GearTake();
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
