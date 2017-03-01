@@ -38,11 +38,21 @@ public class Drive extends Command {
 			Robot.driveTrain.inverter = -1;
 		}
 		if (Robot.prefs.getBoolean("arcade", true)) {
-			Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-					-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			if (!Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			} else {
+				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			}
 		} else {
-			Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
-					-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+			if (!Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+			} else {
+				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
+			}
 		}
 	}
 
