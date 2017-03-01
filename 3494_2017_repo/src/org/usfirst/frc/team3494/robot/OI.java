@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot;
 
-import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
