@@ -216,4 +216,14 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	public void setAll(double speed) {
 		this.TankDrive(speed, speed);
 	}
+
+	/**
+	 * Returns {@code true} if the drivetrain is inverted (the gear holder is
+	 * considered forward.)
+	 * 
+	 * @return {@code true} if the drivetrain is inverted.
+	 */
+	public boolean getInverted() {
+		return this.inverter == -1;
+	}
 }
