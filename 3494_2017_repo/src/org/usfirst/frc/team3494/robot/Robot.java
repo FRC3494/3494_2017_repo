@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
-import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake;
@@ -17,7 +16,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -47,8 +46,8 @@ public class Robot extends IterativeRobot {
 	public static AHRS ahrs;
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	CommandGroup autonomousCommand;
+	public static SendableChooser<CommandGroup> chooser;
 	public static Preferences prefs;
 
 	/**
@@ -57,6 +56,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		chooser = new SendableChooser<CommandGroup>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		turret = new Turret();
@@ -65,9 +65,9 @@ public class Robot extends IterativeRobot {
 		gearTake = new GearTake();
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
-		// Auto programs come after all subsystems are created
-		chooser.addDefault("Default Auto", new XYDrive(24, 24));
-		chooser.addObject("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		// Auto programs come after all subsystems are created\
+		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		@SuppressWarnings("unused")
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
@@ -105,19 +105,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
-
-		// String autoSelected = SmartDashboard.getString("Auto Selector",
-		// "Default");
-		// switch (autoSelected) {
-		// case "My Auto":
-		// autonomousCommand = new MyAutoCommand();
-		// break;
-		// case "Default Auto":
-		// default:
-		// autonomousCommand = new ExampleCommand();
-		// break;
-		// }
-
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
@@ -148,6 +135,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putData(Scheduler.getInstance());
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));

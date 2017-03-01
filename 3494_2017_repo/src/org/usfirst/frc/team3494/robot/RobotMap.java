@@ -41,6 +41,8 @@ public class RobotMap {
 	public static final int UP_MOTOR = 4;
 	// climber
 	public static final int CLIMBER_MOTOR = 1;
+	public static final int CLIMBER_PTO_FORWARD = 6;
+	public static final int CLIMBER_PTO_BACKARD = 7;
 	// turret
 	public static final int TURRET_RING = 62;
 	public static final int TURRET_LOWER = 63;
