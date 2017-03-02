@@ -72,7 +72,6 @@ public class Robot extends IterativeRobot {
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putString("test", "test");
 		// get preferences
 		prefs = Preferences.getInstance();
 	}
