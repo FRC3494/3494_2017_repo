@@ -3,7 +3,7 @@ package org.usfirst.frc.team3494.robot;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
-import org.usfirst.frc.team3494.robot.commands.gears.SetGearPosition;
+import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
@@ -66,7 +66,7 @@ public class OI {
 		// Ready Player One
 		xbox_b.whileHeld(new Climb(DriveDirections.UP));
 		xbox_b.whenReleased(new StopClimber());
-		xbox_x.whenPressed(new SetGearPosition());
+		xbox_x.whileHeld(new HoldInState());
 		// Ready Player Two
 		xbox_b_2.whenPressed(new SwitchPosition());
 		xbox_y_2.whenPressed(new ToggleGearRamp());
