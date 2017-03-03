@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.DriveDirections;
+import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -24,6 +25,8 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	public Climber() {
 		super("Climber");
 		this.motor = new Talon(RobotMap.CLIMBER_MOTOR);
+		this.pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
+		this.pto.set(Value.kForward);
 		this.driveTrainMode = false;
 	}
 
@@ -73,7 +76,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void setPTO(Value value) {
 		this.pto.set(value);
-		if (value.equals(Value.kOff) || value.equals(Value.kForward)) {
+		if (value.equals(Value.kOff) || value.equals(Value.kReverse)) {
 			this.driveTrainMode = true;
 		} else {
 			this.driveTrainMode = false;
@@ -90,5 +93,9 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 
 	public boolean getState() {
 		return this.driveTrainMode;
+	}
+	
+	public double getMotorCurrent() {
+		return Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP);
 	}
 }
