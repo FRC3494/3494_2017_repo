@@ -135,6 +135,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		/*
+		 * if (Robot.climber.getMotorCurrent() > 10.0D) {
+		 * Robot.climber.engagePTO(); }
+		 */
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
@@ -149,7 +153,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
-
 	}
 
 	/**
