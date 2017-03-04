@@ -57,8 +57,9 @@ public class DistanceDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return (Robot.driveTrain.getAvgDistance(this.unit) >= this.dist - 1
-				&& Robot.driveTrain.getAvgDistance(this.unit) <= this.dist + 1);
+		return (this.dist >= Robot.driveTrain.getAvgDistance(this.unit) - 1
+				&& this.dist <= Robot.driveTrain.getAvgDistance(this.unit) + 1)
+				|| (this.dist < Robot.driveTrain.getAvgDistance(unit) && this.dist > 0);
 	}
 
 	// Called once after isFinished returns true
