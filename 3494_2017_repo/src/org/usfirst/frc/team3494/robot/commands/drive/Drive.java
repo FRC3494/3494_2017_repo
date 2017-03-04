@@ -43,7 +43,7 @@ public class Drive extends Command {
 						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
 			} else {
 				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
 			}
 		} else {
 			if (!Robot.driveTrain.getInverted()) {
