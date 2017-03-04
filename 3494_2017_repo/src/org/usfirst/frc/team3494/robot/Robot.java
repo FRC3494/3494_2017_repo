@@ -62,6 +62,9 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera camera_0;
 	public static UsbCamera camera_1;
 	// Vision items
+	private static final int IMG_WIDTH = 320;
+	@SuppressWarnings("unused")
+	private static final int IMG_HEIGHT = 240;
 	VisionThread visionThread;
 	public static double centerX = 0.0;
 	@SuppressWarnings("unused")
@@ -88,35 +91,38 @@ public class Robot extends IterativeRobot {
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Follow the shiny", null);
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
+		camera_0.setResolution(IMG_WIDTH, IMG_WIDTH);
 		camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake View", 1);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
 				MatOfPoint firstCont = pipeline.filterContoursOutput().get(0);
 				MatOfPoint secondCont = pipeline.filterContoursOutput().get(1);
-				double average_y_one = 0;
+				double average_x_one = 0;
 				for (Point p : firstCont.toList()) {
-					average_y_one += p.y;
+					average_x_one += p.x;
 				}
-				double average_y_two = 0;
+				double average_x_two = 0;
 				for (Point p : secondCont.toList()) {
-					average_y_two += p.y;
+					average_x_two += p.x;
 				}
 				// divide by number of points to give actual average
-				average_y_two = average_y_two / secondCont.toList().size();
-				average_y_one = average_y_one / firstCont.toList().size();
+				average_x_two = average_x_two / secondCont.toList().size();
+				average_x_one = average_x_one / firstCont.toList().size();
 				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 				synchronized (imgLock) {
 					centerX = r.x + (r.width / 2);
 					filteredContours = pipeline.filterContoursOutput();
 					// add averages to list
-					averages.add(average_y_one);
-					averages.add(average_y_two);
+					averages.clear();
+					averages.add(average_x_one);
+					averages.add(average_x_two);
 				}
 			}
 		});
@@ -157,6 +163,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		} else {
+			System.out.println("Defaulting to track the shiny");
 		}
 	}
 
@@ -165,7 +173,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		if (autonomousCommand != null) {
+			Scheduler.getInstance().run();
+		} else {
+			double centerX;
+			synchronized (imgLock) {
+				centerX = Robot.centerX;
+			}
+			double turn = centerX - (Robot.IMG_WIDTH / 2);
+			// drive with turn
+			driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
+		}
 	}
 
 	@Override
