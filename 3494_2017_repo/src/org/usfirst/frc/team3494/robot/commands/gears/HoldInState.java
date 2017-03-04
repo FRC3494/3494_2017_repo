@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Holds the gear holder in the given position <em>until canceled.</em>
  */
 public class HoldInState extends Command {
-	
+
 	public HoldInState() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);

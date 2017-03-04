@@ -44,7 +44,7 @@ public class AutoGenerator {
 		list.add(new DistanceDrive(100, UnitTypes.INCHES));
 		return list;
 	}
-	
+
 	public static ArrayList<Command> gearPlaceAttempt() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new AngleTurn(180));

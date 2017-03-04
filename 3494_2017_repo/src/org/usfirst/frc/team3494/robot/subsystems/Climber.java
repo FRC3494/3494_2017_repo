@@ -94,7 +94,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	public boolean getState() {
 		return this.driveTrainMode;
 	}
-	
+
 	public double getMotorCurrent() {
 		return Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP);
 	}
