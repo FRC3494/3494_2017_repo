@@ -67,21 +67,21 @@ public class OI {
 
 	public OI() {
 		// Ready Player One
-		
+
 		// Ready Player Two
 		// Climb controls
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
 		xbox_a_2.whenReleased(new StopClimber());
 		// Intake motion
 		xbox_b_2.whenPressed(new SwitchPosition());
-		
+
 		xbox_x_2.whileHeld(new HoldInState());
-		
+
 		xbox_y_2.whenPressed(new ToggleGearRamp());
-		
+
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
-		
+
 		xbox_select_2.whenPressed(new ClimberToggle());
 		xbox_start_2.whileHeld(new HoldDriveTrain());
 	}
