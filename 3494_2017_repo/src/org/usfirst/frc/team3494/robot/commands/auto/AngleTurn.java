@@ -48,11 +48,9 @@ public class AngleTurn extends Command {
 		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
 			if (this.angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
-				Robot.driveTrain.resetRight();
 				return;
 			} else if (this.angle < 0) {
 				Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
-				Robot.driveTrain.resetRight();
 				return;
 			} else {
 				Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
@@ -69,6 +67,7 @@ public class AngleTurn extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.driveTrain.resetRight();
 	}
 
 	// Called when another command which requires one or more of the same

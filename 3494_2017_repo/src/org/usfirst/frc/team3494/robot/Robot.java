@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		@SuppressWarnings("unused")
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		UsbCamera camera_0 = CameraServer.getInstance().startAutomaticCapture(0);
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
