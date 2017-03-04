@@ -41,7 +41,7 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> crossBaseLine() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(100, UnitTypes.INCHES));
+		list.add(new DistanceDrive(240, UnitTypes.INCHES));
 		return list;
 	}
 
