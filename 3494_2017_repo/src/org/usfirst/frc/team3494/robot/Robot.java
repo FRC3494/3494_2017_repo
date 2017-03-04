@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-		camera_0.setExposureManual(50);
+		camera_0.setExposureManual(40);
 		camera_0.setWhiteBalanceAuto();
 	}
 
