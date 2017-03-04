@@ -69,6 +69,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private static double RAMP = 1.1730125; // lowest possible ramp
 
 	public int inverter = 1;
+	public double scaleDown = 1;
 
 	public Drivetrain() {
 		super("Drivetrain");
@@ -104,7 +105,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
-		this.wpiDrive.setExpiration(-1);
+		this.wpiDrive.setExpiration(Integer.MAX_VALUE);
+		this.wpiDrive.setSafetyEnabled(false);
 
 		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
 		this.encRight.setDistancePerPulse(1 / 360);
@@ -136,8 +138,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		driveLeftMaster.set(left);
-		driveRightMaster.set(right);
+		driveLeftMaster.set(left * this.scaleDown);
+		driveRightMaster.set(right * this.scaleDown);
 	}
 
 	/**
@@ -153,8 +155,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            Talons.
 	 */
 	public void adjustedTankDrive(double left, double right) {
-		driveLeftMaster.set(-left);
-		driveRightMaster.set(right);
+		driveLeftMaster.set(-left * this.scaleDown);
+		driveRightMaster.set(right * this.scaleDown);
 	}
 
 	/**
