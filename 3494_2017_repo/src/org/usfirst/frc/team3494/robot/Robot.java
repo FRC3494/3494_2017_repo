@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
-import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake;
@@ -13,7 +12,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -49,7 +47,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
 	/**
@@ -58,19 +56,20 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		chooser = new SendableChooser<Command>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
-		intake.setPiston(Value.kReverse);
+		gearTake = new GearTake();
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
-		chooser.addDefault("Default Auto", new XYDrive(24, 24));
-		chooser.addObject("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		@SuppressWarnings("unused")
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		UsbCamera camera_0 = CameraServer.getInstance().startAutomaticCapture(0);
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
@@ -106,19 +105,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
-
-		// String autoSelected = SmartDashboard.getString("Auto Selector",
-		// "Default");
-		// switch (autoSelected) {
-		// case "My Auto":
-		// autonomousCommand = new MyAutoCommand();
-		// break;
-		// case "Default Auto":
-		// default:
-		// autonomousCommand = new ExampleCommand();
-		// break;
-		// }
-
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
@@ -149,6 +135,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		/*
+		 * if (Robot.climber.getMotorCurrent() > 10.0D) {
+		 * Robot.climber.engagePTO(); }
+		 */
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
@@ -163,7 +153,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
-
 	}
 
 	/**

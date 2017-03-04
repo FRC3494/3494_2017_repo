@@ -1,10 +1,10 @@
 package org.usfirst.frc.team3494.robot;
 
-import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
-import org.usfirst.frc.team3494.robot.commands.gears.SetGearPosition;
+import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
+import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
@@ -67,14 +67,13 @@ public class OI {
 		// Ready Player One
 		xbox_b.whileHeld(new Climb(DriveDirections.UP));
 		xbox_b.whenReleased(new StopClimber());
-		xbox_y.whenPressed(new AngleTurn(90));
-		xbox_x.whenPressed(new SetGearPosition());
+		xbox_x.whileHeld(new HoldInState());
 		// Ready Player Two
 		xbox_b_2.whenPressed(new SwitchPosition());
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
 		xbox_select_2.whenPressed(new ClimberToggle());
-		xbox_start_2.whenPressed(new ClimberToggle());
+		xbox_start_2.whileHeld(new HoldDriveTrain());
 	}
 }

@@ -28,6 +28,7 @@ public class GearTake extends Subsystem {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
 		this.openandclose = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
+		this.openandclose.set(Value.kReverse);
 	}
 
 	@Override

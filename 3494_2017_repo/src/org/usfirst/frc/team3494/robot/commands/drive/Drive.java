@@ -31,21 +31,28 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.prefs.getBoolean("arcade", true)) {
-			Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getX(Hand.kLeft));
-		} else {
-			Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft), -Robot.oi.xbox.getY(Hand.kRight));
+		int dpad = Robot.oi.xbox.getPOV();
+		if (dpad == 0) {
+			Robot.driveTrain.inverter = 1;
+		} else if (dpad == 180) {
+			Robot.driveTrain.inverter = -1;
 		}
-
-		double throttle = Robot.oi.xbox.getTriggerAxis(Hand.kRight);
-		if (Robot.oi.xbox.getPOV() == 0) {
-			Robot.driveTrain.adjustedTankDrive(throttle, throttle);
-		} else if (Robot.oi.xbox.getPOV() == 90) {
-			Robot.driveTrain.adjustedTankDrive(-throttle, throttle);
-		} else if (Robot.oi.xbox.getPOV() == 180) {
-			Robot.driveTrain.adjustedTankDrive(-throttle, -throttle);
-		} else if (Robot.oi.xbox.getPOV() == 270) {
-			Robot.driveTrain.adjustedTankDrive(throttle, -throttle);
+		if (Robot.prefs.getBoolean("arcade", true)) {
+			if (!Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			} else {
+				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			}
+		} else {
+			if (!Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+			} else {
+				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+						-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
+			}
 		}
 	}
 

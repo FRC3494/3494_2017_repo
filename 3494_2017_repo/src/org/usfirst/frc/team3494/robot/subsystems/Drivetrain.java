@@ -68,6 +68,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 	private static double RAMP = 1.1730125; // lowest possible ramp
 
+	public int inverter = 1;
+
 	public Drivetrain() {
 		super("Drivetrain");
 
@@ -109,6 +111,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 
 		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B);
 		this.encLeft.setDistancePerPulse(1 / 360);
+		this.encLeft.setReverseDirection(true);
 		this.encLeft.reset();
 	}
 	// Put methods for controlling this subsystem
@@ -198,10 +201,18 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	public double getAvgDistance(UnitTypes unit) {
+		return ((this.getLeftDistance(unit) + this.getRightDistance(unit)) / 2);
+	}
+
 	/**
 	 * Resets the encoder on the right side of the drivetrain.
 	 */
 	public void resetRight() {
+		this.encRight.reset();
+	}
+
+	public void resetLeft() {
 		this.encRight.reset();
 	}
 
@@ -213,5 +224,15 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	@Override
 	public void setAll(double speed) {
 		this.TankDrive(speed, speed);
+	}
+
+	/**
+	 * Returns {@code true} if the drivetrain is inverted (the gear holder is
+	 * considered forward.)
+	 * 
+	 * @return {@code true} if the drivetrain is inverted.
+	 */
+	public boolean getInverted() {
+		return this.inverter == -1;
 	}
 }

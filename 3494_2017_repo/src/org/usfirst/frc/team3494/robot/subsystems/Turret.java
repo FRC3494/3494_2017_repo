@@ -83,7 +83,16 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	/**
+	 * Runs the turret at the specified power. Screw you, negative numbers are
+	 * not allowed.
+	 * 
+	 * @param power
+	 *            The power to run the shooter at. It will be run by abosolute
+	 *            value first.
+	 */
 	public void shoot(double power) {
+		power = Math.abs(power);
 		this.shooterUpper.set(power);
 		this.shooterLower.set(power);
 	}
