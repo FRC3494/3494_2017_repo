@@ -1,5 +1,11 @@
 package org.usfirst.frc.team3494.robot;
 
+import java.util.ArrayList;
+
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
@@ -7,10 +13,12 @@ import org.usfirst.frc.team3494.robot.subsystems.GearTake;
 import org.usfirst.frc.team3494.robot.subsystems.Intake;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
+import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -21,6 +29,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -50,6 +59,17 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
+	public static UsbCamera camera_0;
+	public static UsbCamera camera_1;
+	// Vision items
+	VisionThread visionThread;
+	public static double centerX = 0.0;
+	@SuppressWarnings("unused")
+	private ArrayList<MatOfPoint> filteredContours;
+	private ArrayList<Double> averages;
+
+	private final Object imgLock = new Object();
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -68,12 +88,39 @@ public class Robot extends IterativeRobot {
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
-		@SuppressWarnings("unused")
-		UsbCamera camera_0 = CameraServer.getInstance().startAutomaticCapture(0);
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
+		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
+		camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake View", 1);
+		// Create and start vision thread
+		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
+			if (!pipeline.filterContoursOutput().isEmpty()) {
+				MatOfPoint firstCont = pipeline.filterContoursOutput().get(0);
+				MatOfPoint secondCont = pipeline.filterContoursOutput().get(1);
+				double average_y_one = 0;
+				for (Point p : firstCont.toList()) {
+					average_y_one += p.y;
+				}
+				double average_y_two = 0;
+				for (Point p : secondCont.toList()) {
+					average_y_two += p.y;
+				}
+				// divide by number of points to give actual average
+				average_y_two = average_y_two / secondCont.toList().size();
+				average_y_one = average_y_one / firstCont.toList().size();
+				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+				synchronized (imgLock) {
+					centerX = r.x + (r.width / 2);
+					filteredContours = pipeline.filterContoursOutput();
+					// add averages to list
+					averages.add(average_y_one);
+					averages.add(average_y_two);
+				}
+			}
+		});
+		visionThread.start();
 	}
 
 	/**
@@ -104,6 +151,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		camera_0.setExposureManual(15);
+		camera_0.setWhiteBalanceManual(VideoCamera.WhiteBalance.kFixedIndoor);
 		autonomousCommand = chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
@@ -128,6 +177,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		camera_0.setExposureManual(50);
+		camera_0.setWhiteBalanceAuto();
 	}
 
 	/**
