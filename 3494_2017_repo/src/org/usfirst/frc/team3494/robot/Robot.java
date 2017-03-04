@@ -98,7 +98,6 @@ public class Robot extends IterativeRobot {
 		// get preferences
 		prefs = Preferences.getInstance();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
-		camera_0.setResolution(IMG_WIDTH, IMG_WIDTH);
 		camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake View", 1);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
@@ -197,7 +196,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-		camera_0.setExposureManual(40);
+		camera_0.setExposureManual(50);
 		camera_0.setWhiteBalanceAuto();
 	}
 
