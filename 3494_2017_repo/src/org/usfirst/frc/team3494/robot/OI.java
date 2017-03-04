@@ -3,6 +3,7 @@ package org.usfirst.frc.team3494.robot;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
+import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
@@ -73,6 +74,6 @@ public class OI {
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
 		xbox_select_2.whenPressed(new ClimberToggle());
-		xbox_start_2.whenPressed(new ClimberToggle());
+		xbox_start_2.whileHeld(new HoldDriveTrain());
 	}
 }
