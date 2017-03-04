@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.DriveDirections;
+import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,12 +18,15 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 
 	private Talon motor;
 	private boolean driveTrainMode;
+	private DoubleSolenoid pto; // zarya named it
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Climber() {
 		super("Climber");
 		this.motor = new Talon(RobotMap.CLIMBER_MOTOR);
+		this.pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
+		this.pto.set(Value.kForward);
 		this.driveTrainMode = false;
 	}
 
@@ -40,22 +46,56 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void climb(DriveDirections dir) {
 		if (dir.equals(DriveDirections.UP) && !this.driveTrainMode) {
-			motor.set(0.4);
+			this.motor.set(0.4);
 		} else if (dir.equals(DriveDirections.DOWN) && !this.driveTrainMode) {
-			motor.set(-0.4);
+			this.motor.set(-0.4);
 		} else {
 			// stop the climber
-			motor.set(0);
+			this.motor.set(0);
 		}
 	}
 
 	@Override
 	public void stopAll() {
-		motor.set(0);
+		this.motor.set(0);
 	}
 
 	@Override
 	public void setAll(double speed) {
-		motor.set(speed);
+		this.motor.set(speed);
+	}
+
+	/**
+	 * Engages or disengages the drivetrain from the climber. Note that with the
+	 * drivetrain engaged controlling the climber by this subsystem becomes
+	 * impossible (you must use {@link Drivetrain} instead.)
+	 * 
+	 * @see Drivetrain
+	 * @param value
+	 *            The state to set the PTO piston in.
+	 */
+	public void setPTO(Value value) {
+		this.pto.set(value);
+		if (value.equals(Value.kOff) || value.equals(Value.kReverse)) {
+			this.driveTrainMode = true;
+		} else {
+			this.driveTrainMode = false;
+		}
+	}
+
+	public void disengagePTO() {
+		this.setPTO(Value.kForward);
+	}
+
+	public void engagePTO() {
+		this.setPTO(Value.kReverse);
+	}
+
+	public boolean getState() {
+		return this.driveTrainMode;
+	}
+
+	public double getMotorCurrent() {
+		return Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP);
 	}
 }

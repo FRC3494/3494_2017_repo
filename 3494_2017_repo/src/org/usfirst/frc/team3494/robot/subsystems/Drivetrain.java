@@ -66,7 +66,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private Encoder encRight;
 	private Encoder encLeft;
 
-	private static double RAMP = 0.6;
+	private static double RAMP = 1.1730125; // lowest possible ramp
+
+	public int inverter = 1;
 
 	public Drivetrain() {
 		super("Drivetrain");
@@ -107,8 +109,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.encRight.setDistancePerPulse(1 / 360);
 		this.encRight.reset();
 
-		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B, true);
+		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B);
 		this.encLeft.setDistancePerPulse(1 / 360);
+		this.encLeft.setReverseDirection(true);
 		this.encLeft.reset();
 	}
 	// Put methods for controlling this subsystem
@@ -117,7 +120,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new Drive());
+		this.setDefaultCommand(new Drive());
 	}
 
 	/**
@@ -176,21 +179,40 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
+	/**
+	 * Gets the distance the left encoder has counted in the specified unit.
+	 * 
+	 * @param unit
+	 *            The unit type to get the distance in.
+	 * @return The distance the left encoder has counted, in the specified unit.
+	 */
 	public double getLeftDistance(UnitTypes unit) {
 		double inches = (Math.PI * 4) * (this.encLeft.get() / 360.0D);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
 			return inches / 12.0D;
+		} else if (unit.equals(UnitTypes.MILLIMETERS)) {
+			return inches * 25.400;
+		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
+			return inches * 2.540;
 		} else {
-			return this.encLeft.get();
+			return this.encRight.get();
 		}
+	}
+
+	public double getAvgDistance(UnitTypes unit) {
+		return ((this.getLeftDistance(unit) + this.getRightDistance(unit)) / 2);
 	}
 
 	/**
 	 * Resets the encoder on the right side of the drivetrain.
 	 */
 	public void resetRight() {
+		this.encRight.reset();
+	}
+
+	public void resetLeft() {
 		this.encRight.reset();
 	}
 
@@ -202,5 +224,15 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	@Override
 	public void setAll(double speed) {
 		this.TankDrive(speed, speed);
+	}
+
+	/**
+	 * Returns {@code true} if the drivetrain is inverted (the gear holder is
+	 * considered forward.)
+	 * 
+	 * @return {@code true} if the drivetrain is inverted.
+	 */
+	public boolean getInverted() {
+		return this.inverter == -1;
 	}
 }

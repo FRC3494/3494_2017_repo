@@ -19,6 +19,7 @@ public class Kompressor extends Subsystem {
 		this.compress.setClosedLoopControl(true);
 	}
 
+	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
