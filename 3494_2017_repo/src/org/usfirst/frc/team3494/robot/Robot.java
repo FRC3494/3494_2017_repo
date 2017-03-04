@@ -224,6 +224,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
+		
+		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
 	}
 
 	/**
