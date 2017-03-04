@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
 	private static final int IMG_HEIGHT = 240;
 	VisionThread visionThread;
 	public static double centerX = 0.0;
+	public static double absolutelyAverage = 0.0;
 	@SuppressWarnings("unused")
 	private ArrayList<MatOfPoint> filteredContours;
 	private ArrayList<Double> averages;
@@ -118,6 +119,7 @@ public class Robot extends IterativeRobot {
 				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 				synchronized (imgLock) {
 					centerX = r.x + (r.width / 2);
+					absolutelyAverage = (average_x_two + average_x_one) / 2;
 					filteredContours = pipeline.filterContoursOutput();
 					// add averages to list
 					averages.clear();
