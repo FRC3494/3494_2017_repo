@@ -166,7 +166,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
-		double inches = (Math.PI * 4) * (this.encRight.getDistance());
+		double inches = (Math.PI * 4) * (this.encRight.get() / 360);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -188,7 +188,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 * @return The distance the left encoder has counted, in the specified unit.
 	 */
 	public double getLeftDistance(UnitTypes unit) {
-		double inches = (Math.PI * 4) * (this.encLeft.getDistance());
+		double inches = (Math.PI * 4) * (this.encLeft.get() / 360);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -213,8 +213,11 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.encRight.reset();
 	}
 
+	/**
+	 * Resets the encoder on the left side of the drivetrain.
+	 */
 	public void resetLeft() {
-		this.encRight.reset();
+		this.encLeft.reset();
 	}
 
 	@Override
