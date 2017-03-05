@@ -83,6 +83,7 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser<Command>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
+		climber.disengagePTO();
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
