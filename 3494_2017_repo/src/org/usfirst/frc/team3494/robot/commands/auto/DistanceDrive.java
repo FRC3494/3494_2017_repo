@@ -45,9 +45,9 @@ public class DistanceDrive extends Command {
 	@Override
 	protected void execute() {
 		if (this.dist > Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
+			Robot.driveTrain.adjustedTankDrive(0.38, 0.4);
 		} else if (this.dist < Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
+			Robot.driveTrain.adjustedTankDrive(-0.38, -0.4);
 		} else {
 			return;
 		}
