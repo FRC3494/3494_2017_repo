@@ -66,7 +66,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private Encoder encRight;
 	private Encoder encLeft;
 
-	private static double RAMP = 1.1730125; // lowest possible ramp
+	private static double RAMP = 1.173;
 
 	public int inverter = 1;
 	public double scaleDown = 1;
