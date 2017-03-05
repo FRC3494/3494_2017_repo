@@ -138,7 +138,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		driveLeftMaster.set(left * this.scaleDown);
+		driveLeftMaster.set(left * this.scaleDown * 0.95);
 		driveRightMaster.set(right * this.scaleDown);
 	}
 
@@ -155,7 +155,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            Talons.
 	 */
 	public void adjustedTankDrive(double left, double right) {
-		driveLeftMaster.set(-left * this.scaleDown);
+		driveLeftMaster.set(-left * this.scaleDown * 0.95);
 		driveRightMaster.set(right * this.scaleDown);
 	}
 
