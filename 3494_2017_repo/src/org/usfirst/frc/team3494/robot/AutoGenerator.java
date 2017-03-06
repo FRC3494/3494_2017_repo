@@ -2,6 +2,7 @@ package org.usfirst.frc.team3494.robot;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 
@@ -47,7 +48,13 @@ public class AutoGenerator {
 	public static ArrayList<Command> gearPlaceAttempt() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new DistanceDrive(93.25, UnitTypes.INCHES));
-		// list.add(new XYDrive());
+		list.add(new AngleTurn(-180));
+		double rise = 20.462;
+		double run = 32.463;
+		list.add(new AngleTurn(Math.toDegrees(Math.atan2(20.462, 32.463))));
+		double dist = 0;
+		dist = Math.sqrt((rise * rise) + (run * run));
+		list.add(new DistanceDrive(-dist, UnitTypes.INCHES));
 		return list;
 	}
 }
