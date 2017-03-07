@@ -7,6 +7,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake;
@@ -93,6 +94,7 @@ public class Robot extends IterativeRobot {
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		// put chooser on DS
 		SmartDashboard.putData("Auto mode", chooser);

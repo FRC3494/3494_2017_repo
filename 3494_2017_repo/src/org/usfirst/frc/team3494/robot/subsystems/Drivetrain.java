@@ -1,10 +1,12 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
+import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.UnitTypes;
 import org.usfirst.frc.team3494.robot.commands.drive.Drive;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -71,9 +73,12 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	public int inverter = 1;
 	public double scaleDown = 1;
 
+	private CANTalon[] leftSide;
+	private CANTalon[] rightSide;
+
 	public Drivetrain() {
 		super("Drivetrain");
-
+		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
 		this.driveLeftMaster.enableBrakeMode(true);
 		this.driveLeftMaster.setVoltageRampRate(RAMP);
@@ -88,6 +93,8 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
 		this.driveLeftFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
+		// create list
+		this.leftSide = new CANTalon[] { this.driveLeftMaster, this.driveLeftFollower_One, this.driveLeftFollower_Two };
 
 		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
 		this.driveRightMaster.enableBrakeMode(true);
@@ -103,6 +110,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
 		this.driveRightFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
+		// list time!
+		this.rightSide = new CANTalon[] { this.driveRightMaster, this.driveRightFollower_One,
+				this.driveLeftFollower_Two };
 
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 		this.wpiDrive.setExpiration(Integer.MAX_VALUE);
@@ -138,7 +148,7 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		driveLeftMaster.set(left * this.scaleDown * 0.95);
+		driveLeftMaster.set(left * this.scaleDown * Robot.prefs.getDouble("left side multiplier", 1.0D));
 		driveRightMaster.set(right * this.scaleDown);
 	}
 
@@ -239,5 +249,56 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public boolean getInverted() {
 		return this.inverter == -1;
+	}
+
+	/**
+	 * Stage-sets the drivetrain. Please, for the love of all that is holy call
+	 * {@link Drivetrain#snapBackToReality()} after this.
+	 * 
+	 * @param left
+	 *            The left power
+	 * @param right
+	 *            The right power
+	 */
+	public void stagedTankDrive(double left, double right) {
+		this.driveLeftMaster.set(left);
+		this.driveRightMaster.set(right);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.driveLeftFollower_One.set(left);
+		this.driveRightFollower_One.set(right);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.driveLeftFollower_Two.set(left);
+		this.driveRightFollower_Two.set(right);
+	}
+
+	public void initStaging() {
+		// change all to be percent Vbus
+		for (CANTalon t : this.leftSide) {
+			t.changeControlMode(TalonControlMode.PercentVbus);
+		}
+		for (CANTalon t : this.rightSide) {
+			t.changeControlMode(TalonControlMode.PercentVbus);
+		}
+	}
+
+	public void snapBackToReality() {
+		// left reset
+		this.driveLeftFollower_One.changeControlMode(TalonControlMode.Follower);
+		this.driveLeftFollower_Two.changeControlMode(TalonControlMode.Follower);
+		this.driveLeftFollower_One.set(this.driveLeftMaster.getDeviceID());
+		this.driveLeftFollower_Two.set(this.driveLeftMaster.getDeviceID());
+		// right reset
+		this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
+		this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
+		this.driveRightFollower_One.set(this.driveRightMaster.getDeviceID());
+		this.driveRightFollower_Two.set(this.driveRightMaster.getDeviceID());
 	}
 }
