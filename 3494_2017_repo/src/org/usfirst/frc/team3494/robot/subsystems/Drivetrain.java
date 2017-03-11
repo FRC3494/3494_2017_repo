@@ -68,16 +68,17 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private Encoder encRight;
 	private Encoder encLeft;
 
-	private static double RAMP = 1.173;
+	private static double RAMP = 48;
 
 	public int inverter = 1;
-	public double scaleDown = 1;
+	public double scaleDown = -1;
 
 	private CANTalon[] leftSide;
 	private CANTalon[] rightSide;
 
 	public Drivetrain() {
 		super("Drivetrain");
+		// int maxAmps = 50;
 		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
 		this.driveLeftMaster.enableBrakeMode(true);
@@ -106,9 +107,9 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveRightFollower_Two.enableBrakeMode(true);
 		this.driveRightFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
-		this.driveRightFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
+		this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
 		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
-		this.driveRightFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
+		this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
 		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 		// list time!
 		this.rightSide = new CANTalon[] { this.driveRightMaster, this.driveRightFollower_One,
@@ -264,14 +265,14 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveLeftMaster.set(left);
 		this.driveRightMaster.set(right);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		this.driveLeftFollower_One.set(left);
 		this.driveRightFollower_One.set(right);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
