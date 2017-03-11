@@ -7,6 +7,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
@@ -96,8 +97,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
 		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
+		chooser.addObject("Do nothing", new NullAuto());
 		// put chooser on DS
-		SmartDashboard.putData("Auto-mode", chooser);
+		String dataKey = "AutoChooser";
+		SmartDashboard.putData(dataKey, chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
