@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Sets the gear holder position to what it is not.
  */
-public class SetGearPosition extends Command {
-	public SetGearPosition() {
+public class ToggleGearPosition extends Command {
+	public ToggleGearPosition() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.gearTake);
