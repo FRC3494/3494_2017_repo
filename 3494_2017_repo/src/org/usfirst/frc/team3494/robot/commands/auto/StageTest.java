@@ -33,6 +33,8 @@ public class StageTest extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.snapBackToReality();
+    	Robot.driveTrain.setAll(0);
     }
 
     // Called when another command which requires one or more of the same
