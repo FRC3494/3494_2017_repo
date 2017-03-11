@@ -1,13 +1,15 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
+import org.usfirst.frc.team3494.robot.sensors.LineBreak;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Gear holder subsystem. Contains all methods for controlling the robot's gear
+ * holder.
  */
 public class GearTake extends Subsystem {
 
@@ -23,12 +25,15 @@ public class GearTake extends Subsystem {
 	 * The solenoid that holds the gear or drops it.
 	 */
 	private DoubleSolenoid openandclose;
+	
+	public LineBreak lb;
 
 	public GearTake() {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
 		this.openandclose = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
 		this.openandclose.set(Value.kReverse);
+		this.lb = new LineBreak(0);
 	}
 
 	@Override

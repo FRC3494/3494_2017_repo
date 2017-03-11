@@ -67,11 +67,11 @@ public class Robot extends IterativeRobot {
 	@SuppressWarnings("unused")
 	private static final int IMG_HEIGHT = 240;
 	VisionThread visionThread;
-	public static double centerX = 0.0;
-	public static double absolutelyAverage = 0.0;
+	public double centerX = 0.0;
+	public double absolutelyAverage = 0.0;
 	@SuppressWarnings("unused")
 	private ArrayList<MatOfPoint> filteredContours;
-	private ArrayList<Double> averages;
+	private ArrayList<Double> averages = new ArrayList<Double>();
 
 	private final Object imgLock = new Object();
 
@@ -93,40 +93,48 @@ public class Robot extends IterativeRobot {
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
-		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
 		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		// put chooser on DS
-		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto-mode", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
-		camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake View", 1);
+		camera_0.setExposureManual(20);
+		// camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake
+		// View", 1);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
-				MatOfPoint firstCont = pipeline.filterContoursOutput().get(0);
-				MatOfPoint secondCont = pipeline.filterContoursOutput().get(1);
-				double average_x_one = 0;
-				for (Point p : firstCont.toList()) {
-					average_x_one += p.x;
-				}
-				double average_x_two = 0;
-				for (Point p : secondCont.toList()) {
-					average_x_two += p.x;
-				}
-				// divide by number of points to give actual average
-				average_x_two = average_x_two / secondCont.toList().size();
-				average_x_one = average_x_one / firstCont.toList().size();
-				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
-				synchronized (imgLock) {
-					centerX = r.x + (r.width / 2);
-					absolutelyAverage = (average_x_two + average_x_one) / 2;
-					filteredContours = pipeline.filterContoursOutput();
-					// add averages to list
-					averages.clear();
-					averages.add(average_x_one);
-					averages.add(average_x_two);
+				if (pipeline.filterContoursOutput().size() >= 2) {
+					MatOfPoint firstCont = pipeline.filterContoursOutput().get(0);
+					MatOfPoint secondCont = pipeline.filterContoursOutput().get(1);
+					double average_y_one = 0;
+					for (Point p : firstCont.toList()) {
+						average_y_one += p.y;
+					}
+					double average_y_two = 0;
+					for (Point p : secondCont.toList()) {
+						average_y_two += p.y;
+					}
+					// divide by number of points to give actual average
+					average_y_two = average_y_two / secondCont.toList().size();
+					average_y_one = average_y_one / firstCont.toList().size();
+					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+					synchronized (imgLock) {
+						centerX = r.x + (r.width / 2);
+						filteredContours = pipeline.filterContoursOutput();
+						// add averages to list
+						averages.add(average_y_one);
+						averages.add(average_y_two);
+					}
+				} else {
+					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+					synchronized (imgLock) {
+						centerX = r.x + (r.width / 2);
+						filteredContours = pipeline.filterContoursOutput();
+					}
 				}
 			}
 		});
@@ -182,11 +190,13 @@ public class Robot extends IterativeRobot {
 		} else {
 			double centerX;
 			synchronized (imgLock) {
-				centerX = Robot.centerX;
+				centerX = this.centerX;
+				System.out.println("CenterX: " + this.centerX);
 			}
 			double turn = centerX - (Robot.IMG_WIDTH / 2);
 			// drive with turn
-			driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
+			System.out.println("Turn: " + turn);
+			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
 		}
 	}
 
@@ -228,6 +238,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
+		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
 	}
 
 	/**
