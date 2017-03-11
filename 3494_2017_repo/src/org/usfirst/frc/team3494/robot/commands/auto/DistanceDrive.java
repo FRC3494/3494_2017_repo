@@ -44,9 +44,9 @@ public class DistanceDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (this.dist > Robot.driveTrain.getAvgDistance(this.unit)) {
+		if (this.dist > Robot.driveTrain.getRightDistance(this.unit)) {
 			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
-		} else if (this.dist < Robot.driveTrain.getAvgDistance(this.unit)) {
+		} else if (this.dist < Robot.driveTrain.getRightDistance(this.unit)) {
 			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
 		} else {
 			return;
@@ -57,9 +57,13 @@ public class DistanceDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return (this.dist >= Robot.driveTrain.getAvgDistance(this.unit) - 1
-				&& this.dist <= Robot.driveTrain.getAvgDistance(this.unit) + 1)
-				|| (this.dist < Robot.driveTrain.getAvgDistance(unit) && this.dist > 0);
+		boolean isDone;
+		if (this.dist < 0) {
+			isDone = Robot.driveTrain.getRightDistance(this.unit) < this.dist;
+		} else {
+			isDone = Robot.driveTrain.getRightDistance(this.unit) > this.dist;
+		}
+		return isDone;
 	}
 
 	// Called once after isFinished returns true
