@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
+import org.usfirst.frc.team3494.robot.commands.gears.SetGearPosition;
+import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -41,7 +43,16 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> crossBaseLine() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(240, UnitTypes.INCHES));
+		list.add(new DistanceDrive(-112, UnitTypes.INCHES));
+		return list;
+	}
+
+	public static ArrayList<Command> placeCenterGear() {
+		ArrayList<Command> list = new ArrayList<Command>();
+		list.add(new DistanceDrive(-76, UnitTypes.INCHES));
+		list.add(new SetGearPosition());
+		list.add(new ToggleGearRamp());
+		list.add(new DistanceDrive(10, UnitTypes.INCHES));
 		return list;
 	}
 
