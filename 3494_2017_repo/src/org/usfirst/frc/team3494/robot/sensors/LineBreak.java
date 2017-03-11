@@ -12,14 +12,17 @@ public class LineBreak {
 	 * Analog trigger object.
 	 */
 	private AnalogTrigger trigger1;
+
 	public LineBreak(int channel) {
 		this.ai1 = new AnalogInput(channel);
 		this.trigger1 = new AnalogTrigger(ai1);
 		this.trigger1.setLimitsVoltage(0.777, 3.703);
 	}
+
 	public LineBreak() {
 		this(1);
 	}
+
 	/**
 	 * Returns true if the trigger is broken.
 	 */

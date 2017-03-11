@@ -25,7 +25,7 @@ public class GearTake extends Subsystem {
 	 * The solenoid that holds the gear or drops it.
 	 */
 	private DoubleSolenoid openandclose;
-	
+
 	public LineBreak lb;
 
 	public GearTake() {
