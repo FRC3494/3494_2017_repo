@@ -79,7 +79,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	public double PIDTune;
 
 	public Drivetrain() {
-		super("Drivetrain", 0.02, 0, 0);
+		super("Drivetrain", 0.0035, 0, 0);
 		// int maxAmps = 50;
 		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
