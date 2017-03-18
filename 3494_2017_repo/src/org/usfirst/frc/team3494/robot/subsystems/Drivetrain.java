@@ -10,7 +10,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  * Drivetrain subsystem. Contains all methods for controlling the robot's
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * 
  * @since 0.0.0
  */
-public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
+public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	/**
 	 * Master drive talon, left side. Setting this should set all the talons on
 	 * the left side of the drive train.
@@ -76,8 +76,10 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon[] leftSide;
 	private CANTalon[] rightSide;
 
+	public double PIDTune;
+
 	public Drivetrain() {
-		super("Drivetrain");
+		super("Drivetrain", 0.02, 0, 0);
 		// int maxAmps = 50;
 		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
@@ -127,6 +129,13 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.encLeft.setDistancePerPulse(1 / 360);
 		this.encLeft.setReverseDirection(true);
 		this.encLeft.reset();
+		// PID control
+		this.PIDTune = 0;
+		double outRange = 0.5;
+		this.getPIDController().setInputRange(-180, 180);
+		this.getPIDController().setOutputRange(-outRange, outRange);
+		this.getPIDController().setContinuous(true);
+		this.getPIDController().setPercentTolerance(20);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -301,5 +310,15 @@ public class Drivetrain extends Subsystem implements IMotorizedSubsystem {
 		this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
 		this.driveRightFollower_One.set(this.driveRightMaster.getDeviceID());
 		this.driveRightFollower_Two.set(this.driveRightMaster.getDeviceID());
+	}
+
+	@Override
+	protected double returnPIDInput() {
+		return Robot.ahrs.getAngle();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		this.PIDTune = output;
 	}
 }
