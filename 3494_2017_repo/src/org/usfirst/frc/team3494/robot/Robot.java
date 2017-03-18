@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
 		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
-		chooser.addObject("PID Test - drive straight", new PIDFullDrive(12));
+		chooser.addObject("PID Test - drive straight", new PIDFullDrive(36));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
@@ -191,9 +191,11 @@ public class Robot extends IterativeRobot {
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(0);
+			t.enableBrakeMode(true);
 		}
 		for (CANTalon t : Robot.driveTrain.rightSide) {
 			t.setVoltageRampRate(0);
+			t.enableBrakeMode(true);
 		}
 	}
 
