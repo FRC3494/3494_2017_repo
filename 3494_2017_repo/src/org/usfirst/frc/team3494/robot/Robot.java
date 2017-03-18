@@ -18,6 +18,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
@@ -185,6 +186,13 @@ public class Robot extends IterativeRobot {
 		} else {
 			System.out.println("Defaulting to track the shiny");
 		}
+		// set ramps
+		for (CANTalon t : Robot.driveTrain.leftSide) {
+			t.setVoltageRampRate(0);
+		}
+		for (CANTalon t : Robot.driveTrain.rightSide) {
+			t.setVoltageRampRate(0);
+		}
 	}
 
 	/**
@@ -231,6 +239,13 @@ public class Robot extends IterativeRobot {
 		}
 		camera_0.setExposureManual(50);
 		camera_0.setWhiteBalanceAuto();
+		// set ramps
+		for (CANTalon t : Robot.driveTrain.leftSide) {
+			t.setVoltageRampRate(Drivetrain.RAMP);
+		}
+		for (CANTalon t : Robot.driveTrain.rightSide) {
+			t.setVoltageRampRate(Drivetrain.RAMP);
+		}
 	}
 
 	/**

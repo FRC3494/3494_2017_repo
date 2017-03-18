@@ -68,13 +68,13 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	private Encoder encRight;
 	private Encoder encLeft;
 
-	private static double RAMP = 48;
+	public static final double RAMP = 48;
 
 	public int inverter = -1;
 	public double scaleDown = 1;
 
-	private CANTalon[] leftSide;
-	private CANTalon[] rightSide;
+	public CANTalon[] leftSide;
+	public CANTalon[] rightSide;
 
 	public double PIDTune;
 
