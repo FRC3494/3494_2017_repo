@@ -8,6 +8,7 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
@@ -98,9 +99,9 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
+		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
 		// put chooser on DS
-		String dataKey = "AutoChooser";
-		SmartDashboard.putData(dataKey, chooser);
+		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
@@ -177,6 +178,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
+			System.out.println("Selected command " + chooser.getSelected().getName());
 			autonomousCommand.start();
 		} else {
 			System.out.println("Defaulting to track the shiny");
