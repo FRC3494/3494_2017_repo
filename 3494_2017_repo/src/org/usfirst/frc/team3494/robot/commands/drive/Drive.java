@@ -46,13 +46,13 @@ public class Drive extends Command {
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
 		if (Robot.prefs.getBoolean("arcade", true)) {
 			if (Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.wpiDrive.arcadeDrive(
+				Robot.driveTrain.ArcadeDrive(
 						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown);
+						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
 			} else {
-				Robot.driveTrain.wpiDrive.arcadeDrive(
+				Robot.driveTrain.ArcadeDrive(
 						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown);
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
 			}
 		} else {
 			if (!Robot.driveTrain.getInverted()) {
