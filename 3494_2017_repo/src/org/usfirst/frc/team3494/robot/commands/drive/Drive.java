@@ -44,24 +44,31 @@ public class Drive extends Command {
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
-		if (Robot.prefs.getBoolean("arcade", true)) {
-			if (Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.ArcadeDrive(
-						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+		boolean useX = Robot.prefs.getBoolean("usexbox", true);
+		if (useX) {
+			if (Robot.prefs.getBoolean("arcade", true)) {
+				if (Robot.driveTrain.getInverted()) {
+					Robot.driveTrain.ArcadeDrive(
+							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							true);
+				} else {
+					Robot.driveTrain.ArcadeDrive(
+							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							true);
+				}
 			} else {
-				Robot.driveTrain.ArcadeDrive(
-						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+				if (!Robot.driveTrain.getInverted()) {
+					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
+							-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+				} else {
+					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+							-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
+				}
 			}
 		} else {
-			if (!Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
-			} else {
-				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
-			}
+			Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 		}
 	}
 
