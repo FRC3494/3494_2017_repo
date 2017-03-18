@@ -25,6 +25,8 @@ public class LineBreak {
 
 	/**
 	 * Returns true if the trigger is broken.
+	 * 
+	 * @return Whether or not the line is broken.
 	 */
 	public boolean getBroken() {
 		if (!this.trigger1.getInWindow()) {
