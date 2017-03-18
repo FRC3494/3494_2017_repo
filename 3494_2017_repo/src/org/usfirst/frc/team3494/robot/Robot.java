@@ -201,6 +201,19 @@ public class Robot extends IterativeRobot {
 			System.out.println("Turn: " + turn);
 			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
 		}
+		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
+		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
+		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
+
+		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
+		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
+		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 	}
 
 	@Override
