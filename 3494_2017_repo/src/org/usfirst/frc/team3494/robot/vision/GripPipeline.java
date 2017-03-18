@@ -111,7 +111,7 @@ public class GripPipeline implements VisionPipeline {
 	 *            The min and max saturation
 	 * @param lum
 	 *            The min and max luminance
-	 * @param output
+	 * @param out
 	 *            The image in which to store the output.
 	 */
 	private void hslThreshold(Mat input, double[] hue, double[] sat, double[] lum, Mat out) {
@@ -164,7 +164,7 @@ public class GripPipeline implements VisionPipeline {
 	 *            minimum height
 	 * @param maxHeight
 	 *            maximimum height
-	 * @param Solidity
+	 * @param solidity
 	 *            the minimum and maximum solidity of a contour
 	 * @param minVertexCount
 	 *            minimum vertex Count of the contours

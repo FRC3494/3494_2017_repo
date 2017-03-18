@@ -84,7 +84,7 @@ public class GearPipeline implements VisionPipeline {
 	/**
 	 * This method is a generated getter for the output of a Find_Contours.
 	 * 
-	 * @return ArrayList<MatOfPoint> output from Find_Contours.
+	 * @return ArrayList&lt;MatOfPoint&gt; output from Find_Contours.
 	 */
 	public ArrayList<MatOfPoint> findContoursOutput() {
 		return findContoursOutput;
@@ -93,7 +93,7 @@ public class GearPipeline implements VisionPipeline {
 	/**
 	 * This method is a generated getter for the output of a Filter_Contours.
 	 * 
-	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
+	 * @return ArrayList&lt;MatOfPoint&gt; output from Filter_Contours.
 	 */
 	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
@@ -110,7 +110,7 @@ public class GearPipeline implements VisionPipeline {
 	 *            The min and max green.
 	 * @param blue
 	 *            The min and max blue.
-	 * @param output
+	 * @param out
 	 *            The image in which to store the output.
 	 */
 	private void rgbThreshold(Mat input, double[] red, double[] green, double[] blue, Mat out) {
@@ -163,7 +163,7 @@ public class GearPipeline implements VisionPipeline {
 	 *            minimum height
 	 * @param maxHeight
 	 *            maximimum height
-	 * @param Solidity
+	 * @param solidity
 	 *            the minimum and maximum solidity of a contour
 	 * @param minVertexCount
 	 *            minimum vertex Count of the contours
