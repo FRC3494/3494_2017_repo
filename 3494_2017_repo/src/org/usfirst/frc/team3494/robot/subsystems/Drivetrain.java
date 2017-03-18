@@ -92,10 +92,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.driveLeftFollower_Two.enableBrakeMode(true);
 		this.driveLeftFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
-		this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
-		this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
-		this.driveLeftFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
-		this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
+		// this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
+		// this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
+		// this.driveLeftFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
+		// this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
 		// create list
 		this.leftSide = new CANTalon[] { this.driveLeftMaster, this.driveLeftFollower_One, this.driveLeftFollower_Two };
 
@@ -109,10 +109,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.driveRightFollower_Two.enableBrakeMode(true);
 		this.driveRightFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
-		this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
-		this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
-		this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
-		this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
+		// this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
+		// this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
+		// this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
+		// this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 		// list time!
 		this.rightSide = new CANTalon[] { this.driveRightMaster, this.driveRightFollower_One,
 				this.driveLeftFollower_Two };
@@ -158,8 +158,13 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 *            between 0 and 1.
 	 */
 	public void TankDrive(double left, double right) {
-		driveLeftMaster.set(left * this.scaleDown * Robot.prefs.getDouble("left side multiplier", 1.0D));
+		double leftScale = Robot.prefs.getDouble("left side multiplier", 1.0D);
+		driveLeftMaster.set(left * this.scaleDown * leftScale);
 		driveRightMaster.set(right * this.scaleDown);
+		this.driveLeftFollower_One.set(left * this.scaleDown * leftScale);
+		this.driveRightFollower_One.set(right * this.scaleDown);
+		this.driveLeftFollower_Two.set(left * this.scaleDown * leftScale);
+		this.driveRightFollower_Two.set(right * this.scaleDown);
 	}
 
 	/**
