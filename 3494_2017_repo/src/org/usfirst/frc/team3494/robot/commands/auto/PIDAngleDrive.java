@@ -12,6 +12,12 @@ public class PIDAngleDrive extends Command {
 
 	private double angle;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param angle
+	 *            The angle to turn, in degrees.
+	 */
 	public PIDAngleDrive(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);

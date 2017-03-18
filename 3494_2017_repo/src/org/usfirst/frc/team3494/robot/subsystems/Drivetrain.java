@@ -183,6 +183,18 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.TankDrive(-left, right);
 	}
 
+	/**
+	 * Arcade drive implements single stick driving. This function lets you
+	 * directly provide joystick values from any source.
+	 *
+	 * @param moveValue
+	 *            The value to use for forwards/backwards
+	 * @param rotateValue
+	 *            The value to use for the rotate right/left
+	 * @param squaredInputs
+	 *            If set, decreases the sensitivity at low speeds
+	 * @author Worcester Polytechnic Institute
+	 */
 	public void ArcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
 		double leftMotorSpeed;
 		double rightMotorSpeed;

@@ -7,20 +7,34 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Drives straight using the drivetrain's PID loop.
+ * Drives straight using the drivetrain's PID loop. Only works in inches.
  */
 public class PIDStraightDrive extends Command {
 
 	private double distance;
 	private double angle;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param dist
+	 *            The distance to drive, in inches.
+	 * @param angle
+	 *            The angle to turn to.
+	 */
 	public PIDStraightDrive(double dist, double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
 		this.distance = dist;
 	}
-	
+
+	/**
+	 * Other constructor. Uses default angle of 0 degrees.
+	 * 
+	 * @param dist
+	 *            The distance to drive in inches.
+	 */
 	public PIDStraightDrive(double dist) {
 		this(dist, 0);
 	}
