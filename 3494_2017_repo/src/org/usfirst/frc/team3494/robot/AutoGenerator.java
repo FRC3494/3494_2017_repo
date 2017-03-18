@@ -2,6 +2,7 @@ package org.usfirst.frc.team3494.robot;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team3494.robot.commands.DelayCommand;
 import org.usfirst.frc.team3494.robot.commands.auto.AngleTurn;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
@@ -43,16 +44,17 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> crossBaseLine() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(-112, UnitTypes.INCHES));
+		list.add(new DistanceDrive(-112 / 2, UnitTypes.INCHES));
 		return list;
 	}
 
 	public static ArrayList<Command> placeCenterGear() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(-109, UnitTypes.INCHES));
+		list.add(new DistanceDrive(-111 / 2, UnitTypes.INCHES));
 		list.add(new ToggleGearPosition());
 		list.add(new ToggleGearRamp());
-		list.add(new DistanceDrive(1, UnitTypes.INCHES));
+		list.add(new DelayCommand(250));
+		list.add(new DistanceDrive(10, UnitTypes.INCHES));
 		return list;
 	}
 
@@ -63,7 +65,7 @@ public class AutoGenerator {
 		double rise = 20.462;
 		double run = 32.463;
 		list.add(new AngleTurn(Math.toDegrees(Math.atan2(20.462, 32.463))));
-		double dist = 0;
+		double dist = 10;
 		dist = Math.sqrt((rise * rise) + (run * run));
 		list.add(new DistanceDrive(-dist, UnitTypes.INCHES));
 		return list;
