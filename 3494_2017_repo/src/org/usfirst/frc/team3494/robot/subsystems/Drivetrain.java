@@ -183,6 +183,49 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.TankDrive(-left, right);
 	}
 
+	public void ArcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
+		double leftMotorSpeed;
+		double rightMotorSpeed;
+
+		moveValue = limit(moveValue);
+		rotateValue = limit(rotateValue);
+
+		if (squaredInputs) {
+			// square the inputs (while preserving the sign) to increase fine
+			// control
+			// while permitting full power
+			if (moveValue >= 0.0) {
+				moveValue = moveValue * moveValue;
+			} else {
+				moveValue = -(moveValue * moveValue);
+			}
+			if (rotateValue >= 0.0) {
+				rotateValue = rotateValue * rotateValue;
+			} else {
+				rotateValue = -(rotateValue * rotateValue);
+			}
+		}
+
+		if (moveValue > 0.0) {
+			if (rotateValue > 0.0) {
+				leftMotorSpeed = moveValue - rotateValue;
+				rightMotorSpeed = Math.max(moveValue, rotateValue);
+			} else {
+				leftMotorSpeed = Math.max(moveValue, -rotateValue);
+				rightMotorSpeed = moveValue + rotateValue;
+			}
+		} else {
+			if (rotateValue > 0.0) {
+				leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+				rightMotorSpeed = moveValue + rotateValue;
+			} else {
+				leftMotorSpeed = moveValue - rotateValue;
+				rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+			}
+		}
+		this.TankDrive(leftMotorSpeed, -rightMotorSpeed);
+	}
+
 	/**
 	 * Gets the distance the right encoder has counted in the specified unit.
 	 * 
@@ -325,5 +368,15 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		this.PIDTune = output;
+	}
+
+	private static double limit(double num) {
+		if (num > 1.0) {
+			return 1.0;
+		}
+		if (num < -1.0) {
+			return -1.0;
+		}
+		return num;
 	}
 }
