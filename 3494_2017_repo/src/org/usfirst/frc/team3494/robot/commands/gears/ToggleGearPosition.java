@@ -6,11 +6,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Holds the gear holder in the given position <em>until canceled.</em>
+ * Sets the gear holder position to what it is not.
  */
-public class HoldInState extends Command {
-
-	public HoldInState() {
+public class ToggleGearPosition extends Command {
+	public ToggleGearPosition() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.gearTake);
@@ -24,25 +23,27 @@ public class HoldInState extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.gearTake.setGrasp(Value.kForward);
+		if (Robot.gearTake.getGearState().equals(Value.kForward)) {
+			Robot.gearTake.setGrasp(Value.kReverse);
+		} else {
+			Robot.gearTake.setGrasp(Value.kForward);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.gearTake.setGrasp(Value.kReverse);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		this.end();
 	}
 }

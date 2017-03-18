@@ -1,16 +1,27 @@
 package org.usfirst.frc.team3494.robot;
 
+import java.util.ArrayList;
+
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake;
 import org.usfirst.frc.team3494.robot.subsystems.Intake;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
+import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -21,6 +32,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -50,6 +62,21 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
+	public static UsbCamera camera_0;
+	public static UsbCamera camera_1;
+	// Vision items
+	private static final int IMG_WIDTH = 320;
+	@SuppressWarnings("unused")
+	private static final int IMG_HEIGHT = 240;
+	VisionThread visionThread;
+	public double centerX = 0.0;
+	public double absolutelyAverage = 0.0;
+	@SuppressWarnings("unused")
+	private ArrayList<MatOfPoint> filteredContours;
+	private ArrayList<Double> averages = new ArrayList<Double>();
+
+	private final Object imgLock = new Object();
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -59,6 +86,7 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser<Command>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
+		climber.disengagePTO();
 		turret = new Turret();
 		kompressor = new Kompressor();
 		intake = new Intake();
@@ -67,13 +95,54 @@ public class Robot extends IterativeRobot {
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
-		chooser.addObject("Other command", new ConstructedAuto(AutoGenerator.crossBaseLine()));
-		@SuppressWarnings("unused")
-		UsbCamera camera_0 = CameraServer.getInstance().startAutomaticCapture(0);
+		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
+		chooser.addObject("Staging test", new StageTest());
+		chooser.addObject("Follow the shiny", null);
+		chooser.addObject("Do nothing", new NullAuto());
+		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
 		// put chooser on DS
-		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
 		prefs = Preferences.getInstance();
+		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
+		camera_0.setExposureManual(20);
+		// camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake
+		// View", 1);
+		// Create and start vision thread
+		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
+			if (!pipeline.filterContoursOutput().isEmpty()) {
+				if (pipeline.filterContoursOutput().size() >= 2) {
+					MatOfPoint firstCont = pipeline.filterContoursOutput().get(0);
+					MatOfPoint secondCont = pipeline.filterContoursOutput().get(1);
+					double average_y_one = 0;
+					for (Point p : firstCont.toList()) {
+						average_y_one += p.y;
+					}
+					double average_y_two = 0;
+					for (Point p : secondCont.toList()) {
+						average_y_two += p.y;
+					}
+					// divide by number of points to give actual average
+					average_y_two = average_y_two / secondCont.toList().size();
+					average_y_one = average_y_one / firstCont.toList().size();
+					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+					synchronized (imgLock) {
+						centerX = r.x + (r.width / 2);
+						filteredContours = pipeline.filterContoursOutput();
+						// add averages to list
+						averages.add(average_y_one);
+						averages.add(average_y_two);
+					}
+				} else {
+					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+					synchronized (imgLock) {
+						centerX = r.x + (r.width / 2);
+						filteredContours = pipeline.filterContoursOutput();
+					}
+				}
+			}
+		});
+		visionThread.start();
 	}
 
 	/**
@@ -104,10 +173,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		camera_0.setExposureManual(15);
+		camera_0.setWhiteBalanceManual(VideoCamera.WhiteBalance.kFixedIndoor);
 		autonomousCommand = chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
+			System.out.println("Selected command " + chooser.getSelected().getName());
 			autonomousCommand.start();
+		} else {
+			System.out.println("Defaulting to track the shiny");
 		}
 	}
 
@@ -116,7 +190,32 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		if (autonomousCommand != null) {
+			Scheduler.getInstance().run();
+		} else {
+			double centerX;
+			synchronized (imgLock) {
+				centerX = this.centerX;
+				System.out.println("CenterX: " + this.centerX);
+			}
+			double turn = centerX - (Robot.IMG_WIDTH / 2);
+			// drive with turn
+			System.out.println("Turn: " + turn);
+			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
+		}
+		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
+		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
+		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
+		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
+
+		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
+		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
+		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 	}
 
 	@Override
@@ -128,6 +227,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		camera_0.setExposureManual(50);
+		camera_0.setWhiteBalanceAuto();
 	}
 
 	/**
@@ -153,6 +254,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
+
+		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
+		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
 	}
 
 	/**

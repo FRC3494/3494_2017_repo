@@ -1,49 +1,58 @@
-package org.usfirst.frc.team3494.robot.commands.gears;
+package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Sets the gear holder position to what it is not.
+ * Turns the robot to an angle using PID. Hello, PID.
  */
-public class SetGearPosition extends Command {
-	public SetGearPosition() {
+public class PIDAngleDrive extends Command {
+
+	private double angle;
+
+	public PIDAngleDrive(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.gearTake);
+		requires(Robot.driveTrain);
+		this.angle = angle;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.ahrs.reset();
+		Robot.driveTrain.enable();
+		Robot.driveTrain.setSetpoint(this.angle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.gearTake.getGearState().equals(Value.kForward)) {
-			Robot.gearTake.setGrasp(Value.kReverse);
-		} else {
-			Robot.gearTake.setGrasp(Value.kForward);
-		}
+		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
+		System.out.println(Robot.ahrs.getAngle());
+		// System.out.println(Robot.driveTrain.PIDTune);
+		Robot.driveTrain.wpiDrive.arcadeDrive(0, Robot.driveTrain.PIDTune);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return Robot.driveTrain.onTarget();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.driveTrain.disable();
+		Robot.driveTrain.stopAll();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }

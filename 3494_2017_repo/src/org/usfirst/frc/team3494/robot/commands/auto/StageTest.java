@@ -1,48 +1,50 @@
-package org.usfirst.frc.team3494.robot.commands.gears;
+package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Holds the gear holder in the given position <em>until canceled.</em>
+ *
  */
-public class HoldInState extends Command {
+public class StageTest extends Command {
+	private int counter;
 
-	public HoldInState() {
+	public StageTest() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.gearTake);
+		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.driveTrain.initStaging();
+		Robot.driveTrain.stagedTankDrive(-0.4, 0.4);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.gearTake.setGrasp(Value.kForward);
+		this.counter++;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return counter > 100;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.gearTake.setGrasp(Value.kReverse);
+		Robot.driveTrain.snapBackToReality();
+		Robot.driveTrain.setAll(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		this.end();
 	}
 }

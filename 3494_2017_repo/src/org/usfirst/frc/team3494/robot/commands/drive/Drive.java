@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks.
@@ -36,14 +37,22 @@ public class Drive extends Command {
 			Robot.driveTrain.inverter = 1;
 		} else if (dpad == 180) {
 			Robot.driveTrain.inverter = -1;
+		} else if (dpad == 270) {
+			Robot.driveTrain.scaleDown = 0.5D;
+		} else if (dpad == 90) {
+			Robot.driveTrain.scaleDown = 1.0D;
 		}
+		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
+		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
 		if (Robot.prefs.getBoolean("arcade", true)) {
-			if (!Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+			if (Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.wpiDrive.arcadeDrive(
+						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown);
 			} else {
-				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+				Robot.driveTrain.wpiDrive.arcadeDrive(
+						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown);
 			}
 		} else {
 			if (!Robot.driveTrain.getInverted()) {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
@@ -46,6 +47,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
+	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 
 	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
 
@@ -59,20 +61,28 @@ public class OI {
 	public JoystickButton xbox_y_2 = new JoystickButton(xbox_2, 4);
 
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
+	public JoystickButton xbox_x_2 = new JoystickButton(xbox_2, 3);
 
 	public JoystickButton xbox_select_2 = new JoystickButton(xbox_2, 7);
 	public JoystickButton xbox_start_2 = new JoystickButton(xbox_2, 8);
 
 	public OI() {
 		// Ready Player One
-		xbox_b.whileHeld(new Climb(DriveDirections.UP));
-		xbox_b.whenReleased(new StopClimber());
-		xbox_x.whileHeld(new HoldInState());
+		xbox_a.whenPressed(new DistanceDrive(-12, UnitTypes.INCHES));
 		// Ready Player Two
+		// Climb controls
+		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
+		xbox_a_2.whenReleased(new StopClimber());
+		// Intake motion
 		xbox_b_2.whenPressed(new SwitchPosition());
+
+		xbox_x_2.whileHeld(new HoldInState());
+
 		xbox_y_2.whenPressed(new ToggleGearRamp());
+
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
+
 		xbox_select_2.whenPressed(new ClimberToggle());
 		xbox_start_2.whileHeld(new HoldDriveTrain());
 	}

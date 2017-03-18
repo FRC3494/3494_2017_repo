@@ -2,6 +2,7 @@ package org.usfirst.frc.team3494.robot.commands.climb;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,6 +14,8 @@ public class ClimberToggle extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.climber);
+		requires(Robot.kompressor);
+		requires(Robot.gearTake);
 	}
 
 	// Called just before this Command runs the first time
@@ -25,8 +28,13 @@ public class ClimberToggle extends Command {
 	protected void execute() {
 		if (!Robot.climber.getState()) {
 			Robot.climber.engagePTO();
+			Robot.kompressor.compress.stop();
+			Robot.gearTake.setRamp(Value.kForward);
+			Robot.gearTake.setGrasp(Value.kForward);
 		} else {
 			Robot.climber.disengagePTO();
+			Robot.kompressor.compress.start();
+			Robot.gearTake.setGrasp(Value.kReverse);
 		}
 	}
 
