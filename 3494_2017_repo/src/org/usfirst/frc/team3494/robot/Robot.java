@@ -83,6 +83,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		System.out.println("Hello FTAs, how are you doing?");
+		System.out.println("Because I'm a QUADRANGLE.");
 		chooser = new SendableChooser<Command>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
