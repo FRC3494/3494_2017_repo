@@ -39,19 +39,20 @@ public class DistanceDrive extends Command {
 	protected void initialize() {
 		Robot.driveTrain.resetRight();
 		Robot.driveTrain.resetLeft();
+		System.out.println("Driving " + this.dist + " " + this.unit.toString() + "(s)");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		if (this.dist > Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(0.3, 0.3);
+			Robot.driveTrain.adjustedTankDrive(0.185, 0.2);
 		} else if (this.dist < Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(-0.3, -0.3);
+			Robot.driveTrain.adjustedTankDrive(-0.185, -0.2);
 		} else {
 			return;
 		}
-		System.out.println(Robot.driveTrain.getAvgDistance(this.unit));
+		System.out.println("Average distance: " + Robot.driveTrain.getAvgDistance(this.unit));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
