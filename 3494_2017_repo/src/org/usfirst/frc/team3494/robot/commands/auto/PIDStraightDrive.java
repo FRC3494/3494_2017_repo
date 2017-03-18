@@ -45,7 +45,7 @@ public class PIDStraightDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Robot.driveTrain.getAvgDistance(UnitTypes.INCHES) >= this.distance;
+		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
 	}
 
 	// Called once after isFinished returns true
