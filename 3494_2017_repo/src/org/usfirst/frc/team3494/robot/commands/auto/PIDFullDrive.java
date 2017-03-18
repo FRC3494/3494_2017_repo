@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Drives straight using the drivetrain's PID loop. Only works in inches.
  */
-public class PIDStraightDrive extends Command {
+public class PIDFullDrive extends Command {
 
 	private double distance;
 	private double angle;
@@ -22,7 +22,7 @@ public class PIDStraightDrive extends Command {
 	 * @param angle
 	 *            The angle to turn to.
 	 */
-	public PIDStraightDrive(double dist, double angle) {
+	public PIDFullDrive(double dist, double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrain);
@@ -35,7 +35,7 @@ public class PIDStraightDrive extends Command {
 	 * @param dist
 	 *            The distance to drive in inches.
 	 */
-	public PIDStraightDrive(double dist) {
+	public PIDFullDrive(double dist) {
 		this(dist, 0);
 	}
 
