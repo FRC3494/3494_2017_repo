@@ -159,12 +159,13 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void TankDrive(double left, double right) {
 		double leftScale = Robot.prefs.getDouble("left side multiplier", 1.0D);
-		driveLeftMaster.set(left * this.scaleDown * leftScale);
-		driveRightMaster.set(right * this.scaleDown);
+		double rightScale = Robot.prefs.getDouble("right side multiplier", 1.0D);
+		this.driveLeftMaster.set(left * this.scaleDown * leftScale);
+		this.driveRightMaster.set(right * this.scaleDown * rightScale);
 		this.driveLeftFollower_One.set(left * this.scaleDown * leftScale);
-		this.driveRightFollower_One.set(right * this.scaleDown);
+		this.driveRightFollower_One.set(right * this.scaleDown * rightScale);
 		this.driveLeftFollower_Two.set(left * this.scaleDown * leftScale);
-		this.driveRightFollower_Two.set(right * this.scaleDown);
+		this.driveRightFollower_Two.set(right * this.scaleDown * rightScale);
 	}
 
 	/**
