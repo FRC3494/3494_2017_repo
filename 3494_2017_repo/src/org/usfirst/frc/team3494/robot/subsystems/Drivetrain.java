@@ -6,6 +6,7 @@ import org.usfirst.frc.team3494.robot.UnitTypes;
 import org.usfirst.frc.team3494.robot.commands.drive.Drive;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -83,6 +84,9 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		// int maxAmps = 50;
 		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
+		this.driveLeftMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		this.driveLeftMaster.configEncoderCodesPerRev(360);
+		this.driveLeftMaster.setEncPosition(0);
 		this.driveLeftMaster.enableBrakeMode(true);
 		this.driveLeftMaster.setVoltageRampRate(RAMP);
 		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
@@ -100,6 +104,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.leftSide = new CANTalon[] { this.driveLeftMaster, this.driveLeftFollower_One, this.driveLeftFollower_Two };
 
 		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
+		this.driveRightMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		this.driveRightMaster.reverseSensor(true);
+		this.driveRightMaster.setEncPosition(0);
+		this.driveRightMaster.configEncoderCodesPerRev(360);
 		this.driveRightMaster.enableBrakeMode(true);
 		this.driveRightMaster.setVoltageRampRate(RAMP);
 		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);

@@ -246,9 +246,11 @@ public class Robot extends IterativeRobot {
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(Drivetrain.RAMP);
+			t.enableBrakeMode(true);
 		}
 		for (CANTalon t : Robot.driveTrain.rightSide) {
 			t.setVoltageRampRate(Drivetrain.RAMP);
+			t.enableBrakeMode(true);
 		}
 	}
 
@@ -267,6 +269,9 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
+		
+		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
+		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
 
 		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
