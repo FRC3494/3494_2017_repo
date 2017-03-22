@@ -5,7 +5,7 @@ import org.usfirst.frc.team3494.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Chris made me do it
  */
 public class StageTest extends Command {
 	private int counter;

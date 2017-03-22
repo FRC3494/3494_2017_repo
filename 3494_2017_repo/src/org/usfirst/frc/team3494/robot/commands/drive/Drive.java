@@ -50,12 +50,12 @@ public class Drive extends Command {
 				if (Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.ArcadeDrive(
 							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							Robot.oi.xbox.getX(Hand.kRight) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
 							true);
 				} else {
 					Robot.driveTrain.ArcadeDrive(
 							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							-Robot.oi.xbox.getX(Hand.kRight) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
 							true);
 				}
 			} else {

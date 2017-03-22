@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Drives straight using the drivetrain's PID loop. Only works in inches.
+ * Drives straight/forward with an angle (WIP) using the drivetrain's PID loop.
+ * Only works in inches.
  */
 public class PIDFullDrive extends Command {
 
