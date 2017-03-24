@@ -129,14 +129,17 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.wpiDrive.setExpiration(Integer.MAX_VALUE);
 		this.wpiDrive.setSafetyEnabled(false);
 
-		this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
-		this.encRight.setDistancePerPulse(1 / 360);
-		this.encRight.reset();
+		/*
+		 * this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A,
+		 * RobotMap.ENCODER_RIGHT_B); this.encRight.setDistancePerPulse(1 /
+		 * 360); this.encRight.reset();
+		 */
 
-		this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A, RobotMap.ENCODER_LEFT_B);
-		this.encLeft.setDistancePerPulse(1 / 360);
-		this.encLeft.setReverseDirection(true);
-		this.encLeft.reset();
+		/*
+		 * this.encLeft = new Encoder(RobotMap.ENCODER_LEFT_A,
+		 * RobotMap.ENCODER_LEFT_B); this.encLeft.setDistancePerPulse(1 / 360);
+		 * this.encLeft.setReverseDirection(true); this.encLeft.reset();
+		 */
 		// PID control
 		this.PIDTune = 0;
 		double outRange = 0.5;
