@@ -52,14 +52,15 @@ public class PIDFullDrive extends Command {
 	@Override
 	protected void execute() {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
-		System.out.println(Robot.ahrs.getAngle());
+		System.out.println(Robot.ahrs.getYaw());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		Robot.driveTrain.ArcadeDrive(0.4, Robot.driveTrain.PIDTune, true);
+		Robot.driveTrain.ArcadeDrive(0.4, -Robot.driveTrain.PIDTune, true);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
+		// return false;
 		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
 	}
 
