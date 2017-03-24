@@ -10,8 +10,6 @@ import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
-import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
-import org.usfirst.frc.team3494.robot.commands.auto.tests.SpeedTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
@@ -101,12 +99,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
 		chooser.addObject("[beta] Right Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttempt()));
 		chooser.addObject("[beta] Left Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttemptLeft()));
-		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
 		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
 		chooser.addObject("PID Test - drive straight", new PIDFullDrive(36));
-		chooser.addDefault("Speed test", new SpeedTest());
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
