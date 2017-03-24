@@ -24,15 +24,17 @@ public class GearTake_2 extends Subsystem {
 	/**
 	 * The solenoid that holds the gear or drops it.
 	 */
-	private DoubleSolenoid openandclose;
+	private DoubleSolenoid openandclose_forward;
+	private DoubleSolenoid openandclose_backward;
 
 	public LineBreak lb;
 
 	public GearTake_2() {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
-		this.openandclose = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
-		this.openandclose.set(Value.kReverse);
+		this.openandclose_forward = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
+		this.openandclose_backward = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
+		this.openandclose_forward.set(Value.kReverse);
 		this.lb = new LineBreak(0);
 	}
 
@@ -59,7 +61,16 @@ public class GearTake_2 extends Subsystem {
 	 *            The position to set the holder to.
 	 */
 	public void setGrasp(Value value) {
-		this.openandclose.set(value);
+		if (value.equals(Value.kForward)) {
+			this.openandclose_forward.set(Value.kForward);
+			this.openandclose_backward.set(Value.kReverse);
+		} else if (value.equals(Value.kReverse)) {
+			this.openandclose_backward.set(Value.kForward);
+			this.openandclose_forward.set(Value.kReverse);
+		} else {
+			this.openandclose_backward.set(Value.kReverse);
+			this.openandclose_backward.set(Value.kReverse);
+		}
 	}
 
 	/**
@@ -78,7 +89,8 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Gets the state of the intake ramp solenoid. Equivalent to
-	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is private.
+	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is
+	 * private.
 	 * 
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
@@ -88,12 +100,12 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Gets the state of the gear holder. Equivalent to
-	 * {@code this.openandclose.get()}, but {@link GearTake_2#openandclose} is
-	 * private.
+	 * {@code this.openandclose.get()}, but
+	 * {@link GearTake_2#openandclose_forward} is private.
 	 * 
 	 * @return The value of {@code this.openandclose.get()}.
 	 */
 	public Value getGearState() {
-		return this.openandclose.get();
+		return this.openandclose_forward.get();
 	}
 }
