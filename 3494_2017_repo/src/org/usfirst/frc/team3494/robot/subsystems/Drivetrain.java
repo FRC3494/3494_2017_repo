@@ -303,7 +303,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void resetRight() {
 		// this.encRight.reset();
-		this.driveRightMaster.setPosition(0);
+		this.driveRightMaster.setEncPosition(0);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void resetLeft() {
 		// this.encLeft.reset();
-		this.driveLeftMaster.setPosition(0);
+		this.driveLeftMaster.setEncPosition(0);
 	}
 
 	@Override
