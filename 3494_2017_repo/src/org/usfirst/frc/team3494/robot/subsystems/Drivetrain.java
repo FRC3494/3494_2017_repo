@@ -257,7 +257,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public double getRightDistance(UnitTypes unit) {
 		double encCountsTalon = this.driveRightMaster.getPosition();
-		double inches = (Math.PI * 4) * (encCountsTalon / 360);
+		double inches = (Math.PI * 4) * (encCountsTalon);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -267,7 +267,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
 			return inches * 2.540;
 		} else {
-			return this.encRight.get();
+			return this.driveRightMaster.getPosition();
 		}
 	}
 
@@ -280,7 +280,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public double getLeftDistance(UnitTypes unit) {
 		double talonEncDist = this.driveLeftMaster.getPosition();
-		double inches = (Math.PI * 4) * (talonEncDist / 360);
+		double inches = (Math.PI * 4) * (talonEncDist);
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -290,7 +290,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
 			return inches * 2.540;
 		} else {
-			return this.encLeft.get();
+			return this.driveLeftMaster.getPosition();
 		}
 	}
 
@@ -302,7 +302,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * Resets the encoder on the right side of the drivetrain.
 	 */
 	public void resetRight() {
-		this.encRight.reset();
+		// this.encRight.reset();
 		this.driveRightMaster.setPosition(0);
 	}
 
@@ -310,7 +310,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * Resets the encoder on the left side of the drivetrain.
 	 */
 	public void resetLeft() {
-		this.encLeft.reset();
+		// this.encLeft.reset();
 		this.driveLeftMaster.setPosition(0);
 	}
 
@@ -387,7 +387,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		return Robot.ahrs.getAngle();
+		return Robot.ahrs.getYaw();
 	}
 
 	@Override
