@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Gear holder subsystem. Contains all methods for controlling the robot's gear
  * holder.
  */
-public class GearTake extends Subsystem {
+public class GearTake_2 extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -28,7 +28,7 @@ public class GearTake extends Subsystem {
 
 	public LineBreak lb;
 
-	public GearTake() {
+	public GearTake_2() {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
 		this.openandclose = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
@@ -63,14 +63,14 @@ public class GearTake extends Subsystem {
 	}
 
 	/**
-	 * Releases the gear with a call to {@link GearTake#setGrasp}.
+	 * Releases the gear with a call to {@link GearTake_2#setGrasp}.
 	 */
 	public void releaseGear() {
 		this.setGrasp(Value.kForward);
 	}
 
 	/**
-	 * Closes the gear holder with a call to {@link GearTake#setGrasp}.
+	 * Closes the gear holder with a call to {@link GearTake_2#setGrasp}.
 	 */
 	public void closeHolder() {
 		this.setGrasp(Value.kReverse);
@@ -78,7 +78,7 @@ public class GearTake extends Subsystem {
 
 	/**
 	 * Gets the state of the intake ramp solenoid. Equivalent to
-	 * {@code this.rampenoid.get()}, but {@link GearTake#rampenoid} is private.
+	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is private.
 	 * 
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
@@ -88,7 +88,7 @@ public class GearTake extends Subsystem {
 
 	/**
 	 * Gets the state of the gear holder. Equivalent to
-	 * {@code this.openandclose.get()}, but {@link GearTake#openandclose} is
+	 * {@code this.openandclose.get()}, but {@link GearTake_2#openandclose} is
 	 * private.
 	 * 
 	 * @return The value of {@code this.openandclose.get()}.
