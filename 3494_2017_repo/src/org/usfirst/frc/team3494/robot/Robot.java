@@ -229,6 +229,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
 		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
 
+		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
+		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
+
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
@@ -271,7 +274,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
-		
+
 		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
 		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
 
