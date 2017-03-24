@@ -7,7 +7,6 @@ import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
-import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -76,8 +75,6 @@ public class OI {
 		// Climb controls
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
 		xbox_a_2.whenReleased(new StopClimber());
-		// Intake motion
-		xbox_b_2.whenPressed(new SwitchPosition());
 
 		xbox_x_2.whileHeld(new HoldInState());
 
