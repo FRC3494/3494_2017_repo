@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
+import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.UnitTypes;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,7 +41,7 @@ public class DistanceDrive extends Command {
 		Robot.driveTrain.resetRight();
 		Robot.driveTrain.resetLeft();
 		try {
-			Thread.sleep((long) 5);
+			Thread.sleep(RobotMap.TALON_RESET_DELAY);
 		} catch (InterruptedException e) {
 			System.out.println("ah crap");
 			e.printStackTrace();
