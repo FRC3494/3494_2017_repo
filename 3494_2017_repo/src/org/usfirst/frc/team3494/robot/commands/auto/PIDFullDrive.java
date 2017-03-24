@@ -43,6 +43,14 @@ public class PIDFullDrive extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.driveTrain.resetLeft();
+		Robot.driveTrain.resetRight();
+		try {
+			Thread.sleep((long) 5);
+		} catch (InterruptedException e) {
+			System.out.println("ah crap");
+			e.printStackTrace();
+		}
 		Robot.ahrs.reset();
 		Robot.driveTrain.enable();
 		Robot.driveTrain.setSetpoint(this.angle);
@@ -54,7 +62,7 @@ public class PIDFullDrive extends Command {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		System.out.println(Robot.ahrs.getYaw());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		Robot.driveTrain.ArcadeDrive(0.4, -Robot.driveTrain.PIDTune, true);
+		Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -67,6 +75,7 @@ public class PIDFullDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		System.out.println("done PID driving");
 		Robot.driveTrain.disable();
 		Robot.driveTrain.stopAll();
 	}
