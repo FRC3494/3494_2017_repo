@@ -12,6 +12,12 @@ public class PIDAngleDrive extends Command {
 
 	private double angle;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param angle
+	 *            The angle to turn, in degrees.
+	 */
 	public PIDAngleDrive(double angle) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -33,7 +39,7 @@ public class PIDAngleDrive extends Command {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		System.out.println(Robot.ahrs.getAngle());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		Robot.driveTrain.wpiDrive.arcadeDrive(0, Robot.driveTrain.PIDTune);
+		Robot.driveTrain.ArcadeDrive(0, Robot.driveTrain.PIDTune, true);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

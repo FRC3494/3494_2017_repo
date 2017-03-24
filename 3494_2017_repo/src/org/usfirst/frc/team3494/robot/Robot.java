@@ -9,7 +9,9 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
+import org.usfirst.frc.team3494.robot.commands.auto.tests.SpeedTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake;
@@ -18,6 +20,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
@@ -83,6 +86,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		System.out.println("Hello FTAs, how are you doing?");
+		System.out.println("Because I'm a QUADRANGLE.");
 		chooser = new SendableChooser<Command>();
 		driveTrain = new Drivetrain();
 		climber = new Climber();
@@ -100,6 +105,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
 		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
+		chooser.addObject("PID Test - drive straight", new PIDFullDrive(36));
+		chooser.addDefault("Speed test", new SpeedTest());
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
@@ -183,6 +190,15 @@ public class Robot extends IterativeRobot {
 		} else {
 			System.out.println("Defaulting to track the shiny");
 		}
+		// set ramps
+		for (CANTalon t : Robot.driveTrain.leftSide) {
+			t.setVoltageRampRate(0);
+			t.enableBrakeMode(true);
+		}
+		for (CANTalon t : Robot.driveTrain.rightSide) {
+			t.setVoltageRampRate(0);
+			t.enableBrakeMode(true);
+		}
 	}
 
 	/**
@@ -213,6 +229,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
 		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
 
+		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
+		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
+
 		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
 		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
@@ -229,6 +248,15 @@ public class Robot extends IterativeRobot {
 		}
 		camera_0.setExposureManual(50);
 		camera_0.setWhiteBalanceAuto();
+		// set ramps
+		for (CANTalon t : Robot.driveTrain.leftSide) {
+			t.setVoltageRampRate(Drivetrain.RAMP);
+			t.enableBrakeMode(true);
+		}
+		for (CANTalon t : Robot.driveTrain.rightSide) {
+			t.setVoltageRampRate(Drivetrain.RAMP);
+			t.enableBrakeMode(true);
+		}
 	}
 
 	/**
@@ -246,6 +274,9 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
+
+		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
+		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
 
 		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
 		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));

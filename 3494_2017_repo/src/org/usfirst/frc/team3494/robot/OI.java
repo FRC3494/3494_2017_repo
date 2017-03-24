@@ -10,6 +10,7 @@ import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -27,6 +28,8 @@ public class OI {
 	// Button button = new JoystickButton(stick, buttonNumber);
 	public final XboxController xbox = new XboxController(RobotMap.XBOX_ONE);
 	public final XboxController xbox_2 = new XboxController(RobotMap.XBOX_TWO);
+	public final Joystick stick_l = new Joystick(3);
+	public final Joystick stick_r = new Joystick(4);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.

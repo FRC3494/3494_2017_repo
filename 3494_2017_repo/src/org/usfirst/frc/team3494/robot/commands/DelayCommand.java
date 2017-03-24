@@ -3,7 +3,7 @@ package org.usfirst.frc.team3494.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Command to cause delays in autonomous. WIP.
  */
 public class DelayCommand extends Command {
 
