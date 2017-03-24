@@ -9,7 +9,6 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -66,8 +65,6 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * @since 0.0.0
 	 */
 	public RobotDrive wpiDrive;
-	private Encoder encRight;
-	private Encoder encLeft;
 
 	public static final double RAMP = 48;
 
