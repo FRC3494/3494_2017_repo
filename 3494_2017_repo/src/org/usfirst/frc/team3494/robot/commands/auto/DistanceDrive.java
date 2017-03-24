@@ -39,6 +39,12 @@ public class DistanceDrive extends Command {
 	protected void initialize() {
 		Robot.driveTrain.resetRight();
 		Robot.driveTrain.resetLeft();
+		try {
+			Thread.sleep((long) 5);
+		} catch (InterruptedException e) {
+			System.out.println("ah crap");
+			e.printStackTrace();
+		}
 		System.out.println("Driving " + this.dist + " " + this.unit.toString() + "(s)");
 	}
 
