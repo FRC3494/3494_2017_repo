@@ -78,7 +78,7 @@ public class OI {
 		xbox_a_2.whenReleased(new StopClimber());
 
 		xbox_b_2.whenPressed(new SetReverse());
-		
+
 		xbox_x_2.whileHeld(new HoldInState_Forward());
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());

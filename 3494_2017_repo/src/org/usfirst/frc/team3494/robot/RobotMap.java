@@ -55,10 +55,10 @@ public class RobotMap {
 	public static final int GEAR_RAMP_CHTWO = 3;
 	public static final int GEAR_GRASP_CHONE = 4;
 	public static final int GEAR_GRASP_CHTWO = 5;
-	
+
 	public static final int GEAR_GRASP_S2_FORWARD = 1;
 	public static final int GEAR_GRASP_S2_BACKWARD = 0;
-	
+
 	// conveyer
 	public static final int CONVEYER_M = 14;
 	// single piston gear holder
