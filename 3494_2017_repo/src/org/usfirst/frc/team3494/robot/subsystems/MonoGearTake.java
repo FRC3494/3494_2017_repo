@@ -15,6 +15,7 @@ public class MonoGearTake extends Subsystem {
 	// here. Call these from Commands.
 	private DoubleSolenoid piston;
 
+	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
