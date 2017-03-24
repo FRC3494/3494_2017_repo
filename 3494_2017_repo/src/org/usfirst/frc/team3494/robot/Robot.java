@@ -177,8 +177,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		camera_0.setExposureManual(15);
-		camera_0.setWhiteBalanceManual(VideoCamera.WhiteBalance.kFixedIndoor);
 		autonomousCommand = chooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
@@ -245,7 +243,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-		camera_0.setExposureManual(50);
+		camera_0.setExposureAuto();
 		camera_0.setWhiteBalanceAuto();
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
