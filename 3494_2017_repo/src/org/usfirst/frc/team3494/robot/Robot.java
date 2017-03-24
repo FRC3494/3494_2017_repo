@@ -99,7 +99,8 @@ public class Robot extends IterativeRobot {
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
-		chooser.addObject("Side Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttempt()));
+		chooser.addObject("[beta] Right Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttempt()));
+		chooser.addObject("[beta] Left Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttemptLeft()));
 		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
@@ -205,6 +206,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		SmartDashboard.putData(Scheduler.getInstance());
 		if (autonomousCommand != null) {
 			Scheduler.getInstance().run();
 		} else {
