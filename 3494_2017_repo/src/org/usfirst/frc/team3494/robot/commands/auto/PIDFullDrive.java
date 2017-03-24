@@ -66,11 +66,14 @@ public class PIDFullDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.driveTrain.disable();
+		Robot.driveTrain.stopAll();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		this.end();
 	}
 }
