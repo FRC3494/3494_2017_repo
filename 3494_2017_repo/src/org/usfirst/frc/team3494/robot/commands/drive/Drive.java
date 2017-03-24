@@ -32,14 +32,14 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		int dpad = Robot.oi.xbox.getPOV();
-		if (dpad == 0) {
+		int dpad = Robot.oi.stick_l.getPOV();
+		if (dpad == 0 || Robot.oi.stick_l.getRawButton(7)) {
 			Robot.driveTrain.inverter = 1;
-		} else if (dpad == 180) {
+		} else if (dpad == 180 || Robot.oi.stick_l.getRawButton(8)) {
 			Robot.driveTrain.inverter = -1;
-		} else if (dpad == 270) {
+		} else if (dpad == 270 || Robot.oi.stick_l.getRawButton(9)) {
 			Robot.driveTrain.scaleDown = 0.5D;
-		} else if (dpad == 90) {
+		} else if (dpad == 90 || Robot.oi.stick_l.getRawButton(10)) {
 			Robot.driveTrain.scaleDown = 1.0D;
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
@@ -50,12 +50,12 @@ public class Drive extends Command {
 				if (Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.ArcadeDrive(
 							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							Robot.oi.xbox.getX(Hand.kRight) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
 							true);
 				} else {
 					Robot.driveTrain.ArcadeDrive(
 							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							-Robot.oi.xbox.getX(Hand.kRight) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
 							true);
 				}
 			} else {
