@@ -53,11 +53,11 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> placeCenterGear() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(-111 / 2, UnitTypes.INCHES));
+		list.add(new PIDFullDrive(-111 / 2));
 		list.add(new ToggleGearPosition());
 		list.add(new ToggleGearRamp());
 		list.add(new DelayCommand(250));
-		list.add(new DistanceDrive(10, UnitTypes.INCHES));
+		list.add(new PIDFullDrive(10));
 		return list;
 	}
 
@@ -74,7 +74,7 @@ public class AutoGenerator {
 	public static ArrayList<Command> gearPlaceAttemptLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(-80));
-		list.add(new PIDAngleDrive(-60));
+		list.add(new PIDAngleDrive(-65));
 		list.add(new PIDFullDrive(-60));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		list.add(new SetGearGrasp(Value.kForward));
