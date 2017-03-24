@@ -6,10 +6,12 @@ import org.usfirst.frc.team3494.robot.commands.DelayCommand;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.SetGearGrasp;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearPosition;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -65,6 +67,7 @@ public class AutoGenerator {
 		list.add(new PIDAngleDrive(65));
 		list.add(new PIDFullDrive(-60));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
+		list.add(new SetGearGrasp(Value.kForward));
 		return list;
 	}
 	
@@ -72,8 +75,9 @@ public class AutoGenerator {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(-80));
 		list.add(new PIDAngleDrive(-60));
-		// list.add(new PIDFullDrive(-60));
-		list.add(new DistanceDrive(-60, UnitTypes.INCHES));
+		list.add(new PIDFullDrive(-60));
+		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
+		list.add(new SetGearGrasp(Value.kForward));
 		return list;
 	}
 }
