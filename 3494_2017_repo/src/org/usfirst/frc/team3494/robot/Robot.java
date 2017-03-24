@@ -95,9 +95,11 @@ public class Robot extends IterativeRobot {
 		gearTake = new GearTake_2();
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		Robot.climber.disengagePTO();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
+		chooser.addObject("Side Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttempt()));
 		chooser.addObject("Staging test", new StageTest());
 		chooser.addObject("Follow the shiny", null);
 		chooser.addObject("Do nothing", new NullAuto());
