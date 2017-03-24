@@ -5,7 +5,8 @@ import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
-import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
+import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
+import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
@@ -76,7 +77,9 @@ public class OI {
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
 		xbox_a_2.whenReleased(new StopClimber());
 
-		xbox_x_2.whileHeld(new HoldInState());
+		xbox_b_2.whenPressed(new SetReverse());
+		
+		xbox_x_2.whileHeld(new HoldInState_Forward());
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 

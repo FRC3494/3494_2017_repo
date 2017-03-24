@@ -33,8 +33,14 @@ public class GearTake_2 extends Subsystem {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
 		this.openandclose_forward = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
-		this.openandclose_backward = new DoubleSolenoid(RobotMap.INTAKE_PISTON_CHONE, RobotMap.INTAKE_PISTON_CHTWO);
+		this.openandclose_backward = new DoubleSolenoid(RobotMap.GEAR_GRASP_S2_FORWARD,
+				RobotMap.GEAR_GRASP_S2_BACKWARD);
+		this.openandclose_forward.set(Value.kForward);
 		this.openandclose_forward.set(Value.kReverse);
+
+		this.openandclose_backward.set(Value.kReverse);
+		this.openandclose_backward.set(Value.kForward);
+
 		this.lb = new LineBreak(0);
 	}
 
@@ -63,13 +69,15 @@ public class GearTake_2 extends Subsystem {
 	public void setGrasp(Value value) {
 		if (value.equals(Value.kForward)) {
 			this.openandclose_forward.set(Value.kForward);
-			this.openandclose_backward.set(Value.kReverse);
-		} else if (value.equals(Value.kReverse)) {
 			this.openandclose_backward.set(Value.kForward);
+		} else if (value.equals(Value.kReverse)) {
+			this.openandclose_backward.set(Value.kReverse);
 			this.openandclose_forward.set(Value.kReverse);
 		} else {
+			this.openandclose_forward.set(Value.kForward);
+			this.openandclose_forward.set(Value.kReverse);
 			this.openandclose_backward.set(Value.kReverse);
-			this.openandclose_backward.set(Value.kReverse);
+			this.openandclose_backward.set(Value.kForward);
 		}
 	}
 

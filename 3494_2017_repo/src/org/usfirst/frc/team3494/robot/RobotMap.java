@@ -50,14 +50,15 @@ public class RobotMap {
 	public static final int TURRET_UPPER = 64;
 
 	public static final int COMPRESSOR = 0;
-	// intake pistons
-	public static final int INTAKE_PISTON_CHONE = 0;
-	public static final int INTAKE_PISTON_CHTWO = 1;
 	// gear holder pistons
 	public static final int GEAR_RAMP_CHONE = 2;
 	public static final int GEAR_RAMP_CHTWO = 3;
 	public static final int GEAR_GRASP_CHONE = 4;
 	public static final int GEAR_GRASP_CHTWO = 5;
+	
+	public static final int GEAR_GRASP_S2_FORWARD = 1;
+	public static final int GEAR_GRASP_S2_BACKWARD = 0;
+	
 	// conveyer
 	public static final int CONVEYER_M = 14;
 	// single piston gear holder

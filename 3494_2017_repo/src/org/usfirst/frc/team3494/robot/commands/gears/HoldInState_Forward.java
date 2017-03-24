@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Holds the gear holder in the given position <em>until canceled.</em>
  */
-public class HoldInState extends Command {
+public class HoldInState_Forward extends Command {
 
-	public HoldInState() {
+	public HoldInState_Forward() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.gearTake);
@@ -36,7 +36,7 @@ public class HoldInState extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.gearTake.setGrasp(Value.kReverse);
+		Robot.gearTake.setGrasp(Value.kOff);
 	}
 
 	// Called when another command which requires one or more of the same
