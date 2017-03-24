@@ -66,4 +66,12 @@ public class AutoGenerator {
 		list.add(new PIDFullDrive(-60));
 		return list;
 	}
+	
+	public static ArrayList<Command> gearPlaceAttemptLeft() {
+		ArrayList<Command> list = new ArrayList<Command>();
+		list.add(new PIDFullDrive(-80));
+		list.add(new PIDAngleDrive(-60));
+		list.add(new PIDFullDrive(-60));
+		return list;
+	}
 }
