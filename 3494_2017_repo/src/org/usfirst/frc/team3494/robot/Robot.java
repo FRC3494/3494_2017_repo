@@ -14,8 +14,7 @@ import org.usfirst.frc.team3494.robot.commands.auto.StageTest;
 import org.usfirst.frc.team3494.robot.commands.auto.tests.SpeedTest;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team3494.robot.subsystems.GearTake;
-import org.usfirst.frc.team3494.robot.subsystems.Intake;
+import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
@@ -50,9 +49,8 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain driveTrain;
 	public static Climber climber;
 	public static Turret turret;
-	public static Intake intake;
 	public static Kompressor kompressor;
-	public static GearTake gearTake;
+	public static GearTake_2 gearTake;
 	/**
 	 * The gyro board mounted to the RoboRIO.
 	 * 
@@ -94,8 +92,7 @@ public class Robot extends IterativeRobot {
 		climber.disengagePTO();
 		turret = new Turret();
 		kompressor = new Kompressor();
-		intake = new Intake();
-		gearTake = new GearTake();
+		gearTake = new GearTake_2();
 		oi = new OI();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		// Auto programs come after all subsystems are created
