@@ -53,7 +53,7 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> placeCenterGear() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new PIDFullDrive(-111 / 2));
+		list.add(new PIDFullDrive(-110.5));
 		list.add(new ToggleGearPosition());
 		list.add(new ToggleGearRamp());
 		list.add(new DelayCommand(250));
