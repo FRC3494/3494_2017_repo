@@ -68,7 +68,7 @@ public class Drive extends Command {
 				}
 			}
 		} else {
-			Robot.driveTrain.TeleopTank(Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
+			Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 		}
 	}
 
