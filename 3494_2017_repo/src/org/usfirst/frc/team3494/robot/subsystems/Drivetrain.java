@@ -175,6 +175,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.driveLeftFollower_Two.set(left * this.scaleDown * leftScale);
 		this.driveRightFollower_Two.set(right * this.scaleDown * rightScale);
 	}
+	
+	public void TeleopTank(double left, double right) {
+		this.TankDrive(left * this.inverter, right * this.inverter);
+	}
 
 	/**
 	 * Drives the drivetrain, with the value passed in for left inverted. This
