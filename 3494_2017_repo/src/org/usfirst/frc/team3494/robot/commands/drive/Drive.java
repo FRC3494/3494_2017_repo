@@ -68,7 +68,11 @@ public class Drive extends Command {
 				}
 			}
 		} else {
-			Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
+			if (Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
+			} else {
+				Robot.driveTrain.TankDrive(Robot.oi.stick_r.getY(), -Robot.oi.stick_l.getY());
+			}
 		}
 	}
 
