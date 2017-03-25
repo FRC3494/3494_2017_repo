@@ -70,7 +70,7 @@ public class AutoGenerator {
 		list.add(new SetGearGrasp(Value.kForward));
 		return list;
 	}
-	
+
 	public static ArrayList<Command> gearPlaceAttemptLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(-80));

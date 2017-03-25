@@ -64,6 +64,6 @@ public class RobotMap {
 	// single piston gear holder
 	public static final int MONO_GEAR_FORWARD = 10;
 	public static final int MONO_GEAR_REVERSE = 11;
-	
+
 	public static final long TALON_RESET_DELAY = 100;
 }

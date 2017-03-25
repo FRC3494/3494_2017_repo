@@ -11,34 +11,39 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetGearGrasp extends Command {
 
 	private Value v;
-	
-    public SetGearGrasp(Value val) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.requires(Robot.gearTake);
-    	this.v = val;
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public SetGearGrasp(Value val) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		this.requires(Robot.gearTake);
+		this.v = val;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.gearTake.setGrasp(v);
-    }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		Robot.gearTake.setGrasp(v);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted() {
+	}
 }
