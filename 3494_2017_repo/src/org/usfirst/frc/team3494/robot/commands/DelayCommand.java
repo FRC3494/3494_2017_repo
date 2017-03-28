@@ -1,21 +1,18 @@
-package org.usfirst.frc.team3494.robot.commands.intake;
-
-import org.usfirst.frc.team3494.robot.Robot;
+package org.usfirst.frc.team3494.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Runs the intake. Default command for Intake subsystem.
+ * Command to cause delays in autonomous. WIP.
  */
-public class RunIntake extends Command {
+public class DelayCommand extends Command {
 
-	boolean running = false;
-	double speed;
+	double time;
 
-	public RunIntake() {
+	public DelayCommand(double t) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.intake);
+		this.time = t;
 	}
 
 	// Called just before this Command runs the first time
@@ -26,19 +23,18 @@ public class RunIntake extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.oi.xbox_rt.get()) {
-			Robot.intake.runIntake(0.75);
-		} else if (Robot.oi.xbox_lt.get()) {
-			Robot.intake.runIntake(-0.75);
-		} else {
-			Robot.intake.stopAll();
+		try {
+			Thread.sleep((long) time);
+		} catch (InterruptedException e) {
+			System.out.println("HOW LONG DID YOU WAIT?!");
+			e.printStackTrace();
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

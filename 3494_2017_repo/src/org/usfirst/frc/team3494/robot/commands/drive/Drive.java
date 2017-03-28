@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks.
@@ -31,27 +32,46 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		int dpad = Robot.oi.xbox.getPOV();
-		if (dpad == 0) {
+		int dpad = Robot.oi.stick_l.getPOV();
+		if (dpad == 0 || Robot.oi.stick_l.getRawButton(7)) {
 			Robot.driveTrain.inverter = 1;
-		} else if (dpad == 180) {
+		} else if (dpad == 180 || Robot.oi.stick_l.getRawButton(8)) {
 			Robot.driveTrain.inverter = -1;
+		} else if (dpad == 270 || Robot.oi.stick_l.getRawButton(9)) {
+			Robot.driveTrain.scaleDown = 0.5D;
+		} else if (dpad == 90 || Robot.oi.stick_l.getRawButton(10)) {
+			Robot.driveTrain.scaleDown = 1.0D;
 		}
-		if (Robot.prefs.getBoolean("arcade", true)) {
-			if (!Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
+		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
+		boolean useX = Robot.prefs.getBoolean("usexbox", true);
+		if (useX) {
+			if (Robot.prefs.getBoolean("arcade", true)) {
+				if (Robot.driveTrain.getInverted()) {
+					Robot.driveTrain.ArcadeDrive(
+							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							true);
+				} else {
+					Robot.driveTrain.ArcadeDrive(
+							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+							true);
+				}
 			} else {
-				Robot.driveTrain.wpiDrive.arcadeDrive(Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter);
+				if (!Robot.driveTrain.getInverted()) {
+					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
+							-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+				} else {
+					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
+							-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
+				}
 			}
 		} else {
-			if (!Robot.driveTrain.getInverted()) {
-				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
+			if (Robot.driveTrain.getInverted()) {
+				Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 			} else {
-				Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
-						-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
+				Robot.driveTrain.TankDrive(Robot.oi.stick_r.getY(), -Robot.oi.stick_l.getY());
 			}
 		}
 	}

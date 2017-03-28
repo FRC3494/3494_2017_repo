@@ -1,14 +1,16 @@
 package org.usfirst.frc.team3494.robot;
 
+import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
-import org.usfirst.frc.team3494.robot.commands.gears.HoldInState;
+import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
+import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
-import org.usfirst.frc.team3494.robot.commands.intake.SwitchPosition;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -26,6 +28,8 @@ public class OI {
 	// Button button = new JoystickButton(stick, buttonNumber);
 	public final XboxController xbox = new XboxController(RobotMap.XBOX_ONE);
 	public final XboxController xbox_2 = new XboxController(RobotMap.XBOX_TWO);
+	public final Joystick stick_l = new Joystick(3);
+	public final Joystick stick_r = new Joystick(4);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
@@ -46,6 +50,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
+	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 
 	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
 
@@ -59,20 +64,28 @@ public class OI {
 	public JoystickButton xbox_y_2 = new JoystickButton(xbox_2, 4);
 
 	public JoystickButton xbox_x = new JoystickButton(xbox, 3);
+	public JoystickButton xbox_x_2 = new JoystickButton(xbox_2, 3);
 
 	public JoystickButton xbox_select_2 = new JoystickButton(xbox_2, 7);
 	public JoystickButton xbox_start_2 = new JoystickButton(xbox_2, 8);
 
 	public OI() {
 		// Ready Player One
-		xbox_b.whileHeld(new Climb(DriveDirections.UP));
-		xbox_b.whenReleased(new StopClimber());
-		xbox_x.whileHeld(new HoldInState());
+		xbox_a.whenPressed(new DistanceDrive(-12, UnitTypes.INCHES));
 		// Ready Player Two
-		xbox_b_2.whenPressed(new SwitchPosition());
+		// Climb controls
+		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
+		xbox_a_2.whenReleased(new StopClimber());
+
+		xbox_b_2.whenPressed(new SetReverse());
+
+		xbox_x_2.whileHeld(new HoldInState_Forward());
+
 		xbox_y_2.whenPressed(new ToggleGearRamp());
+
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
+
 		xbox_select_2.whenPressed(new ClimberToggle());
 		xbox_start_2.whileHeld(new HoldDriveTrain());
 	}

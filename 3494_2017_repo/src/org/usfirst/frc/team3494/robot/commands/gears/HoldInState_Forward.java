@@ -1,21 +1,19 @@
-package org.usfirst.frc.team3494.robot.commands.intake;
+package org.usfirst.frc.team3494.robot.commands.gears;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Deploys the intake for the start of teleop.
- * 
- * @see org.usfirst.frc.team3494.robot.subsystems.Intake
+ * Holds the gear holder in the given position <em>until canceled.</em>
  */
-public class SwitchPosition extends Command {
+public class HoldInState_Forward extends Command {
 
-	public SwitchPosition() {
+	public HoldInState_Forward() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.intake);
+		requires(Robot.gearTake);
 	}
 
 	// Called just before this Command runs the first time
@@ -26,28 +24,25 @@ public class SwitchPosition extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (!Robot.intake.isDeployed) {
-			Robot.intake.pushForward();
-		} else {
-			Robot.intake.retract();
-		}
-		SmartDashboard.putBoolean("Intake Deployed", Robot.intake.isDeployed);
+		Robot.gearTake.setGrasp(Value.kForward);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.gearTake.setGrasp(Value.kOff);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		this.end();
 	}
 }

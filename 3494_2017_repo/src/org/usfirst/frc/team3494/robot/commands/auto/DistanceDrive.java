@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
+import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.UnitTypes;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -39,26 +40,32 @@ public class DistanceDrive extends Command {
 	protected void initialize() {
 		Robot.driveTrain.resetRight();
 		Robot.driveTrain.resetLeft();
+		try {
+			Thread.sleep(RobotMap.TALON_RESET_DELAY);
+		} catch (InterruptedException e) {
+			System.out.println("ah crap");
+			e.printStackTrace();
+		}
+		System.out.println("Driving " + this.dist + " " + this.unit.toString() + "(s)");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (this.dist > Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(0.4, 0.4);
-		} else if (this.dist < Robot.driveTrain.getAvgDistance(this.unit)) {
-			Robot.driveTrain.adjustedTankDrive(-0.4, -0.4);
+		if (this.dist > 0) {
+			Robot.driveTrain.adjustedTankDrive(0.185, 0.2);
+		} else if (this.dist < 0) {
+			Robot.driveTrain.adjustedTankDrive(-0.185, -0.2);
 		} else {
 			return;
 		}
-		System.out.println(Robot.driveTrain.getAvgDistance(this.unit));
+		System.out.println("Average distance: " + Robot.driveTrain.getAvgDistance(this.unit));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return (Robot.driveTrain.getAvgDistance(this.unit) >= this.dist - 1
-				&& Robot.driveTrain.getAvgDistance(this.unit) <= this.dist + 1);
+		return Math.abs(Robot.driveTrain.getAvgDistance(unit)) >= Math.abs(this.dist);
 	}
 
 	// Called once after isFinished returns true

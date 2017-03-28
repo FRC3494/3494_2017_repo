@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3494.robot.commands.gears;
+package org.usfirst.frc.team3494.robot.commands.auto;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
@@ -6,13 +6,17 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Sets the gear holder position to what it is not.
+ *
  */
-public class SetGearPosition extends Command {
-	public SetGearPosition() {
+public class SetGearGrasp extends Command {
+
+	private Value v;
+
+	public SetGearGrasp(Value val) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.gearTake);
+		this.requires(Robot.gearTake);
+		this.v = val;
 	}
 
 	// Called just before this Command runs the first time
@@ -23,11 +27,7 @@ public class SetGearPosition extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.gearTake.getGearState().equals(Value.kForward)) {
-			Robot.gearTake.setGrasp(Value.kReverse);
-		} else {
-			Robot.gearTake.setGrasp(Value.kForward);
-		}
+		Robot.gearTake.setGrasp(v);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
