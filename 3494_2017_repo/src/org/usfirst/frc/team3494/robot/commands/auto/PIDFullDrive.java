@@ -63,7 +63,11 @@ public class PIDFullDrive extends Command {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		System.out.println(Robot.ahrs.getYaw());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+		if (this.distance < 0) {
+			Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+		} else {
+			Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
