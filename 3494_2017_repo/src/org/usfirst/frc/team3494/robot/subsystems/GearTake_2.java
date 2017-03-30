@@ -85,7 +85,7 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Gets the state of the gear holder. Equivalent to
-	 * {@code this.openandclose.get()}, but
+	 * {@code this.rampenoid.get()}, but
 	 * {@link GearTake_2#rampenoid} is private.
 	 * 
 	 * @return The value of {@code this.rampenoid.get()}.

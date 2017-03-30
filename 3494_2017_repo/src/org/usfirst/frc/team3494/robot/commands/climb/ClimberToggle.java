@@ -29,7 +29,6 @@ public class ClimberToggle extends Command {
 		if (!Robot.climber.getState()) {
 			Robot.climber.engagePTO();
 			Robot.kompressor.compress.stop();
-			Robot.gearTake.setRamp(Value.kForward);
 			Robot.gearTake.setGrasp(Value.kForward);
 		} else {
 			Robot.climber.disengagePTO();
