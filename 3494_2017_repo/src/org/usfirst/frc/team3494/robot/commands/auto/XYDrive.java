@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3494.robot.commands.auto;
 
-import org.usfirst.frc.team3494.robot.UnitTypes;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -29,7 +27,7 @@ public class XYDrive extends CommandGroup {
 		double rise2 = rise * rise;
 		this.hypot = Math.sqrt(run2 + rise2);
 		this.angle = Math.toDegrees(Math.atan2(rise, run));
-		addSequential(new AngleTurn(angle));
-		addSequential(new DistanceDrive(hypot, UnitTypes.INCHES));
+		addSequential(new PIDAngleDrive(angle));
+		addSequential(new PIDFullDrive(hypot));
 	}
 }
