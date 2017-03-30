@@ -86,8 +86,17 @@ public class Drive extends Command {
 	}
 
 	private static void driveArcade() {
-		Robot.driveTrain.ArcadeDrive(
-				Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-				Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+		double leftX = Robot.oi.xbox.getX(Hand.kLeft);
+		if (Robot.oi.xbox.getX(Hand.kLeft) == 0 || leftX > -0.09 || leftX < 0.01) {
+			Robot.driveTrain.setSetpoint(0);
+			Robot.driveTrain.enable();
+			Robot.driveTrain.ArcadeDrive(
+					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+					Robot.driveTrain.PIDTune, true);
+		} else {
+			Robot.driveTrain.ArcadeDrive(
+					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+					Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+		}
 	}
 }
