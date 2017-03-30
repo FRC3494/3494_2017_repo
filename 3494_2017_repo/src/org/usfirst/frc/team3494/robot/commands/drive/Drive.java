@@ -92,7 +92,7 @@ public class Drive extends Command {
 			Robot.driveTrain.enable();
 			Robot.driveTrain.ArcadeDrive(
 					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-					Robot.driveTrain.PIDTune, true);
+					-Robot.driveTrain.PIDTune, true);
 		} else {
 			Robot.driveTrain.ArcadeDrive(
 					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
