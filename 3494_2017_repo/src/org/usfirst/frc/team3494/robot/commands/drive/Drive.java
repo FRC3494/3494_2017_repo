@@ -47,17 +47,9 @@ public class Drive extends Command {
 		boolean useX = Robot.prefs.getBoolean("usexbox", true);
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", true)) {
-				if (Robot.driveTrain.getInverted()) {
-					Robot.driveTrain.ArcadeDrive(
-							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							true);
-				} else {
-					Robot.driveTrain.ArcadeDrive(
-							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							true);
-				}
+				Robot.driveTrain.ArcadeDrive(
+						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
 			} else {
 				if (!Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
