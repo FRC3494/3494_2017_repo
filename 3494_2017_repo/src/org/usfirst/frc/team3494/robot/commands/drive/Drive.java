@@ -47,9 +47,7 @@ public class Drive extends Command {
 		boolean useX = Robot.prefs.getBoolean("usexbox", true);
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", true)) {
-				Robot.driveTrain.ArcadeDrive(
-						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+				Drive.driveArcade();
 			} else {
 				// 10 gbp to whoever can reduce this to one call
 				if (!Robot.driveTrain.getInverted()) {
@@ -85,5 +83,11 @@ public class Drive extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+	}
+
+	private static void driveArcade() {
+		Robot.driveTrain.ArcadeDrive(
+				Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+				Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
 	}
 }
