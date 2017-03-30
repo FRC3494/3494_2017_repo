@@ -51,6 +51,7 @@ public class Drive extends Command {
 						Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
 						Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
 			} else {
+				// 10 gbp to whoever can reduce this to one call
 				if (!Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
 							-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
@@ -60,6 +61,7 @@ public class Drive extends Command {
 				}
 			}
 		} else {
+			// Same reward here.
 			if (Robot.driveTrain.getInverted()) {
 				Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 			} else {

@@ -21,26 +21,12 @@ public class GearTake_2 extends Subsystem {
 	 * forward most of the time.
 	 */
 	private DoubleSolenoid rampenoid;
-	/**
-	 * The solenoid that holds the gear or drops it.
-	 */
-	private DoubleSolenoid openandclose_forward;
-	private DoubleSolenoid openandclose_backward;
 
 	public LineBreak lb;
 
 	public GearTake_2() {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
-		this.openandclose_forward = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
-		this.openandclose_backward = new DoubleSolenoid(RobotMap.GEAR_GRASP_S2_FORWARD,
-				RobotMap.GEAR_GRASP_S2_BACKWARD);
-		this.openandclose_forward.set(Value.kForward);
-		this.openandclose_forward.set(Value.kReverse);
-
-		this.openandclose_backward.set(Value.kReverse);
-		this.openandclose_backward.set(Value.kForward);
-
 		this.lb = new LineBreak(0);
 	}
 
@@ -55,6 +41,7 @@ public class GearTake_2 extends Subsystem {
 	 * 
 	 * @param value
 	 *            The position to set the ramp to.
+	 * @deprecated use {@linkplain GearTake_2#setGrasp(Value)} instead.
 	 */
 	public void setRamp(Value value) {
 		this.rampenoid.set(value);
@@ -67,18 +54,7 @@ public class GearTake_2 extends Subsystem {
 	 *            The position to set the holder to.
 	 */
 	public void setGrasp(Value value) {
-		if (value.equals(Value.kForward)) {
-			this.openandclose_forward.set(Value.kForward);
-			this.openandclose_backward.set(Value.kForward);
-		} else if (value.equals(Value.kReverse)) {
-			this.openandclose_backward.set(Value.kReverse);
-			this.openandclose_forward.set(Value.kReverse);
-		} else {
-			this.openandclose_forward.set(Value.kForward);
-			this.openandclose_forward.set(Value.kReverse);
-			this.openandclose_backward.set(Value.kReverse);
-			this.openandclose_backward.set(Value.kForward);
-		}
+		this.rampenoid.set(value);
 	}
 
 	/**
@@ -101,6 +77,7 @@ public class GearTake_2 extends Subsystem {
 	 * private.
 	 * 
 	 * @return The value of {@code this.rampenoid.get()}.
+	 * @deprecated use getGearState instead
 	 */
 	public Value getRampState() {
 		return this.rampenoid.get();
@@ -109,11 +86,11 @@ public class GearTake_2 extends Subsystem {
 	/**
 	 * Gets the state of the gear holder. Equivalent to
 	 * {@code this.openandclose.get()}, but
-	 * {@link GearTake_2#openandclose_forward} is private.
+	 * {@link GearTake_2#rampenoid} is private.
 	 * 
-	 * @return The value of {@code this.openandclose.get()}.
+	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getGearState() {
-		return this.openandclose_forward.get();
+		return this.rampenoid.get();
 	}
 }
