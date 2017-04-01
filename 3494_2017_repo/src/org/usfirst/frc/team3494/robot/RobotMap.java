@@ -45,9 +45,10 @@ public class RobotMap {
 	public static final int CLIMBER_PTO_FORWARD = 6;
 	public static final int CLIMBER_PTO_BACKARD = 7;
 	// turret
+	public static final int UNSCRAMBLER = 3;
 	public static final int TURRET_RING = 62;
-	public static final int TURRET_LOWER = 63;
-	public static final int TURRET_UPPER = 64;
+	public static final int TURRET_LOWER = 6;
+	public static final int TURRET_UPPER = 7;
 
 	public static final int COMPRESSOR = 0;
 	// gear holder pistons
