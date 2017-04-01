@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot.commands.turret;
 
-import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,18 +23,7 @@ public class TurretCon extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		int dpad = Robot.oi.xbox_2.getPOV();
-		if (dpad == -1) {
-			Robot.turret.stopTurret();
-		} else if (dpad == 0) {
-			Robot.turret.stopTurret();
-		} else if (dpad == 180) {
-			Robot.turret.stopTurret();
-		} else if (dpad == 90) {
-			Robot.turret.turnTurret(DriveDirections.RIGHT);
-		} else if (dpad == 270) {
-			Robot.turret.turnTurret(DriveDirections.LEFT);
-		}
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
