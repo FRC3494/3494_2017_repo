@@ -2,8 +2,8 @@ package org.usfirst.frc.team3494.robot.commands.turret;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,13 +24,10 @@ public class TurretCon extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		int dpad = Robot.oi.stick_l.getPOV();
-		if (dpad == 0) {
-			Robot.turret.multi += 0.1;
-		} else if (dpad == 180) {
-			Robot.turret.multi -= 0.1;
-		}
-		SmartDashboard.putNumber("Shooter multiplier", Robot.turret.multi);
+		double setpoint = (Robot.oi.xbox_2.getTriggerAxis(Hand.kRight) * 80.0D);
+		setpoint = Math.pow(setpoint, 2);
+		Robot.turret.enablePID();
+		Robot.turret.setSetpoint(setpoint);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

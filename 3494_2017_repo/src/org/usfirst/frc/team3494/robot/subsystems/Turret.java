@@ -25,9 +25,6 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon shooterLower;
 	private CANTalon unscrambler;
 	private CANTalon conveyer;
-
-	public double multi;
-
 	public double PIDTune;
 
 	private PIDController upperPID;
@@ -36,17 +33,21 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 
 	public Turret() {
 		super("Turret");
+		double RAMP = 10;
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterUpper.enableBrakeMode(false);
+		this.shooterUpper.setVoltageRampRate(RAMP);
+		
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
 		this.shooterLower.enableBrakeMode(false);
+		this.shooterLower.setVoltageRampRate(RAMP);
+		
 		this.unscrambler = new CANTalon(RobotMap.UNSCRAMBLER);
 		this.conveyer = new CANTalon(RobotMap.TURRET_CONVEYER);
 
 		this.shooterEnc_lower = new Encoder(RobotMap.TURRET_ENCLOWER_A, RobotMap.TURRET_ENCLOWER_B);
 		this.shooterEnc_upper = new Encoder(RobotMap.TURRET_ENCUPPER_A, RobotMap.TURRET_ENCUPPER_B);
 		this.shooterEnc_upper.setReverseDirection(true);
-
 		// Set up PID controllers for RPM control
 		this.shooterEnc_upper.setPIDSourceType(PIDSourceType.kRate);
 		this.upperPID = new PIDController(0.1, 0, 0, this.shooterEnc_upper, this.shooterUpper);
@@ -60,7 +61,6 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 			c.setOutputRange(-1, 1);
 			c.disable();
 		}
-		this.multi = 1;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void shoot(double power) {
 		power = Math.abs(power);
-		this.shooterUpper.set(power * multi);
+		this.shooterUpper.set(power);
 		this.shooterLower.set(power);
 		if (power != 0) {
 			this.conveyer.set(0.5);
