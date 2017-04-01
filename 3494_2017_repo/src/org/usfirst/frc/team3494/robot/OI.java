@@ -82,7 +82,7 @@ public class OI {
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 
-		xbox_rt_2.whenPressed(new Shoot(0.8));
+		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
 
 		xbox_select_2.whenPressed(new ClimberPTOSetter(true));

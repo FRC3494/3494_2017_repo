@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
-import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 
 import com.ctre.CANTalon;
 
@@ -66,7 +65,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		this.setDefaultCommand(new TurretCon());
+		// this.setDefaultCommand(new TurretCon());
 	}
 
 	@Override
@@ -107,8 +106,10 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		this.shooterLower.set(power);
 		if (power != 0) {
 			this.conveyer.set(0.5);
+			this.unscrambler.set(0.7);
 		} else {
 			this.conveyer.set(0);
+			this.unscrambler.set(0);
 		}
 	}
 
