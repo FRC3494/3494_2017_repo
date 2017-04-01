@@ -113,14 +113,6 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		}
 	}
 
-	/**
-	 * Runs the conveyer to move balls into the shooter. Call in conjunction
-	 * with {@link Turret#shoot(double)}.
-	 */
-	public void convey() {
-		this.conveyer.set(0.4);
-	}
-
 	public void stopConveyer() {
 		this.conveyer.set(0);
 	}
@@ -132,13 +124,13 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 			return this.shooterEnc_lower.getRate();
 		}
 	}
-	
+
 	public void enablePID() {
 		for (PIDController c : this.PIDlist) {
 			c.enable();
 		}
 	}
-	
+
 	public void setSetpoint(double setpoint) {
 		for (PIDController c : this.PIDlist) {
 			c.setSetpoint(setpoint);
