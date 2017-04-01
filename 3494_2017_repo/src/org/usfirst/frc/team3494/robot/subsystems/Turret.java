@@ -6,14 +6,16 @@ import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Turret subsystem. Contains methods for controlling the turret.
  * 
  * @since 0.0.0
  */
-public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
+public class Turret extends Subsystem implements IMotorizedSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private Encoder shooterEnc_lower;
@@ -28,8 +30,12 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 
 	public double PIDTune;
 
+	private PIDController upperPID;
+	private PIDController lowerPID;
+	private PIDController[] PIDlist;
+
 	public Turret() {
-		super("Turret", 0.01, 0, 0);
+		super("Turret");
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterUpper.enableBrakeMode(false);
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
@@ -41,9 +47,19 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 		this.shooterEnc_upper = new Encoder(RobotMap.TURRET_ENCUPPER_A, RobotMap.TURRET_ENCUPPER_B);
 		this.shooterEnc_upper.setReverseDirection(true);
 
-		this.setOutputRange(-1, 1);
-		this.getPIDController().setContinuous(false);
-
+		// Set up PID controllers for RPM control
+		this.shooterEnc_upper.setPIDSourceType(PIDSourceType.kRate);
+		this.upperPID = new PIDController(0.1, 0, 0, this.shooterEnc_upper, this.shooterUpper);
+		this.shooterEnc_lower.setPIDSourceType(PIDSourceType.kRate);
+		this.lowerPID = new PIDController(0.1, 0, 0, this.shooterEnc_lower, this.shooterLower);
+		// list for easy enable/disable/setpoints
+		this.PIDlist = new PIDController[] { this.lowerPID, this.upperPID };
+		for (PIDController c : this.PIDlist) {
+			c.setContinuous(false);
+			c.setInputRange(0, Double.MAX_VALUE);
+			c.setOutputRange(-1, 1);
+			c.disable();
+		}
 		this.multi = 1;
 	}
 
@@ -116,23 +132,16 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 			return this.shooterEnc_lower.getRate();
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected double returnPIDInput() {
-		return (this.shooterEnc_upper.getRate() + this.shooterEnc_lower.getRate()) / 2;
+	
+	public void enablePID() {
+		for (PIDController c : this.PIDlist) {
+			c.enable();
+		}
 	}
-
-	/**
-	 * Writes the output of the PID controller to {@linkplain Turret#PIDTune}.
-	 * 
-	 * @param output
-	 *            The output as calculated by the PID controller.
-	 */
-	@Override
-	protected void usePIDOutput(double output) {
-		this.PIDTune = output;
+	
+	public void setSetpoint(double setpoint) {
+		for (PIDController c : this.PIDlist) {
+			c.setSetpoint(setpoint);
+		}
 	}
 }
