@@ -19,7 +19,7 @@ public class Shoot extends Command {
 	}
 
 	public Shoot(double power) {
-		super();
+		super("Shoot");
 		this.power = power;
 		requires(Robot.turret);
 	}

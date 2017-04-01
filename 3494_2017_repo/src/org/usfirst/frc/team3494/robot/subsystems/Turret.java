@@ -86,4 +86,12 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	public void stopConveyer() {
 		this.conveyer.set(0);
 	}
+
+	public double getRate(TurretEncoders enc) {
+		if (enc.equals(TurretEncoders.TOP)) {
+			return this.shooterEnc_upper.getRate();
+		} else {
+			return this.shooterEnc_lower.getRate();
+		}
+	}
 }

@@ -15,6 +15,7 @@ import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
 import org.usfirst.frc.team3494.robot.subsystems.Turret;
+import org.usfirst.frc.team3494.robot.subsystems.TurretEncoders;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.ctre.CANTalon;
@@ -217,22 +218,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("Turn: " + turn);
 			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
 		}
-		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
-		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
-
-		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
-		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
-
-		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
-		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
-		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
-
-		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
-		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
-
-		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
-		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
-		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
+		Robot.putDebugInfo();
 	}
 
 	@Override
@@ -268,6 +254,18 @@ public class Robot extends IterativeRobot {
 		 * Robot.climber.engagePTO(); }
 		 */
 		Scheduler.getInstance().run();
+		Robot.putDebugInfo();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+
+	public static void putDebugInfo() {
 		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
 
@@ -287,13 +285,8 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
 		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
-	}
 
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
+		SmartDashboard.putNumber("Upper Shooter Speed", Robot.turret.getRate(TurretEncoders.TOP));
+		SmartDashboard.putNumber("Lower Shooter Speed", Robot.turret.getRate(TurretEncoders.BOTTOM));
 	}
 }
