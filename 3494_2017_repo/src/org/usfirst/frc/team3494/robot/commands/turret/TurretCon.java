@@ -2,7 +2,6 @@ package org.usfirst.frc.team3494.robot.commands.turret;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -24,16 +23,14 @@ public class TurretCon extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		double setpoint = (Robot.oi.xbox_2.getTriggerAxis(Hand.kRight) * 80.0D);
-		setpoint = Math.pow(setpoint, 2);
 		Robot.turret.enablePID();
-		Robot.turret.setSetpoint(setpoint);
+		Robot.turret.setSetpoint(5000);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
@@ -45,5 +42,6 @@ public class TurretCon extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		this.end();
 	}
 }
