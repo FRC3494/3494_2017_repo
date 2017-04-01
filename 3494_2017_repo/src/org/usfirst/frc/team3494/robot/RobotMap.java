@@ -49,7 +49,12 @@ public class RobotMap {
 	public static final int TURRET_CONVEYER = 12;
 	public static final int TURRET_LOWER = 6;
 	public static final int TURRET_UPPER = 7;
-
+	
+	public static final int TURRET_ENCUPPER_A = 3;
+	public static final int TURRET_ENCUPPER_B = 4;
+	public static final int TURRET_ENCLOWER_A = 5;
+	public static final int TURRET_ENCLOWER_B = 6;
+	
 	public static final int COMPRESSOR = 0;
 	// gear holder pistons
 	public static final int GEAR_RAMP_CHONE = 2;

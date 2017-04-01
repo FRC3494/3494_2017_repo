@@ -5,14 +5,14 @@ import org.usfirst.frc.team3494.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  * Turret subsystem. Contains methods for controlling the turret.
  * 
  * @since 0.0.0
  */
-public class Turret extends Subsystem implements IMotorizedSubsystem {
+public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private Encoder shooterEnc_lower;
@@ -23,12 +23,17 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon unscrambler;
 	private CANTalon conveyer;
 
+	public double PIDTune;
+
 	public Turret() {
-		super("Turret");
+		super("Turret", 0.01, 0, 0);
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
 		this.unscrambler = new CANTalon(RobotMap.UNSCRAMBLER);
 		this.conveyer = new CANTalon(RobotMap.TURRET_CONVEYER);
+
+		this.shooterEnc_lower = new Encoder(RobotMap.TURRET_ENCLOWER_A, RobotMap.TURRET_ENCLOWER_B);
+		this.shooterEnc_upper = new Encoder(RobotMap.TURRET_ENCUPPER_A, RobotMap.TURRET_ENCUPPER_B);
 	}
 
 	@Override
@@ -93,5 +98,24 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		} else {
 			return this.shooterEnc_lower.getRate();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected double returnPIDInput() {
+		return this.shooterEnc_upper.getRate();
+	}
+
+	/**
+	 * Writes the output of the PID controller to {@linkplain Turret#PIDTune}.
+	 * 
+	 * @param output
+	 *            The output as calculated by the PID controller.
+	 */
+	@Override
+	protected void usePIDOutput(double output) {
+		this.PIDTune = output;
 	}
 }
