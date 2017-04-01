@@ -25,7 +25,6 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	private CANTalon shooterLower;
 	private CANTalon unscrambler;
 	private CANTalon conveyer;
-	public double PIDTune;
 
 	private PIDController upperPID;
 	private PIDController lowerPID;
