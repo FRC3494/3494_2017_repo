@@ -36,6 +36,7 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 
 		this.shooterEnc_lower = new Encoder(RobotMap.TURRET_ENCLOWER_A, RobotMap.TURRET_ENCLOWER_B);
 		this.shooterEnc_upper = new Encoder(RobotMap.TURRET_ENCUPPER_A, RobotMap.TURRET_ENCUPPER_B);
+		this.shooterEnc_upper.setReverseDirection(true);
 
 		this.setOutputRange(-1, 1);
 		this.getPIDController().setContinuous(false);
@@ -81,7 +82,7 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void shoot(double power) {
 		power = Math.abs(power);
-		this.shooterUpper.set(power);
+		this.shooterUpper.set(power + 0.1);
 		this.shooterLower.set(power);
 		if (power != 0) {
 			this.conveyer.set(1);

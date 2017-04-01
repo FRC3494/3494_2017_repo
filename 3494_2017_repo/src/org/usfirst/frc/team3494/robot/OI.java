@@ -2,9 +2,8 @@ package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
-import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
+import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
-import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
 import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
@@ -83,10 +82,10 @@ public class OI {
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 
-		xbox_rt_2.whenPressed(new Shoot());
+		xbox_rt_2.whenPressed(new Shoot(0.8));
 		xbox_rt_2.whenReleased(new Shoot(0));
 
-		xbox_select_2.whenPressed(new ClimberToggle());
-		xbox_start_2.whileHeld(new HoldDriveTrain());
+		xbox_select_2.whenPressed(new ClimberPTOSetter(true));
+		xbox_start_2.whileHeld(new ClimberPTOSetter(false));
 	}
 }
