@@ -105,7 +105,7 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	@Override
 	protected double returnPIDInput() {
-		return this.shooterEnc_upper.getRate();
+		return (this.shooterEnc_upper.getRate() + this.shooterEnc_lower.getRate()) / 2;
 	}
 
 	/**

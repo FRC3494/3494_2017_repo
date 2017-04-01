@@ -43,6 +43,7 @@ public class GearTake_2 extends Subsystem {
 	 *            The position to set the ramp to.
 	 * @deprecated use {@linkplain GearTake_2#setGrasp(Value)} instead.
 	 */
+	@Deprecated
 	public void setRamp(Value value) {
 		this.rampenoid.set(value);
 	}
@@ -79,6 +80,7 @@ public class GearTake_2 extends Subsystem {
 	 * @return The value of {@code this.rampenoid.get()}.
 	 * @deprecated use getGearState instead
 	 */
+	@Deprecated
 	public Value getRampState() {
 		return this.rampenoid.get();
 	}
