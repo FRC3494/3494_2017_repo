@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
+import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 
 import com.ctre.CANTalon;
 
@@ -23,6 +24,8 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 	private CANTalon unscrambler;
 	private CANTalon conveyer;
 
+	public double multi;
+
 	public double PIDTune;
 
 	public Turret() {
@@ -40,12 +43,15 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 
 		this.setOutputRange(-1, 1);
 		this.getPIDController().setContinuous(false);
+
+		this.multi = 1;
 	}
 
 	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		this.setDefaultCommand(new TurretCon());
 	}
 
 	@Override
@@ -82,10 +88,10 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void shoot(double power) {
 		power = Math.abs(power);
-		this.shooterUpper.set(power + 0.1);
+		this.shooterUpper.set(power * multi);
 		this.shooterLower.set(power);
 		if (power != 0) {
-			this.conveyer.set(1);
+			this.conveyer.set(0.5);
 		} else {
 			this.conveyer.set(0);
 		}
