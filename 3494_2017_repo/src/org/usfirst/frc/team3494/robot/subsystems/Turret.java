@@ -88,7 +88,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 	 * not allowed.
 	 * 
 	 * @param power
-	 *            The power to run the shooter at. It will be run by abosolute
+	 *            The power to run the shooter at. It will be run by absolute
 	 *            value first.
 	 */
 	public void shoot(double power) {
