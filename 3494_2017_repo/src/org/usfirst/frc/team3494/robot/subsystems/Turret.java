@@ -134,5 +134,8 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		for (PIDController c : this.PIDlist) {
 			c.setSetpoint(setpoint);
 		}
+		if (setpoint > 0) {
+			this.conveyer.set(0.5);
+		}
 	}
 }
