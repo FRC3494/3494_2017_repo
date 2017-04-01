@@ -26,18 +26,14 @@ public class TurretCon extends Command {
 	protected void execute() {
 		int dpad = Robot.oi.xbox_2.getPOV();
 		if (dpad == -1) {
-			Robot.turret.stopHood();
+			Robot.turret.stopTurret();
 		} else if (dpad == 0) {
 			Robot.turret.stopTurret();
-			Robot.turret.setHood(0.25);
 		} else if (dpad == 180) {
 			Robot.turret.stopTurret();
-			Robot.turret.setHood(-0.25);
 		} else if (dpad == 90) {
-			Robot.turret.stopHood();
 			Robot.turret.turnTurret(DriveDirections.RIGHT);
 		} else if (dpad == 270) {
-			Robot.turret.stopHood();
 			Robot.turret.turnTurret(DriveDirections.LEFT);
 		}
 	}
