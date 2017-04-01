@@ -37,11 +37,11 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterUpper.enableBrakeMode(false);
 		this.shooterUpper.setVoltageRampRate(RAMP);
-		
+
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
 		this.shooterLower.enableBrakeMode(false);
 		this.shooterLower.setVoltageRampRate(RAMP);
-		
+
 		this.unscrambler = new CANTalon(RobotMap.UNSCRAMBLER);
 		this.conveyer = new CANTalon(RobotMap.TURRET_CONVEYER);
 

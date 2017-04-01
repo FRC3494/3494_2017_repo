@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimberPTOSetter extends Command {
 
 	private boolean b;
-	
+
 	public ClimberPTOSetter(boolean engage) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
