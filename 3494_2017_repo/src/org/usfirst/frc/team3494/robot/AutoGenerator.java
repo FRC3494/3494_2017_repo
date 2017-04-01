@@ -70,14 +70,14 @@ public class AutoGenerator {
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		return list;
 	}
-	
+
 	public static ArrayList<Command> activeLeftGear() {
 		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptLeft();
 		list.add(new ToggleGearRamp());
 		list.add(new PIDFullDrive(10));
 		return list;
 	}
-	
+
 	public static ArrayList<Command> activeGearRight() {
 		ArrayList<Command> list = AutoGenerator.gearPlaceAttempt();
 		list.add(new ToggleGearRamp());

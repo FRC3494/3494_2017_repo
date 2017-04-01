@@ -104,7 +104,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
 		chooser.addObject("PID Test - drive straight", new PIDFullDrive(36));
 		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
-		chooser.addObject("Active Gear placer - Robot turn right", new ConstructedAuto(AutoGenerator.activeGearRight()));
+		chooser.addObject("Active Gear placer - Robot turn right",
+				new ConstructedAuto(AutoGenerator.activeGearRight()));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// get preferences
