@@ -34,6 +34,9 @@ public class Turret extends PIDSubsystem implements IMotorizedSubsystem {
 
 		this.shooterEnc_lower = new Encoder(RobotMap.TURRET_ENCLOWER_A, RobotMap.TURRET_ENCLOWER_B);
 		this.shooterEnc_upper = new Encoder(RobotMap.TURRET_ENCUPPER_A, RobotMap.TURRET_ENCUPPER_B);
+		
+		this.setOutputRange(-1, 1);
+		this.getPIDController().setContinuous(false);
 	}
 
 	@Override
