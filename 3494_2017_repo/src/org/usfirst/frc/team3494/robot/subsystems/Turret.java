@@ -20,14 +20,15 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 
 	private CANTalon shooterUpper;
 	private CANTalon shooterLower;
-
 	private CANTalon unscrambler;
+	private CANTalon conveyer;
 
 	public Turret() {
 		super("Turret");
 		this.shooterUpper = new CANTalon(RobotMap.TURRET_UPPER);
 		this.shooterLower = new CANTalon(RobotMap.TURRET_LOWER);
 		this.unscrambler = new CANTalon(RobotMap.UNSCRAMBLER);
+		this.conveyer = new CANTalon(RobotMap.TURRET_CONVEYER);
 	}
 
 	@Override
@@ -41,6 +42,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		this.shooterLower.set(0);
 		this.shooterUpper.set(0);
 		this.unscrambler.set(0);
+		this.stopConveyer();
 	}
 
 	@Override
@@ -48,6 +50,7 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		this.shooterLower.set(speed);
 		this.shooterUpper.set(speed);
 		this.unscrambler.set(speed);
+		this.conveyer.set(speed);
 	}
 
 	public double getDistance(TurretEncoders enc) {
@@ -70,5 +73,17 @@ public class Turret extends Subsystem implements IMotorizedSubsystem {
 		power = Math.abs(power);
 		this.shooterUpper.set(power);
 		this.shooterLower.set(power);
+	}
+
+	/**
+	 * Runs the conveyer to move balls into the shooter. Call in conjunction
+	 * with {@link Turret#shoot(double)}.
+	 */
+	public void convey() {
+		this.conveyer.set(0.4);
+	}
+
+	public void stopConveyer() {
+		this.conveyer.set(0);
 	}
 }
