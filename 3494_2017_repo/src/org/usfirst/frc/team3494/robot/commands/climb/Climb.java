@@ -28,6 +28,7 @@ public class Climb extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.climber);
+		requires(Robot.driveTrain);
 		if (dir != null) {
 			if (dir.equals(DriveDirections.DOWN) || dir.equals(DriveDirections.UP)) {
 				this.direction = dir;
@@ -45,7 +46,13 @@ public class Climb extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.climber.climb(direction);
+		float pitch = Robot.ahrs.getPitch();
+		if (!(pitch > 30)) {
+			Robot.climber.climb(direction);
+		} else {
+			Robot.climber.stopAll();
+			Robot.climber.engagePTO();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
