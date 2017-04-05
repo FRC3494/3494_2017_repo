@@ -28,7 +28,6 @@ public class Climb extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.climber);
-		requires(Robot.driveTrain);
 		if (dir != null) {
 			if (dir.equals(DriveDirections.DOWN) || dir.equals(DriveDirections.UP)) {
 				this.direction = dir;
