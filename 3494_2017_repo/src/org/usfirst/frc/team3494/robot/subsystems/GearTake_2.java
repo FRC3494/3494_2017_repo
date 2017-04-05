@@ -28,6 +28,7 @@ public class GearTake_2 extends Subsystem {
 	public GearTake_2() {
 		super();
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
+		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
 		this.lb = new LineBreak(0);
 	}
 
