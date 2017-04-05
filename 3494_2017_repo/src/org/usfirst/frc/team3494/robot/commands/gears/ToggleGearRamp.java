@@ -23,9 +23,9 @@ public class ToggleGearRamp extends Command {
 	@Override
 	protected void execute() {
 		if (Robot.gearTake.getGearState().equals(Value.kForward)) {
-			Robot.gearTake.setGrasp(Value.kReverse);
+			Robot.gearTake.setRamp(Value.kReverse);
 		} else {
-			Robot.gearTake.setGrasp(Value.kForward);
+			Robot.gearTake.setRamp(Value.kForward);
 		}
 	}
 
