@@ -3,12 +3,13 @@ package org.usfirst.frc.team3494.robot;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
-import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
+import org.usfirst.frc.team3494.robot.commands.gears.SetHolderState;
 import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -77,7 +78,8 @@ public class OI {
 
 		xbox_b_2.whenPressed(new SetReverse());
 
-		xbox_x_2.whileHeld(new HoldInState_Forward());
+		xbox_x_2.whenPressed(new SetHolderState(Value.kForward));
+		xbox_x_2.whenReleased(new SetHolderState(Value.kReverse));
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 
