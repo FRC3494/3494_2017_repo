@@ -35,6 +35,16 @@ public class DistanceDrive extends Command {
 		this.unit = unitType;
 	}
 
+	/**
+	 * Alternative constructor.
+	 * 
+	 * @param distance
+	 *            The distance to drive, in inches.
+	 */
+	public DistanceDrive(double distance) {
+		this(distance, UnitTypes.INCHES);
+	}
+
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
