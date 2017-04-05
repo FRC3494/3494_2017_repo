@@ -45,7 +45,13 @@ public class Climb extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.climber.climb(direction);
+		float pitch = Robot.ahrs.getPitch();
+		if (!(pitch > 30)) {
+			Robot.climber.climb(direction);
+		} else {
+			Robot.climber.stopAll();
+			Robot.climber.engagePTO();
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -23,13 +23,14 @@ public class TurretCon extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-
+		Robot.turret.enablePID();
+		Robot.turret.setSetpoint(5000);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
@@ -41,5 +42,6 @@ public class TurretCon extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		this.end();
 	}
 }

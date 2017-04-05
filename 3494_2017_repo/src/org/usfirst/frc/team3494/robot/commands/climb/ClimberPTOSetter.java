@@ -8,14 +8,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Toggles the climber from drivetrain to climb motor.
  */
-public class ClimberToggle extends Command {
+public class ClimberPTOSetter extends Command {
 
-	public ClimberToggle() {
+	private boolean b;
+
+	public ClimberPTOSetter(boolean engage) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.climber);
 		requires(Robot.kompressor);
 		requires(Robot.gearTake);
+		this.b = engage;
 	}
 
 	// Called just before this Command runs the first time
@@ -26,7 +29,7 @@ public class ClimberToggle extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (!Robot.climber.getState()) {
+		if (this.b) {
 			Robot.climber.engagePTO();
 			Robot.kompressor.compress.stop();
 			Robot.gearTake.setGrasp(Value.kForward);

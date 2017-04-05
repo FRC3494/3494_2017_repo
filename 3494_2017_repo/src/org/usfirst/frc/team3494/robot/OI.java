@@ -2,13 +2,13 @@ package org.usfirst.frc.team3494.robot;
 
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
-import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
+import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
-import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
 import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
+import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -52,7 +52,7 @@ public class OI {
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
 	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 
-	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
+	public JoystickButton xbox_lt_2 = new JoystickButton(xbox_2, 5);
 
 	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
 	public JoystickButton xbox_rt_2 = new JoystickButton(xbox_2, 6);
@@ -86,7 +86,10 @@ public class OI {
 		xbox_rt_2.whenPressed(new Shoot());
 		xbox_rt_2.whenReleased(new Shoot(0));
 
-		xbox_select_2.whenPressed(new ClimberToggle());
-		xbox_start_2.whileHeld(new HoldDriveTrain());
+		xbox_lt_2.whenReleased(new TurretCon());
+		xbox_lt_2.whenReleased(new Shoot(0));
+
+		xbox_select_2.whenPressed(new ClimberPTOSetter(true));
+		xbox_start_2.whileHeld(new ClimberPTOSetter(false));
 	}
 }
