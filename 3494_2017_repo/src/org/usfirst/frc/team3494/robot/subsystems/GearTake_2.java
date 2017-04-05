@@ -21,6 +21,7 @@ public class GearTake_2 extends Subsystem {
 	 * forward most of the time.
 	 */
 	private DoubleSolenoid rampenoid;
+	private DoubleSolenoid doornoid;
 
 	public LineBreak lb;
 
@@ -41,9 +42,7 @@ public class GearTake_2 extends Subsystem {
 	 * 
 	 * @param value
 	 *            The position to set the ramp to.
-	 * @deprecated use {@linkplain GearTake_2#setGrasp(Value)} instead.
 	 */
-	@Deprecated
 	public void setRamp(Value value) {
 		this.rampenoid.set(value);
 	}
@@ -55,7 +54,7 @@ public class GearTake_2 extends Subsystem {
 	 *            The position to set the holder to.
 	 */
 	public void setGrasp(Value value) {
-		this.rampenoid.set(value);
+		this.doornoid.set(value);
 	}
 
 	/**
@@ -78,9 +77,7 @@ public class GearTake_2 extends Subsystem {
 	 * private.
 	 * 
 	 * @return The value of {@code this.rampenoid.get()}.
-	 * @deprecated use getGearState instead
 	 */
-	@Deprecated
 	public Value getRampState() {
 		return this.rampenoid.get();
 	}
@@ -93,6 +90,6 @@ public class GearTake_2 extends Subsystem {
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getGearState() {
-		return this.rampenoid.get();
+		return this.doornoid.get();
 	}
 }
