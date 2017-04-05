@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot;
 
-import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
@@ -71,7 +70,6 @@ public class OI {
 
 	public OI() {
 		// Ready Player One
-		xbox_a.whenPressed(new DistanceDrive(-12, UnitTypes.INCHES));
 		// Ready Player Two
 		// Climb controls
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
