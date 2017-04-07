@@ -24,6 +24,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -93,6 +94,8 @@ public class Robot extends IterativeRobot {
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
 		oi = new OI();
+		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
+		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		Robot.climber.disengagePTO();
 		// Auto programs come after all subsystems are created
