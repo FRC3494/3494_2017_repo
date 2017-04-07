@@ -68,7 +68,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	public static final double RAMP = 48;
 
-	public int inverter = -1;
+	public int inverter = 1;
 	public double scaleDown = 1;
 
 	public CANTalon[] leftSide;
