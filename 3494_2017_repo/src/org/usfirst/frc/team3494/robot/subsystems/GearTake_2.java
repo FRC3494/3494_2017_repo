@@ -27,15 +27,13 @@ public class GearTake_2 extends Subsystem {
 
 	public GearTake_2() {
 		super();
-		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_CHONE, RobotMap.GEAR_RAMP_CHTWO);
-		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_GRASP_CHONE, RobotMap.GEAR_GRASP_CHTWO);
+		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
+		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
 		this.lb = new LineBreak(0);
 	}
 
 	@Override
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 
 	/**
