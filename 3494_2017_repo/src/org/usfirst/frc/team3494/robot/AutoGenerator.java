@@ -40,7 +40,7 @@ public class AutoGenerator {
 	}
 
 	/**
-	 * Drives to the baseline and earns us five points (hopefully.)
+	 * Drives to the baseline.
 	 * 
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive
 	 * @since 0.0.3
@@ -68,7 +68,7 @@ public class AutoGenerator {
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *         ConstructedAuto}
 	 */
-	public static ArrayList<Command> gearPlaceAttempt() {
+	public static ArrayList<Command> gearPlaceAttemptRight() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(65));
@@ -77,6 +77,15 @@ public class AutoGenerator {
 		return list;
 	}
 
+	/**
+	 * Drives forward, turns left, drives forward again.
+	 * 
+	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *      Constructed Auto
+	 * @return A list for use with
+	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *         ConstructedAuto}
+	 */
 	public static ArrayList<Command> gearPlaceAttemptLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
@@ -86,6 +95,16 @@ public class AutoGenerator {
 		return list;
 	}
 
+	/**
+	 * Same as {@link AutoGenerator#gearPlaceAttemptLeft()}, but drops the gear
+	 * on the peg at the end.
+	 * 
+	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *      Constructed Auto
+	 * @return A list for use with
+	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *         ConstructedAuto}
+	 */
 	public static ArrayList<Command> activeLeftGear() {
 		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptLeft();
 		list.add(new SetGearGrasp(Value.kForward));
@@ -93,8 +112,18 @@ public class AutoGenerator {
 		return list;
 	}
 
+	/**
+	 * Same as {@link AutoGenerator#gearPlaceAttemptRight()}, but drops the gear on
+	 * the peg at the end.
+	 * 
+	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *      Constructed Auto
+	 * @return A list for use with
+	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *         ConstructedAuto}
+	 */
 	public static ArrayList<Command> activeGearRight() {
-		ArrayList<Command> list = AutoGenerator.gearPlaceAttempt();
+		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptRight();
 		list.add(new SetGearGrasp(Value.kForward));
 		list.add(new PIDFullDrive(-10));
 		return list;
