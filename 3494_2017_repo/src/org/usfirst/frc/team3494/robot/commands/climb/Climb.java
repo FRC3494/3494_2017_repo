@@ -52,7 +52,8 @@ public class Climb extends Command {
 			Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
 			Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
 		} else {
-			Robot.climber.stopAll();
+			System.out.println("Climb detected - rumbling");
+			Robot.climber.stopAll(); // maybe remove this?
 			Robot.climber.engagePTO();
 			Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0.75);
 			Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0.75);
