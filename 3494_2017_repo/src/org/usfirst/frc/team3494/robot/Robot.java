@@ -62,7 +62,6 @@ public class Robot extends IterativeRobot {
 	public static Preferences prefs;
 
 	public static UsbCamera camera_0;
-	public static UsbCamera camera_1;
 	// Vision items
 	private static final int IMG_WIDTH = 320;
 	@SuppressWarnings("unused")

@@ -48,7 +48,7 @@ public class Drive extends Command {
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", true)) {
 				Drive.driveArcade();
-			} else {
+			} else if (!Robot.prefs.getBoolean("betapid", false)) {
 				// 10 gbp to whoever can reduce this to one call
 				if (!Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
@@ -57,6 +57,14 @@ public class Drive extends Command {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
 							-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
 				}
+			} else {
+				// BETA - steer using Drivetrain PID
+				if (!Robot.driveTrain.getPIDController().isEnabled()) {
+					Robot.driveTrain.enable(); // enable only if disabled
+				}
+				double setpoint = Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight);
+				Robot.driveTrain.setSetpoint(setpoint);
+				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
 			// Same reward here.
