@@ -69,7 +69,6 @@ public class Climb extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.climber.stopAll();
 		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
 		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
 	}
