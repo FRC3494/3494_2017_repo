@@ -3,7 +3,6 @@ package org.usfirst.frc.team3494.robot.commands.climb;
 import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -46,17 +45,7 @@ public class Climb extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		float pitch = Robot.ahrs.getPitch();
-		if (!(pitch > 30 || pitch < -30)) {
-			Robot.climber.climb(direction);
-			Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
-			Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
-		} else {
-			Robot.climber.stopAll(); // maybe remove this?
-			Robot.climber.engagePTO();
-			Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0.75);
-			Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0.75);
-		}
+		Robot.climber.climb(direction);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -68,8 +57,6 @@ public class Climb extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
-		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
 	}
 
 	// Called when another command which requires one or more of the same
