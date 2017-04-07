@@ -3,8 +3,8 @@ package org.usfirst.frc.team3494.robot;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
+import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.SetHolderState;
-import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
@@ -76,7 +76,7 @@ public class OI {
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
 		xbox_a_2.whenReleased(new StopClimber());
 
-		xbox_b_2.whenPressed(new SetReverse());
+		xbox_b_2.whileHeld(new HoldDriveTrain());
 
 		xbox_x_2.whenPressed(new SetHolderState(Value.kForward));
 		xbox_x_2.whenReleased(new SetHolderState(Value.kReverse));
