@@ -22,7 +22,7 @@ public class ToggleGearRamp extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.gearTake.getGearState().equals(Value.kForward)) {
+		if (Robot.gearTake.getRampState().equals(Value.kForward)) {
 			Robot.gearTake.setRamp(Value.kReverse);
 		} else {
 			Robot.gearTake.setRamp(Value.kForward);
