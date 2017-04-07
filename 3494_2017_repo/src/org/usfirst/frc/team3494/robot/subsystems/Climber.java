@@ -4,9 +4,10 @@ import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.RobotMap;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem implements IMotorizedSubsystem {
 
-	private Talon motor;
+	private CANTalon motor;
 	private boolean driveTrainMode;
 	private DoubleSolenoid pto; // zarya named it
 
@@ -24,7 +25,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	// here. Call these from Commands.
 	public Climber() {
 		super("Climber");
-		this.motor = new Talon(RobotMap.CLIMBER_MOTOR);
+		this.motor = new CANTalon(RobotMap.CLIMBER_MOTOR);
 		this.motor.setInverted(true);
 		this.pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
 		this.pto.set(Value.kForward);
@@ -47,9 +48,9 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void climb(DriveDirections dir) {
 		if (dir.equals(DriveDirections.UP) && !this.driveTrainMode) {
-			this.motor.set(1);
+			this.motor.set(0.35);
 		} else if (dir.equals(DriveDirections.DOWN) && !this.driveTrainMode) {
-			this.motor.set(-1);
+			this.motor.set(-0.35);
 		} else {
 			// stop the climber
 			this.motor.set(0);
