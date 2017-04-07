@@ -20,6 +20,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoGenerator {
 	/**
+	 * The distance of the first pull in gear placing.
+	 */
+	private static final double FIRST_PULL = 87.5 - 29;
+
+	/**
 	 * Test method. Drives to XY (36, 36) (inches).
 	 * 
 	 * @since 0.0.3
@@ -56,7 +61,7 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> gearPlaceAttempt() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new PIDFullDrive(87.5));
+		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(65));
 		list.add(new PIDFullDrive(54));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
@@ -65,7 +70,7 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> gearPlaceAttemptLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new PIDFullDrive(87.5));
+		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(-65));
 		list.add(new PIDFullDrive(54));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
