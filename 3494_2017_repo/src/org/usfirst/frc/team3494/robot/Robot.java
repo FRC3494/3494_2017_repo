@@ -101,9 +101,9 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
 		chooser.addObject("Passive Gear Placer - Robot turn right",
-				new ConstructedAuto(AutoGenerator.gearPlaceAttemptRight()));
+				new ConstructedAuto(AutoGenerator.gearPassiveRight()));
 		chooser.addObject("Passive Gear Placer - Robot turn left",
-				new ConstructedAuto(AutoGenerator.gearPlaceAttemptLeft()));
+				new ConstructedAuto(AutoGenerator.gearPassiveLeft()));
 		chooser.addObject("Do nothing", new NullAuto());
 		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
 		chooser.addObject("Active Gear placer - Robot turn right",

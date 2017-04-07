@@ -68,7 +68,7 @@ public class AutoGenerator {
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *         ConstructedAuto}
 	 */
-	public static ArrayList<Command> gearPlaceAttemptRight() {
+	public static ArrayList<Command> gearPassiveRight() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(65));
@@ -86,7 +86,7 @@ public class AutoGenerator {
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *         ConstructedAuto}
 	 */
-	public static ArrayList<Command> gearPlaceAttemptLeft() {
+	public static ArrayList<Command> gearPassiveLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(-65));
@@ -96,8 +96,8 @@ public class AutoGenerator {
 	}
 
 	/**
-	 * Same as {@link AutoGenerator#gearPlaceAttemptLeft()}, but drops the gear
-	 * on the peg at the end.
+	 * Same as {@link AutoGenerator#gearPassiveLeft()}, but drops the gear on
+	 * the peg at the end.
 	 * 
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *      Constructed Auto
@@ -106,14 +106,14 @@ public class AutoGenerator {
 	 *         ConstructedAuto}
 	 */
 	public static ArrayList<Command> activeLeftGear() {
-		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptLeft();
+		ArrayList<Command> list = AutoGenerator.gearPassiveLeft();
 		list.add(new SetGearGrasp(Value.kForward));
 		list.add(new PIDFullDrive(-10));
 		return list;
 	}
 
 	/**
-	 * Same as {@link AutoGenerator#gearPlaceAttemptRight()}, but drops the gear on
+	 * Same as {@link AutoGenerator#gearPassiveRight()}, but drops the gear on
 	 * the peg at the end.
 	 * 
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
@@ -123,7 +123,7 @@ public class AutoGenerator {
 	 *         ConstructedAuto}
 	 */
 	public static ArrayList<Command> activeGearRight() {
-		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptRight();
+		ArrayList<Command> list = AutoGenerator.gearPassiveRight();
 		list.add(new SetGearGrasp(Value.kForward));
 		list.add(new PIDFullDrive(-10));
 		return list;
