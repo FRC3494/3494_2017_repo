@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.SetGearGrasp;
 import org.usfirst.frc.team3494.robot.commands.auto.XYDrive;
-import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -43,7 +44,7 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> crossBaseLine() {
 		ArrayList<Command> list = new ArrayList<Command>();
-		list.add(new DistanceDrive(-72, UnitTypes.INCHES));
+		list.add(new DistanceDrive(72, UnitTypes.INCHES));
 		return list;
 	}
 
@@ -73,14 +74,14 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> activeLeftGear() {
 		ArrayList<Command> list = AutoGenerator.gearPlaceAttemptLeft();
-		list.add(new ToggleGearRamp());
-		list.add(new PIDFullDrive(10));
+		list.add(new SetGearGrasp(Value.kForward));
+		list.add(new PIDFullDrive(-10));
 		return list;
 	}
 
 	public static ArrayList<Command> activeGearRight() {
 		ArrayList<Command> list = AutoGenerator.gearPlaceAttempt();
-		list.add(new ToggleGearRamp());
+		list.add(new SetGearGrasp(Value.kForward));
 		list.add(new PIDFullDrive(-10));
 		return list;
 	}
