@@ -62,8 +62,7 @@ public class Drive extends Command {
 				if (!Robot.driveTrain.getPIDController().isEnabled()) {
 					Robot.driveTrain.enable(); // enable only if disabled
 				}
-				double setpoint = Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight);
-				Robot.driveTrain.setSetpoint(setpoint);
+				Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight));
 				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
