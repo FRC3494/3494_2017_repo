@@ -2,7 +2,8 @@ package org.usfirst.frc.team3494.robot.commands.climb;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -17,7 +18,7 @@ public class ClimberPTOSetter extends Command {
 		// eg. requires(chassis);
 		requires(Robot.climber);
 		requires(Robot.kompressor);
-		requires(Robot.gearTake);
+		requires(Robot.driveTrain);
 		this.b = engage;
 	}
 
@@ -32,11 +33,17 @@ public class ClimberPTOSetter extends Command {
 		if (this.b) {
 			Robot.climber.engagePTO();
 			Robot.kompressor.compress.stop();
-			Robot.gearTake.setGrasp(Value.kForward);
+			for (CANTalon c : Robot.driveTrain.leftSide) {
+				c.setCurrentLimit(35);
+				c.EnableCurrentLimit(true);
+			}
+			for (CANTalon c : Robot.driveTrain.rightSide) {
+				c.setCurrentLimit(35);
+				c.EnableCurrentLimit(true);
+			}
 		} else {
 			Robot.climber.disengagePTO();
 			Robot.kompressor.compress.start();
-			Robot.gearTake.setGrasp(Value.kReverse);
 		}
 	}
 
