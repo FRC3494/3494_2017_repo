@@ -59,6 +59,15 @@ public class AutoGenerator {
 		return list;
 	}
 
+	/**
+	 * Drives forward, turns right, drives forward again.
+	 * 
+	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *      Constructed Auto
+	 * @return A list for use with
+	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
+	 *         ConstructedAuto}
+	 */
 	public static ArrayList<Command> gearPlaceAttempt() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
