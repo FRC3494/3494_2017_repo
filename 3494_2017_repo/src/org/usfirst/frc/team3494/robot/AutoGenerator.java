@@ -22,7 +22,7 @@ public class AutoGenerator {
 	/**
 	 * The distance of the first pull in gear placing.
 	 */
-	private static final double FIRST_PULL = 87.5 - 29;
+	private static final double FIRST_PULL = 86.5 - 29;
 
 	/**
 	 * Test method. Drives to XY (36, 36) (inches).
