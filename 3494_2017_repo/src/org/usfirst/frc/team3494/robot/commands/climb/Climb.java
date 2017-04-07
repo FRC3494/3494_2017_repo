@@ -47,7 +47,7 @@ public class Climb extends Command {
 	@Override
 	protected void execute() {
 		float pitch = Robot.ahrs.getPitch();
-		if (!(pitch > 30)) {
+		if (!(pitch > 30 || pitch < -30)) {
 			Robot.climber.climb(direction);
 			Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
 			Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
