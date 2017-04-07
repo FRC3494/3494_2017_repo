@@ -25,6 +25,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	public Climber() {
 		super("Climber");
 		this.motor = new Talon(RobotMap.CLIMBER_MOTOR);
+		this.motor.setInverted(true);
 		this.pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
 		this.pto.set(Value.kForward);
 		this.driveTrainMode = false;
