@@ -59,10 +59,14 @@ public class Drive extends Command {
 				}
 			} else {
 				// BETA - steer using Drivetrain PID
+				SmartDashboard.putNumber("Drive setpoint", Robot.driveTrain.getSetpoint());
+				SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
 				if (!Robot.driveTrain.getPIDController().isEnabled()) {
 					Robot.driveTrain.enable(); // enable only if disabled
 				}
-				Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + (Robot.oi.xbox.getX(Hand.kRight) * -1));
+				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
+					Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight));
+				}
 				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
