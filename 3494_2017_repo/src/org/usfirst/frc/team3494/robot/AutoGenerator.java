@@ -22,7 +22,8 @@ public class AutoGenerator {
 	/**
 	 * The distance of the first pull in gear placing.
 	 */
-	private static final double FIRST_PULL = 86.5 - 29;
+	private static final double FIRST_PULL = 87.5 - 14.5;
+	private static final double ANGLE = 58.5;
 
 	/**
 	 * Test method. Drives to XY (36, 36) (inches).
@@ -71,7 +72,7 @@ public class AutoGenerator {
 	public static ArrayList<Command> gearPassiveRight() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
-		list.add(new PIDAngleDrive(65));
+		list.add(new PIDAngleDrive(ANGLE));
 		list.add(new PIDFullDrive(54));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		return list;
@@ -89,7 +90,7 @@ public class AutoGenerator {
 	public static ArrayList<Command> gearPassiveLeft() {
 		ArrayList<Command> list = new ArrayList<Command>();
 		list.add(new PIDFullDrive(FIRST_PULL));
-		list.add(new PIDAngleDrive(-65));
+		list.add(new PIDAngleDrive(-ANGLE));
 		list.add(new PIDFullDrive(54));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		return list;
