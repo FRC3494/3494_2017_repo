@@ -23,6 +23,9 @@ public class AutoGenerator {
 	 * The distance of the first pull in gear placing.
 	 */
 	private static final double FIRST_PULL = 87.5 - 14.5;
+	/**
+	 * The angle to turn after the first pull in gear placing.
+	 */
 	private static final double ANGLE = 58.5;
 
 	/**
