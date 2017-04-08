@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 	 * @since 0.0.2
 	 */
 	public static AHRS ahrs;
-	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	public static PowerDistributionPanel pdp;
 
 	Command autonomousCommand;
 	public static SendableChooser<Command> chooser;
@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
 		gearTake = new GearTake_2();
 		gearTake.closeHolder();
 		oi = new OI();
+		pdp = new PowerDistributionPanel();
 		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
 		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
 		ahrs = new AHRS(SerialPort.Port.kMXP);
