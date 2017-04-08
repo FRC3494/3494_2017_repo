@@ -21,7 +21,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -282,7 +281,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
-		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
 
 		SmartDashboard.putNumber("Upper Shooter Speed", Robot.turret.getRate(TurretEncoders.TOP));
 		SmartDashboard.putNumber("Lower Shooter Speed", Robot.turret.getRate(TurretEncoders.BOTTOM));

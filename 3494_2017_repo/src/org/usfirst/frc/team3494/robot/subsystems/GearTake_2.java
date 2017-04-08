@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
-import org.usfirst.frc.team3494.robot.sensors.LineBreak;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -23,13 +22,10 @@ public class GearTake_2 extends Subsystem {
 	private DoubleSolenoid rampenoid;
 	private DoubleSolenoid doornoid;
 
-	public LineBreak lb;
-
 	public GearTake_2() {
 		super();
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
-		this.lb = new LineBreak(0);
 	}
 
 	@Override
