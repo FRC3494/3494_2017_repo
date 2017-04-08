@@ -67,9 +67,7 @@ public class Drive extends Command {
 				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
 					Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight));
 				}
-				if (!Robot.driveTrain.onTarget()) {
-					Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
-				}
+				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
 			// Same reward here.
