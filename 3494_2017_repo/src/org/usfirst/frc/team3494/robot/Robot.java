@@ -22,7 +22,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -35,11 +34,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The JVM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * documentation.
  */
 public class Robot extends IterativeRobot {
 
@@ -55,6 +52,9 @@ public class Robot extends IterativeRobot {
 	 * @since 0.0.2
 	 */
 	public static AHRS ahrs;
+	/**
+	 * The robot's PDP panel. Use for reading current draw.
+	 */
 	public static PowerDistributionPanel pdp;
 
 	Command autonomousCommand;
@@ -83,7 +83,17 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Hello FTAs, how are you doing?");
 		System.out.println("Because I'm a QUADRANGLE.");
+		// Init hardware
+		pdp = new PowerDistributionPanel();
+		ahrs = new AHRS(SerialPort.Port.kMXP);
+		ahrs.reset();
+		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
+		camera_0.setExposureManual(20);
+		// Non subsystem software init
+		prefs = Preferences.getInstance();
 		chooser = new SendableChooser<Command>();
+		oi = new OI();
+		// Init subsystems
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		climber.disengagePTO();
@@ -91,12 +101,6 @@ public class Robot extends IterativeRobot {
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
 		gearTake.closeHolder();
-		oi = new OI();
-		pdp = new PowerDistributionPanel();
-		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
-		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
-		ahrs = new AHRS(SerialPort.Port.kMXP);
-		Robot.climber.disengagePTO();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
@@ -110,12 +114,6 @@ public class Robot extends IterativeRobot {
 				new ConstructedAuto(AutoGenerator.activeGearRight()));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
-		// get preferences
-		prefs = Preferences.getInstance();
-		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
-		camera_0.setExposureManual(20);
-		// camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake
-		// View", 1);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
