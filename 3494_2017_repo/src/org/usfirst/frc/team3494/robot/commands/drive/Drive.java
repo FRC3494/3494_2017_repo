@@ -44,7 +44,7 @@ public class Drive extends Command {
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
-		boolean useX = Robot.prefs.getBoolean("usexbox", true);
+		boolean useX = false;
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", true)) {
 				Drive.driveArcade();
