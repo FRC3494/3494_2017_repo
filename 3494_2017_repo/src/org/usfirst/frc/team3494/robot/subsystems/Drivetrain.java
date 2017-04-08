@@ -140,10 +140,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		// PID control
 		this.PIDTune = 0;
 		double outRange = 0.5;
-		this.getPIDController().setInputRange(-180, 180);
-		this.getPIDController().setOutputRange(-outRange, outRange);
-		this.getPIDController().setContinuous(false);
-		this.getPIDController().setPercentTolerance(2.5);
+		this.setInputRange(-180, 180);
+		this.setOutputRange(-outRange, outRange);
+		this.getPIDController().setContinuous(true);
+		this.setPercentTolerance(2.5);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
