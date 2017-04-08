@@ -46,7 +46,7 @@ public class Drive extends Command {
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
 		boolean useX = false;
 		if (useX) {
-			if (Robot.prefs.getBoolean("arcade", true)) {
+			if (Robot.prefs.getBoolean("arcade", false)) {
 				Drive.driveArcade();
 			} else if (!Robot.prefs.getBoolean("betapid", false)) {
 				// 10 gbp to whoever can reduce this to one call
