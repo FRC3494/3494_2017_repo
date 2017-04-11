@@ -9,6 +9,7 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
+import org.usfirst.frc.team3494.robot.subsystems.ClimberPTO;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
@@ -42,6 +43,8 @@ public class Robot extends IterativeRobot {
 	public static Climber climber;
 	public static Kompressor kompressor;
 	public static GearTake_2 gearTake;
+	public static ClimberPTO pto;
+	
 	/**
 	 * The gyro board mounted to the RoboRIO.
 	 * 
@@ -92,10 +95,11 @@ public class Robot extends IterativeRobot {
 		// Init subsystems
 		driveTrain = new Drivetrain();
 		climber = new Climber();
-		climber.disengagePTO();
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
 		gearTake.closeHolder();
+		pto = new ClimberPTO();
+		pto.disengagePTO();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
