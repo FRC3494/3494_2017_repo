@@ -6,8 +6,6 @@ import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
 import org.usfirst.frc.team3494.robot.commands.gears.SetHolderState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
-import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
-import org.usfirst.frc.team3494.robot.commands.turret.TurretCon;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
@@ -82,13 +80,7 @@ public class OI {
 		xbox_x_2.whenReleased(new SetHolderState(Value.kReverse));
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
-
-		xbox_rt_2.whenPressed(new Shoot());
-		xbox_rt_2.whenReleased(new Shoot(0));
-
-		xbox_lt_2.whenReleased(new TurretCon());
-		xbox_lt_2.whenReleased(new Shoot(0));
-
+		
 		xbox_select_2.whenPressed(new ClimberPTOSetter(true));
 		xbox_start_2.whileHeld(new ClimberPTOSetter(false));
 	}
