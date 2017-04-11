@@ -12,8 +12,6 @@ import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
-import org.usfirst.frc.team3494.robot.subsystems.Turret;
-import org.usfirst.frc.team3494.robot.subsystems.TurretEncoders;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.ctre.CANTalon;
@@ -42,7 +40,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drivetrain driveTrain;
 	public static Climber climber;
-	public static Turret turret;
 	public static Kompressor kompressor;
 	public static GearTake_2 gearTake;
 	/**
@@ -96,7 +93,6 @@ public class Robot extends IterativeRobot {
 		driveTrain = new Drivetrain();
 		climber = new Climber();
 		climber.disengagePTO();
-		turret = new Turret();
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
 		gearTake.closeHolder();
@@ -281,8 +277,5 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
-
-		SmartDashboard.putNumber("Upper Shooter Speed", Robot.turret.getRate(TurretEncoders.TOP));
-		SmartDashboard.putNumber("Lower Shooter Speed", Robot.turret.getRate(TurretEncoders.BOTTOM));
 	}
 }
