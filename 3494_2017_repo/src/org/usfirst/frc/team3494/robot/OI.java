@@ -80,7 +80,7 @@ public class OI {
 		xbox_x_2.whenReleased(new SetHolderState(Value.kReverse));
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
-		
+
 		xbox_select_2.whenPressed(new ClimberPTOSetter(true));
 		xbox_start_2.whileHeld(new ClimberPTOSetter(false));
 	}
