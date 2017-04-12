@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 	public static Kompressor kompressor;
 	public static GearTake_2 gearTake;
 	public static ClimberPTO pto;
-	
+
 	/**
 	 * The gyro board mounted to the RoboRIO.
 	 * 

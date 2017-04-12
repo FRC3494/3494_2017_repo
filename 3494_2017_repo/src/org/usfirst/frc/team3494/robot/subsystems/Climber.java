@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Climber extends Subsystem implements IMotorizedSubsystem {
 
 	private CANTalon motor;
-	
+
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public Climber() {
