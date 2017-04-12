@@ -88,10 +88,6 @@ public class Robot extends IterativeRobot {
 		ahrs.reset();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
 		camera_0.setExposureManual(20);
-		// Non subsystem software init
-		prefs = Preferences.getInstance();
-		chooser = new SendableChooser<Command>();
-		oi = new OI();
 		// Init subsystems
 		driveTrain = new Drivetrain();
 		climber = new Climber();
@@ -100,6 +96,10 @@ public class Robot extends IterativeRobot {
 		gearTake.closeHolder();
 		pto = new ClimberPTO();
 		pto.disengagePTO();
+		// Non subsystem software init
+		prefs = Preferences.getInstance();
+		chooser = new SendableChooser<Command>();
+		oi = new OI();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
