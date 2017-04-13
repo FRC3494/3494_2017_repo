@@ -32,6 +32,8 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		SmartDashboard.putNumber("Drive setpoint", Robot.driveTrain.getSetpoint());
+		SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
 		int dpad = Robot.oi.stick_l.getPOV();
 		if (dpad == 0 || Robot.oi.stick_l.getRawButton(7)) {
 			Robot.driveTrain.inverter = 1;
@@ -44,7 +46,7 @@ public class Drive extends Command {
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
-		boolean useX = false;
+		boolean useX = Robot.prefs.getBoolean("xbone", false);
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", false)) {
 				Drive.driveArcade();
@@ -59,13 +61,12 @@ public class Drive extends Command {
 				}
 			} else {
 				// BETA - steer using Drivetrain PID
-				SmartDashboard.putNumber("Drive setpoint", Robot.driveTrain.getSetpoint());
-				SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
 				if (!Robot.driveTrain.getPIDController().isEnabled()) {
 					Robot.driveTrain.enable(); // enable only if disabled
 				}
 				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
-					Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight));
+					Robot.driveTrain
+							.setSetpoint(Robot.driveTrain.getSetpoint() + (3 * Robot.oi.xbox.getX(Hand.kRight)));
 				}
 				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
