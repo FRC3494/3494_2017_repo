@@ -16,52 +16,52 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  * Drivetrain subsystem. Contains all methods for controlling the robot's
  * drivetrain. Also has in instance of RobotDrive (wpiDrive) if you want to use
  * that.
- * 
+ *
  * @since 0.0.0
  */
 public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	/**
 	 * Master drive talon, left side. Setting this should set all the talons on
 	 * the left side of the drive train.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftMaster;
 	/**
 	 * Follower talon on left side.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftFollower_One;
 	/**
 	 * Follower talon on left side.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveLeftFollower_Two;
 	/**
 	 * Master drive talon, right side. Setting this should set all the talons on
 	 * the left side of the drive train.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveRightMaster;
 	/**
 	 * Follower talon on right side.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveRightFollower_One;
 	/**
 	 * Follower talon on right side.
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	private CANTalon driveRightFollower_Two;
 	/**
 	 * Instance of wpiDrive for using WPI's driving code. Should <em>not</em> be
 	 * used for tank driving (use {@link Drivetrain#TankDrive} instead.)
-	 * 
+	 *
 	 * @since 0.0.0
 	 */
 	public RobotDrive wpiDrive;
@@ -161,7 +161,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	/**
 	 * Drives the drivetrain tank drive style. The drivetrain will continue to
 	 * run until stopped with a method like {@link Drivetrain#stopAll()}.
-	 * 
+	 *
 	 * @param left
 	 *            The power to drive the left side. Should be a {@code double}
 	 *            between 0 and 1.
@@ -188,7 +188,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * Drives the drivetrain, with the value passed in for left inverted. This
 	 * corrects for the left side being inverted hardware side.<br>
 	 * It works if you don't think about it too hard.
-	 * 
+	 *
 	 * @param left
 	 *            The power to set the left side to. This will be multiplied by
 	 *            -1 before getting to the Talons.
@@ -257,7 +257,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	/**
 	 * Gets the distance the right encoder has counted in the specified unit.
-	 * 
+	 *
 	 * @param unit
 	 *            The unit type to get the distance in.
 	 * @return The distance the right encoder has counted, in the specified
@@ -281,7 +281,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	/**
 	 * Gets the distance the left encoder has counted in the specified unit.
-	 * 
+	 *
 	 * @param unit
 	 *            The unit type to get the distance in.
 	 * @return The distance the left encoder has counted, in the specified unit.
@@ -335,7 +335,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	/**
 	 * Returns {@code true} if the drivetrain is inverted (the gear holder is
 	 * considered forward.)
-	 * 
+	 *
 	 * @return {@code true} if the drivetrain is inverted.
 	 */
 	public boolean getInverted() {
@@ -345,7 +345,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	/**
 	 * Stage-sets the drivetrain. Please, for the love of all that is holy call
 	 * {@link Drivetrain#snapBackToReality()} after this.
-	 * 
+	 *
 	 * @param left
 	 *            The left power
 	 * @param right

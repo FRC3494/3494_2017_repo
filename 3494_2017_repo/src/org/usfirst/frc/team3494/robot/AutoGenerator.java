@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Class containing methods that return valid lists to pass to
  * {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto}.
- * 
+ *
  * @since 0.0.3
  * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
  */
@@ -30,7 +30,7 @@ public class AutoGenerator {
 
 	/**
 	 * Test method. Drives to XY (36, 36) (inches).
-	 * 
+	 *
 	 * @since 0.0.3
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.XYDrive
@@ -38,34 +38,34 @@ public class AutoGenerator {
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto}.
 	 */
 	public static ArrayList<Command> autoOne() {
-		ArrayList<Command> list = new ArrayList<Command>();
+		ArrayList<Command> list = new ArrayList<>();
 		list.add(new XYDrive(36, 36));
 		return list;
 	}
 
 	/**
 	 * Drives to the baseline.
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive
 	 * @since 0.0.3
 	 * @return A list of commands suitable for use with
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto}.
 	 */
 	public static ArrayList<Command> crossBaseLine() {
-		ArrayList<Command> list = new ArrayList<Command>();
+		ArrayList<Command> list = new ArrayList<>();
 		list.add(new DistanceDrive(72, UnitTypes.INCHES));
 		return list;
 	}
 
 	public static ArrayList<Command> placeCenterGear() {
-		ArrayList<Command> list = new ArrayList<Command>();
+		ArrayList<Command> list = new ArrayList<>();
 		list.add(new PIDFullDrive(110.75));
 		return list;
 	}
 
 	/**
 	 * Drives forward, turns right, drives forward again.
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *      Constructed Auto
 	 * @return A list for use with
@@ -73,7 +73,7 @@ public class AutoGenerator {
 	 *         ConstructedAuto}
 	 */
 	public static ArrayList<Command> gearPassiveRight() {
-		ArrayList<Command> list = new ArrayList<Command>();
+		ArrayList<Command> list = new ArrayList<>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(ANGLE));
 		list.add(new PIDFullDrive(62));
@@ -83,7 +83,7 @@ public class AutoGenerator {
 
 	/**
 	 * Drives forward, turns left, drives forward again.
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *      Constructed Auto
 	 * @return A list for use with
@@ -91,7 +91,7 @@ public class AutoGenerator {
 	 *         ConstructedAuto}
 	 */
 	public static ArrayList<Command> gearPassiveLeft() {
-		ArrayList<Command> list = new ArrayList<Command>();
+		ArrayList<Command> list = new ArrayList<>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(-ANGLE));
 		list.add(new PIDFullDrive(62));
@@ -102,7 +102,7 @@ public class AutoGenerator {
 	/**
 	 * Same as {@link AutoGenerator#gearPassiveLeft()}, but drops the gear on
 	 * the peg at the end.
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *      Constructed Auto
 	 * @return A list for use with
@@ -119,7 +119,7 @@ public class AutoGenerator {
 	/**
 	 * Same as {@link AutoGenerator#gearPassiveRight()}, but drops the gear on
 	 * the peg at the end.
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *      Constructed Auto
 	 * @return A list for use with

@@ -18,7 +18,7 @@ public class PIDFullDrive extends Command {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param dist
 	 *            The distance to drive, in inches.
 	 * @param angle
@@ -33,7 +33,7 @@ public class PIDFullDrive extends Command {
 
 	/**
 	 * Other constructor. Uses default angle of 0 degrees.
-	 * 
+	 *
 	 * @param dist
 	 *            The distance to drive in inches.
 	 */

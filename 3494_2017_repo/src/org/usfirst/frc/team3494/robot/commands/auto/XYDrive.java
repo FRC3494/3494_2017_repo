@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * Drives to a point relative to the robot.
- * 
+ *
  * @since 0.0.3
  */
 public class XYDrive extends CommandGroup {
@@ -14,7 +14,7 @@ public class XYDrive extends CommandGroup {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param rise
 	 *            The distance along the Y axis that the point is from the
 	 *            robot.
@@ -28,7 +28,7 @@ public class XYDrive extends CommandGroup {
 
 	/**
 	 * More verbose(?) constructor.
-	 * 
+	 *
 	 * @param rise
 	 *            The distance along the Y axis that the point is from the
 	 *            robot.

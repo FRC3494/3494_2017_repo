@@ -34,7 +34,7 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Sets the position of the intake ramp.
-	 * 
+	 *
 	 * @param value
 	 *            The position to set the ramp to.
 	 */
@@ -44,7 +44,7 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Sets the position of the actual gear holder.
-	 * 
+	 *
 	 * @param value
 	 *            The position to set the holder to.
 	 */
@@ -70,7 +70,7 @@ public class GearTake_2 extends Subsystem {
 	 * Gets the state of the intake ramp solenoid. Equivalent to
 	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is
 	 * private.
-	 * 
+	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getRampState() {
@@ -81,7 +81,7 @@ public class GearTake_2 extends Subsystem {
 	 * Gets the state of the gear holder. Equivalent to
 	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is
 	 * private.
-	 * 
+	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getGearState() {

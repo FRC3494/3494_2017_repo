@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks.
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain Drivetrain
  * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive Distance
  *      Driving (auto)

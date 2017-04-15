@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 
 	/**
 	 * The gyro board mounted to the RoboRIO.
-	 * 
+	 *
 	 * @since 0.0.2
 	 */
 	public static AHRS ahrs;
@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public double absolutelyAverage = 0.0;
 	@SuppressWarnings("unused")
 	private ArrayList<MatOfPoint> filteredContours;
-	private ArrayList<Double> averages = new ArrayList<Double>();
+	private ArrayList<Double> averages = new ArrayList<>();
 
 	private final Object imgLock = new Object();
 
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot {
 		pto.disengagePTO();
 		// Non subsystem software init
 		prefs = Preferences.getInstance();
-		chooser = new SendableChooser<Command>();
+		chooser = new SendableChooser<>();
 		oi = new OI();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));

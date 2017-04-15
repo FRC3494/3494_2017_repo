@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Climber subsystem. Contains methods for controlling the rope climber.
- * 
+ *
  * @since 0.0.0
  */
 public class Climber extends Subsystem implements IMotorizedSubsystem {
@@ -33,7 +33,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 
 	/**
 	 * Climbs in the specified direction.
-	 * 
+	 *
 	 * @param dir
 	 *            The direction to climb. Setting this to anything other than
 	 *            {@link DriveDirections#UP} or {@link DriveDirections#DOWN}

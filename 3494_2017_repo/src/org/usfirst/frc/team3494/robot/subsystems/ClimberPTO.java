@@ -24,6 +24,7 @@ public class ClimberPTO extends Subsystem {
 		this.driveTrainMode = false;
 	}
 
+	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
@@ -37,7 +38,7 @@ public class ClimberPTO extends Subsystem {
 	 * Engages or disengages the drivetrain from the climber. Note that with the
 	 * drivetrain engaged controlling the climber by this subsystem becomes
 	 * impossible (you must use {@link Drivetrain} instead.)
-	 * 
+	 *
 	 * @see Drivetrain
 	 * @param value
 	 *            The state to set the PTO piston in.
