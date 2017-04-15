@@ -23,6 +23,7 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 		super("Climber");
 		this.motor = new CANTalon(RobotMap.CLIMBER_MOTOR);
 		this.motor.setInverted(true);
+		this.motor.enableBrakeMode(false);
 	}
 
 	@Override
@@ -41,9 +42,9 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void climb(DriveDirections dir) {
 		if (dir.equals(DriveDirections.UP) && !Robot.pto.getState()) {
-			this.motor.set(0.35);
+			this.motor.set(1);
 		} else if (dir.equals(DriveDirections.DOWN) && !Robot.pto.getState()) {
-			this.motor.set(-0.35);
+			this.motor.set(-1);
 		} else {
 			// stop the climber
 			this.motor.set(0);
