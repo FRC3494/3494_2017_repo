@@ -27,6 +27,10 @@ public class AutoGenerator {
 	 * The angle to turn after the first pull in gear placing.
 	 */
 	private static final double ANGLE = 60;
+	/**
+	 * After turning {@link AutoGenerator#ANGLE} degrees, drive this distance.
+	 */
+	private static final double SECOND_PULL = 56.6 - 17.75;
 
 	/**
 	 * Test method. Drives to XY (36, 36) (inches).
@@ -76,7 +80,7 @@ public class AutoGenerator {
 		ArrayList<Command> list = new ArrayList<>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(ANGLE));
-		list.add(new PIDFullDrive(57.6 - 17.75));
+		list.add(new PIDFullDrive(SECOND_PULL));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		return list;
 	}
@@ -94,7 +98,7 @@ public class AutoGenerator {
 		ArrayList<Command> list = new ArrayList<>();
 		list.add(new PIDFullDrive(FIRST_PULL));
 		list.add(new PIDAngleDrive(-ANGLE));
-		list.add(new PIDFullDrive(57.6 - 17.75));
+		list.add(new PIDFullDrive(SECOND_PULL));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
 		return list;
 	}
