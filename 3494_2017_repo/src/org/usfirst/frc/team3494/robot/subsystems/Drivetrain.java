@@ -66,7 +66,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public RobotDrive wpiDrive;
 
-	public static final double RAMP = 48;
+	public static final double RAMP = 0;
 
 	public int inverter = 1;
 	public double scaleDown = 1;
@@ -77,7 +77,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	public double PIDTune;
 
 	public Drivetrain() {
-		super("Drivetrain", 0.025, 0, 0);
+		super("Drivetrain", 0.035, 0, 0);
 		// int maxAmps = 50;
 		// create left talons
 		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
@@ -139,14 +139,14 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		 */
 		// PID control
 		this.PIDTune = 0;
-		double outRange = 0.75;
+		double outRange = 0.5;
 		this.disable();
 		if (this.getSetpoint() != 0) {
 			this.setSetpoint(0);
 		}
-		// this.setInputRange(-180, 180);
+		this.setInputRange(-180, 180);
 		this.setOutputRange(-outRange, outRange);
-		// this.getPIDController().setContinuous(true);
+		this.getPIDController().setContinuous(true);
 		this.setPercentTolerance(2.5);
 	}
 	// Put methods for controlling this subsystem
@@ -395,7 +395,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		return Robot.ahrs.getAngle();
+		return Robot.ahrs.getYaw();
 	}
 
 	@Override
