@@ -178,14 +178,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
-			System.out.println("Selected command " + chooser.getSelected().getName());
-			autonomousCommand.start();
-		} else {
-			System.out.println("Defaulting to track the shiny");
-		}
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(0);
@@ -194,6 +186,14 @@ public class Robot extends IterativeRobot {
 		for (CANTalon t : Robot.driveTrain.rightSide) {
 			t.setVoltageRampRate(0);
 			t.enableBrakeMode(true);
+		}
+		autonomousCommand = chooser.getSelected();
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null) {
+			System.out.println("Selected command " + chooser.getSelected().getName());
+			autonomousCommand.start();
+		} else {
+			System.out.println("Defaulting to track the shiny");
 		}
 	}
 
