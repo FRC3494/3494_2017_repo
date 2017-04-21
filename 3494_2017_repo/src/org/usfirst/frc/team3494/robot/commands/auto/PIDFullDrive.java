@@ -18,7 +18,7 @@ public class PIDFullDrive extends Command {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param dist
 	 *            The distance to drive, in inches.
 	 * @param angle
@@ -33,7 +33,7 @@ public class PIDFullDrive extends Command {
 
 	/**
 	 * Other constructor. Uses default angle of 0 degrees.
-	 * 
+	 *
 	 * @param dist
 	 *            The distance to drive in inches.
 	 */
@@ -62,7 +62,7 @@ public class PIDFullDrive extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		if (this.distance < 0) {
+		if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
 			Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
 		} else {
 			Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);

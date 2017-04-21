@@ -5,7 +5,5 @@ org.usfirst.frc.team3494.robot.commands.auto.tests
 org.usfirst.frc.team3494.robot.commands.climb
 org.usfirst.frc.team3494.robot.commands.drive
 org.usfirst.frc.team3494.robot.commands.gears
-org.usfirst.frc.team3494.robot.commands.turret
-org.usfirst.frc.team3494.robot.sensors
 org.usfirst.frc.team3494.robot.subsystems
 org.usfirst.frc.team3494.robot.vision

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
-import org.usfirst.frc.team3494.robot.sensors.LineBreak;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -23,13 +22,10 @@ public class GearTake_2 extends Subsystem {
 	private DoubleSolenoid rampenoid;
 	private DoubleSolenoid doornoid;
 
-	public LineBreak lb;
-
 	public GearTake_2() {
 		super();
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
-		this.lb = new LineBreak(0);
 	}
 
 	@Override
@@ -38,7 +34,7 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Sets the position of the intake ramp.
-	 * 
+	 *
 	 * @param value
 	 *            The position to set the ramp to.
 	 */
@@ -48,7 +44,7 @@ public class GearTake_2 extends Subsystem {
 
 	/**
 	 * Sets the position of the actual gear holder.
-	 * 
+	 *
 	 * @param value
 	 *            The position to set the holder to.
 	 */
@@ -74,7 +70,7 @@ public class GearTake_2 extends Subsystem {
 	 * Gets the state of the intake ramp solenoid. Equivalent to
 	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is
 	 * private.
-	 * 
+	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getRampState() {
@@ -85,7 +81,7 @@ public class GearTake_2 extends Subsystem {
 	 * Gets the state of the gear holder. Equivalent to
 	 * {@code this.rampenoid.get()}, but {@link GearTake_2#rampenoid} is
 	 * private.
-	 * 
+	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getGearState() {

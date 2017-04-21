@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks.
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain Drivetrain
  * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive Distance
  *      Driving (auto)
@@ -32,6 +32,8 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		SmartDashboard.putNumber("Drive setpoint", Robot.driveTrain.getSetpoint());
+		SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
 		int dpad = Robot.oi.stick_l.getPOV();
 		if (dpad == 0 || Robot.oi.stick_l.getRawButton(7)) {
 			Robot.driveTrain.inverter = 1;
@@ -44,9 +46,9 @@ public class Drive extends Command {
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
-		boolean useX = Robot.prefs.getBoolean("usexbox", true);
+		boolean useX = Robot.prefs.getBoolean("xbone", false);
 		if (useX) {
-			if (Robot.prefs.getBoolean("arcade", true)) {
+			if (Robot.prefs.getBoolean("arcade", false)) {
 				Drive.driveArcade();
 			} else if (!Robot.prefs.getBoolean("betapid", false)) {
 				// 10 gbp to whoever can reduce this to one call
@@ -62,8 +64,10 @@ public class Drive extends Command {
 				if (!Robot.driveTrain.getPIDController().isEnabled()) {
 					Robot.driveTrain.enable(); // enable only if disabled
 				}
-				double setpoint = Robot.driveTrain.getSetpoint() + Robot.oi.xbox.getX(Hand.kRight);
-				Robot.driveTrain.setSetpoint(setpoint);
+				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
+					Robot.driveTrain
+							.setSetpoint(Robot.driveTrain.getSetpoint() + (3 * Robot.oi.xbox.getX(Hand.kRight)));
+				}
 				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {

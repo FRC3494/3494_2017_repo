@@ -9,11 +9,10 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
+import org.usfirst.frc.team3494.robot.subsystems.ClimberPTO;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
-import org.usfirst.frc.team3494.robot.subsystems.Turret;
-import org.usfirst.frc.team3494.robot.subsystems.TurretEncoders;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.ctre.CANTalon;
@@ -21,8 +20,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -35,27 +32,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The JVM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * documentation.
  */
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain driveTrain;
 	public static Climber climber;
-	public static Turret turret;
 	public static Kompressor kompressor;
 	public static GearTake_2 gearTake;
+	public static ClimberPTO pto;
+
 	/**
 	 * The gyro board mounted to the RoboRIO.
-	 * 
+	 *
 	 * @since 0.0.2
 	 */
 	public static AHRS ahrs;
-	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	/**
+	 * The robot's PDP panel. Use for reading current draw.
+	 */
+	public static PowerDistributionPanel pdp;
 
 	Command autonomousCommand;
 	public static SendableChooser<Command> chooser;
@@ -71,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public double absolutelyAverage = 0.0;
 	@SuppressWarnings("unused")
 	private ArrayList<MatOfPoint> filteredContours;
-	private ArrayList<Double> averages = new ArrayList<Double>();
+	private ArrayList<Double> averages = new ArrayList<>();
 
 	private final Object imgLock = new Object();
 
@@ -83,19 +82,24 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Hello FTAs, how are you doing?");
 		System.out.println("Because I'm a QUADRANGLE.");
-		chooser = new SendableChooser<Command>();
+		// Init hardware
+		pdp = new PowerDistributionPanel();
+		ahrs = new AHRS(SerialPort.Port.kMXP);
+		ahrs.reset();
+		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
+		camera_0.setExposureManual(20);
+		// Init subsystems
 		driveTrain = new Drivetrain();
 		climber = new Climber();
-		climber.disengagePTO();
-		turret = new Turret();
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
 		gearTake.closeHolder();
+		pto = new ClimberPTO();
+		pto.disengagePTO();
+		// Non subsystem software init
+		prefs = Preferences.getInstance();
+		chooser = new SendableChooser<>();
 		oi = new OI();
-		Robot.oi.xbox_2.setRumble(RumbleType.kLeftRumble, 0);
-		Robot.oi.xbox_2.setRumble(RumbleType.kRightRumble, 0);
-		ahrs = new AHRS(SerialPort.Port.kMXP);
-		Robot.climber.disengagePTO();
 		// Auto programs come after all subsystems are created
 		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
 		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
@@ -109,12 +113,6 @@ public class Robot extends IterativeRobot {
 				new ConstructedAuto(AutoGenerator.activeGearRight()));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
-		// get preferences
-		prefs = Preferences.getInstance();
-		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
-		camera_0.setExposureManual(20);
-		// camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake
-		// View", 1);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -180,14 +178,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
-			System.out.println("Selected command " + chooser.getSelected().getName());
-			autonomousCommand.start();
-		} else {
-			System.out.println("Defaulting to track the shiny");
-		}
+		// reset gyro
+		Robot.ahrs.reset();
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(0);
@@ -196,6 +188,14 @@ public class Robot extends IterativeRobot {
 		for (CANTalon t : Robot.driveTrain.rightSide) {
 			t.setVoltageRampRate(0);
 			t.enableBrakeMode(true);
+		}
+		autonomousCommand = chooser.getSelected();
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null) {
+			System.out.println("Selected command " + chooser.getSelected().getName());
+			autonomousCommand.start();
+		} else {
+			System.out.println("Defaulting to track the shiny");
 		}
 	}
 
@@ -223,7 +223,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		Robot.gearTake.setGrasp(Value.kOff);
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -284,9 +283,5 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
-		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
-
-		SmartDashboard.putNumber("Upper Shooter Speed", Robot.turret.getRate(TurretEncoders.TOP));
-		SmartDashboard.putNumber("Lower Shooter Speed", Robot.turret.getRate(TurretEncoders.BOTTOM));
 	}
 }

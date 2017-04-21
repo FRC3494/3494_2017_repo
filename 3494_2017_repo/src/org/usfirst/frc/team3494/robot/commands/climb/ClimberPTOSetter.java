@@ -5,6 +5,7 @@ import org.usfirst.frc.team3494.robot.Robot;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Toggles the climber from drivetrain to climb motor.
@@ -16,7 +17,7 @@ public class ClimberPTOSetter extends Command {
 	public ClimberPTOSetter(boolean engage) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.climber);
+		requires(Robot.pto);
 		requires(Robot.kompressor);
 		requires(Robot.driveTrain);
 		this.b = engage;
@@ -30,8 +31,9 @@ public class ClimberPTOSetter extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		SmartDashboard.putBoolean("PTO Engaged", this.b);
 		if (this.b) {
-			Robot.climber.engagePTO();
+			Robot.pto.engagePTO();
 			Robot.kompressor.compress.stop();
 			for (CANTalon c : Robot.driveTrain.leftSide) {
 				c.setCurrentLimit(35);
@@ -42,7 +44,7 @@ public class ClimberPTOSetter extends Command {
 				c.EnableCurrentLimit(true);
 			}
 		} else {
-			Robot.climber.disengagePTO();
+			Robot.pto.disengagePTO();
 			Robot.kompressor.compress.start();
 		}
 	}
