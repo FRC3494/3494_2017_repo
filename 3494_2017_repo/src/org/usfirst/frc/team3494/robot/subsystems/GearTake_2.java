@@ -1,8 +1,8 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
-import org.usfirst.frc.team3494.robot.sensors.Linebreak;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,13 +26,13 @@ public class GearTake_2 extends Subsystem {
 	 * kReverse.
 	 */
 	private DoubleSolenoid doornoid;
-	public Linebreak lb;
+	public DigitalInput lb;
 
 	public GearTake_2() {
 		super("Gear holder");
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
-		this.lb = new Linebreak(0);
+		this.lb = new DigitalInput(9);
 	}
 
 	@Override

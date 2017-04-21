@@ -283,7 +283,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
-		
-		SmartDashboard.putNumber("Linebreak Value", Robot.gearTake.lb.getVoltage());
+
+		SmartDashboard.putBoolean("Linebroken", Robot.gearTake.lb.get());
 	}
 }
