@@ -15,6 +15,17 @@ public class PIDFullDrive extends Command {
 
 	private double distance;
 	private double angle;
+	private boolean uselb;
+
+	/**
+	 * Other constructor. Uses default angle of 0 degrees.
+	 *
+	 * @param dist
+	 *            The distance to drive in inches.
+	 */
+	public PIDFullDrive(double dist) {
+		this(dist, 0);
+	}
 
 	/**
 	 * Constructor.
@@ -25,20 +36,25 @@ public class PIDFullDrive extends Command {
 	 *            The angle to turn to.
 	 */
 	public PIDFullDrive(double dist, double angle) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.driveTrain);
-		this.distance = dist;
+		this(dist, angle, false);
 	}
 
 	/**
-	 * Other constructor. Uses default angle of 0 degrees.
+	 * Constructor.
 	 *
 	 * @param dist
-	 *            The distance to drive in inches.
+	 *            The distance to drive, in inches.
+	 * @param angle
+	 *            The angle to turn to.
+	 * @param uselinebreaker
+	 *            Whether to use the linebreak sensor instead of encoder
+	 *            distance to stop
 	 */
-	public PIDFullDrive(double dist) {
-		this(dist, 0);
+	public PIDFullDrive(double dist, double angle, boolean uselinebreaker) {
+		requires(Robot.driveTrain);
+		this.distance = dist;
+		this.angle = angle;
+		this.uselb = uselinebreaker;
 	}
 
 	// Called just before this Command runs the first time
@@ -72,8 +88,11 @@ public class PIDFullDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		// return false;
-		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
+		if (!this.uselb) {
+			return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
+		} else {
+			return Robot.gearTake.lb.get();
+		}
 	}
 
 	// Called once after isFinished returns true
