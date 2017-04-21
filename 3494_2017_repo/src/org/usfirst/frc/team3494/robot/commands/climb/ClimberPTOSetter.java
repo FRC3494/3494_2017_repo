@@ -2,20 +2,25 @@ package org.usfirst.frc.team3494.robot.commands.climb;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Toggles the climber from drivetrain to climb motor.
  */
-public class ClimberToggle extends Command {
+public class ClimberPTOSetter extends Command {
 
-	public ClimberToggle() {
+	private boolean b;
+
+	public ClimberPTOSetter(boolean engage) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.climber);
+		requires(Robot.pto);
 		requires(Robot.kompressor);
-		requires(Robot.gearTake);
+		requires(Robot.driveTrain);
+		this.b = engage;
 	}
 
 	// Called just before this Command runs the first time
@@ -26,15 +31,21 @@ public class ClimberToggle extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (!Robot.climber.getState()) {
-			Robot.climber.engagePTO();
+		SmartDashboard.putBoolean("PTO Engaged", this.b);
+		if (this.b) {
+			Robot.pto.engagePTO();
 			Robot.kompressor.compress.stop();
-			Robot.gearTake.setRamp(Value.kForward);
-			Robot.gearTake.setGrasp(Value.kForward);
+			for (CANTalon c : Robot.driveTrain.leftSide) {
+				c.setCurrentLimit(35);
+				c.EnableCurrentLimit(true);
+			}
+			for (CANTalon c : Robot.driveTrain.rightSide) {
+				c.setCurrentLimit(35);
+				c.EnableCurrentLimit(true);
+			}
 		} else {
-			Robot.climber.disengagePTO();
+			Robot.pto.disengagePTO();
 			Robot.kompressor.compress.start();
-			Robot.gearTake.setGrasp(Value.kReverse);
 		}
 	}
 

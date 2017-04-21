@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Conveyer subsystem. Contains all methods for controlling the robot's
  * conveyer.
- * 
+ *
  * @since 0.0.4
  */
 public class Conveyer extends Subsystem implements IMotorizedSubsystem {
@@ -44,7 +44,7 @@ public class Conveyer extends Subsystem implements IMotorizedSubsystem {
 	 * DriveDirections.FORWARD} and
 	 * {@link org.usfirst.frc.team3494.robot.DriveDirections#BACKWARD
 	 * DriveDirections.BACKWARD} (anything else will stop the conveyer.).
-	 * 
+	 *
 	 * @see org.usfirst.frc.team3494.robot.DriveDirections
 	 * @param dir
 	 *            The direction to run the

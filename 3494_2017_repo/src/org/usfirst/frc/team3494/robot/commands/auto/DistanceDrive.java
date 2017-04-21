@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Drives a given distance. Currently suffering from encoder issues.
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain
  * @since 0.0.2
  */
@@ -19,7 +19,7 @@ public class DistanceDrive extends Command {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param distance
 	 *            The distance to drive.
 	 * @param unitType
@@ -33,6 +33,16 @@ public class DistanceDrive extends Command {
 		requires(Robot.driveTrain);
 		this.dist = distance;
 		this.unit = unitType;
+	}
+
+	/**
+	 * Alternative constructor.
+	 *
+	 * @param distance
+	 *            The distance to drive, in inches.
+	 */
+	public DistanceDrive(double distance) {
+		this(distance, UnitTypes.INCHES);
 	}
 
 	// Called just before this Command runs the first time

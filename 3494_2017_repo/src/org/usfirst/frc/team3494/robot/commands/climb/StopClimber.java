@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Stops the climber when
  * <a href="https://www.youtube.com/watch?v=2k0SmqbBIpQ">it's time to stop.</a>
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Climber
  */
 public class StopClimber extends Command {

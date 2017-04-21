@@ -8,13 +8,11 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
-import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
-import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
+import org.usfirst.frc.team3494.robot.subsystems.ClimberPTO;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3494.robot.subsystems.GearTake_2;
 import org.usfirst.frc.team3494.robot.subsystems.Kompressor;
-import org.usfirst.frc.team3494.robot.subsystems.Turret;
 import org.usfirst.frc.team3494.robot.vision.GripPipeline;
 
 import com.ctre.CANTalon;
@@ -22,7 +20,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -35,34 +32,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The JVM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * documentation.
  */
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain driveTrain;
 	public static Climber climber;
-	public static Turret turret;
 	public static Kompressor kompressor;
 	public static GearTake_2 gearTake;
+	public static ClimberPTO pto;
+
 	/**
 	 * The gyro board mounted to the RoboRIO.
-	 * 
+	 *
 	 * @since 0.0.2
 	 */
 	public static AHRS ahrs;
-	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	/**
+	 * The robot's PDP panel. Use for reading current draw.
+	 */
+	public static PowerDistributionPanel pdp;
 
 	Command autonomousCommand;
 	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
 	public static UsbCamera camera_0;
-	public static UsbCamera camera_1;
 	// Vision items
 	private static final int IMG_WIDTH = 320;
 	@SuppressWarnings("unused")
@@ -72,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public double absolutelyAverage = 0.0;
 	@SuppressWarnings("unused")
 	private ArrayList<MatOfPoint> filteredContours;
-	private ArrayList<Double> averages = new ArrayList<Double>();
+	private ArrayList<Double> averages = new ArrayList<>();
 
 	private final Object imgLock = new Object();
 
@@ -84,35 +82,37 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		System.out.println("Hello FTAs, how are you doing?");
 		System.out.println("Because I'm a QUADRANGLE.");
-		chooser = new SendableChooser<Command>();
-		driveTrain = new Drivetrain();
-		climber = new Climber();
-		climber.disengagePTO();
-		turret = new Turret();
-		kompressor = new Kompressor();
-		gearTake = new GearTake_2();
-		oi = new OI();
+		// Init hardware
+		pdp = new PowerDistributionPanel();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
-		Robot.climber.disengagePTO();
-		// Auto programs come after all subsystems are created
-		chooser.addDefault("To the baseline!", new ConstructedAuto(AutoGenerator.crossBaseLine()));
-		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
-		chooser.addObject("[beta] Right Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttempt()));
-		chooser.addObject("[beta] Left Gear Attempt", new ConstructedAuto(AutoGenerator.gearPlaceAttemptLeft()));
-		chooser.addObject("Follow the shiny", null);
-		chooser.addObject("Do nothing", new NullAuto());
-		chooser.addObject("PID Test - turn 90 degrees", new PIDAngleDrive(90));
-		chooser.addObject("PID Test - drive straight", new PIDFullDrive(36));
-		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
-		chooser.addObject("Active Gear placer - Robot turn right", new ConstructedAuto(AutoGenerator.activeGearRight()));
-		// put chooser on DS
-		SmartDashboard.putData("AUTO CHOOSER", chooser);
-		// get preferences
-		prefs = Preferences.getInstance();
+		ahrs.reset();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
 		camera_0.setExposureManual(20);
-		// camera_1 = CameraServer.getInstance().startAutomaticCapture("Intake
-		// View", 1);
+		// Init subsystems
+		driveTrain = new Drivetrain();
+		climber = new Climber();
+		kompressor = new Kompressor();
+		gearTake = new GearTake_2();
+		gearTake.closeHolder();
+		pto = new ClimberPTO();
+		pto.disengagePTO();
+		// Non subsystem software init
+		prefs = Preferences.getInstance();
+		chooser = new SendableChooser<>();
+		oi = new OI();
+		// Auto programs come after all subsystems are created
+		chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+		chooser.addObject("Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
+		chooser.addObject("Passive Gear Placer - Robot turn right",
+				new ConstructedAuto(AutoGenerator.gearPassiveRight()));
+		chooser.addObject("Passive Gear Placer - Robot turn left",
+				new ConstructedAuto(AutoGenerator.gearPassiveLeft()));
+		chooser.addObject("Do nothing", new NullAuto());
+		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
+		chooser.addObject("Active Gear placer - Robot turn right",
+				new ConstructedAuto(AutoGenerator.activeGearRight()));
+		// put chooser on DS
+		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// Create and start vision thread
 		visionThread = new VisionThread(camera_0, new GripPipeline(), pipeline -> {
 			if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -178,14 +178,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
-			System.out.println("Selected command " + chooser.getSelected().getName());
-			autonomousCommand.start();
-		} else {
-			System.out.println("Defaulting to track the shiny");
-		}
+		// reset gyro
+		Robot.ahrs.reset();
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(0);
@@ -194,6 +188,14 @@ public class Robot extends IterativeRobot {
 		for (CANTalon t : Robot.driveTrain.rightSide) {
 			t.setVoltageRampRate(0);
 			t.enableBrakeMode(true);
+		}
+		autonomousCommand = chooser.getSelected();
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null) {
+			System.out.println("Selected command " + chooser.getSelected().getName());
+			autonomousCommand.start();
+		} else {
+			System.out.println("Defaulting to track the shiny");
 		}
 	}
 
@@ -216,27 +218,11 @@ public class Robot extends IterativeRobot {
 			System.out.println("Turn: " + turn);
 			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
 		}
-		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
-		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
-
-		SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
-		SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
-
-		SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
-		SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));
-		SmartDashboard.putNumber("Motor 2", Robot.pdp.getCurrent(2));
-
-		SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
-		SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
-
-		SmartDashboard.putNumber("Motor 13", Robot.pdp.getCurrent(13));
-		SmartDashboard.putNumber("Motor 14", Robot.pdp.getCurrent(14));
-		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
+		Robot.putDebugInfo();
 	}
 
 	@Override
 	public void teleopInit() {
-		Robot.gearTake.setGrasp(Value.kOff);
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -267,6 +253,18 @@ public class Robot extends IterativeRobot {
 		 * Robot.climber.engagePTO(); }
 		 */
 		Scheduler.getInstance().run();
+		Robot.putDebugInfo();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+
+	public static void putDebugInfo() {
 		SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
 		SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
 
@@ -285,14 +283,5 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
-		SmartDashboard.putBoolean("line break", Robot.gearTake.lb.getBroken());
-	}
-
-	/**
-	 * This function is called periodically during test mode
-	 */
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
 	}
 }

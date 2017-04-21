@@ -1,18 +1,22 @@
-package org.usfirst.frc.team3494.robot.commands;
+package org.usfirst.frc.team3494.robot.commands.gears;
 
+import org.usfirst.frc.team3494.robot.Robot;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Command to cause delays in autonomous. WIP.
+ * Sets the state of the gear holder.
  */
-public class DelayCommand extends Command {
+public class SetHolderState extends Command {
 
-	double time;
+	private Value value;
 
-	public DelayCommand(double t) {
+	public SetHolderState(Value v) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.time = t;
+		this.value = v;
+		requires(Robot.gearTake);
 	}
 
 	// Called just before this Command runs the first time
@@ -23,12 +27,7 @@ public class DelayCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		try {
-			Thread.sleep((long) time);
-		} catch (InterruptedException e) {
-			System.out.println("HOW LONG DID YOU WAIT?!");
-			e.printStackTrace();
-		}
+		Robot.gearTake.setGrasp(value);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -46,5 +45,6 @@ public class DelayCommand extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		end();
 	}
 }

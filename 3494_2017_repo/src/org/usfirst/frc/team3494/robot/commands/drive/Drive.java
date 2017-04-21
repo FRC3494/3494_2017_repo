@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command to run drivetrain. Only takes input in the form of joysticks.
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain Drivetrain
  * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive Distance
  *      Driving (auto)
@@ -32,6 +32,8 @@ public class Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		SmartDashboard.putNumber("Drive setpoint", Robot.driveTrain.getSetpoint());
+		SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
 		int dpad = Robot.oi.stick_l.getPOV();
 		if (dpad == 0 || Robot.oi.stick_l.getRawButton(7)) {
 			Robot.driveTrain.inverter = 1;
@@ -44,21 +46,12 @@ public class Drive extends Command {
 		}
 		SmartDashboard.putNumber("inverter", Robot.driveTrain.inverter);
 		SmartDashboard.putNumber("scale down", Robot.driveTrain.scaleDown);
-		boolean useX = Robot.prefs.getBoolean("usexbox", true);
+		boolean useX = Robot.prefs.getBoolean("xbone", false);
 		if (useX) {
-			if (Robot.prefs.getBoolean("arcade", true)) {
-				if (Robot.driveTrain.getInverted()) {
-					Robot.driveTrain.ArcadeDrive(
-							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							true);
-				} else {
-					Robot.driveTrain.ArcadeDrive(
-							Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							-Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
-							true);
-				}
-			} else {
+			if (Robot.prefs.getBoolean("arcade", false)) {
+				Drive.driveArcade();
+			} else if (!Robot.prefs.getBoolean("betapid", false)) {
+				// 10 gbp to whoever can reduce this to one call
 				if (!Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
 							-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
@@ -66,8 +59,19 @@ public class Drive extends Command {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter,
 							-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
 				}
+			} else {
+				// BETA - steer using Drivetrain PID
+				if (!Robot.driveTrain.getPIDController().isEnabled()) {
+					Robot.driveTrain.enable(); // enable only if disabled
+				}
+				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
+					Robot.driveTrain
+							.setSetpoint(Robot.driveTrain.getSetpoint() + (3 * Robot.oi.xbox.getX(Hand.kRight)));
+				}
+				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
+			// Same reward here.
 			if (Robot.driveTrain.getInverted()) {
 				Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 			} else {
@@ -91,5 +95,20 @@ public class Drive extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+	}
+
+	private static void driveArcade() {
+		double leftX = Robot.oi.xbox.getX(Hand.kLeft);
+		if (Robot.oi.xbox.getX(Hand.kLeft) == 0 || leftX > -0.09 || leftX < 0.01) {
+			Robot.driveTrain.setSetpoint(0);
+			Robot.driveTrain.enable();
+			Robot.driveTrain.ArcadeDrive(
+					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+					-Robot.driveTrain.PIDTune, true);
+		} else {
+			Robot.driveTrain.ArcadeDrive(
+					Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown,
+					Robot.oi.xbox.getX(Hand.kLeft) * Robot.driveTrain.inverter * Robot.driveTrain.scaleDown, true);
+		}
 	}
 }

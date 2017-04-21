@@ -40,24 +40,27 @@ public class RobotMap {
 	public static final int INTAKE_MOTOR = 5;
 	public static final int UP_MOTOR = 4;
 	// climber
-	public static final int CLIMBER_MOTOR = 1;
-	public static final int CLIMBER_MOTOR_PDP = 11;
+	public static final int CLIMBER_MOTOR = 3;
+	public static final int CLIMBER_MOTOR_PDP = RobotMap.CLIMBER_MOTOR;
 	public static final int CLIMBER_PTO_FORWARD = 6;
 	public static final int CLIMBER_PTO_BACKARD = 7;
 	// turret
-	public static final int TURRET_RING = 62;
-	public static final int TURRET_LOWER = 63;
-	public static final int TURRET_UPPER = 64;
+	public static final int UNSCRAMBLER = 3;
+	public static final int TURRET_CONVEYER = 12;
+	public static final int TURRET_LOWER = 6;
+	public static final int TURRET_UPPER = 7;
+
+	public static final int TURRET_ENCUPPER_A = 6;
+	public static final int TURRET_ENCUPPER_B = 7;
+	public static final int TURRET_ENCLOWER_A = 4;
+	public static final int TURRET_ENCLOWER_B = 5;
 
 	public static final int COMPRESSOR = 0;
 	// gear holder pistons
-	public static final int GEAR_RAMP_CHONE = 2;
-	public static final int GEAR_RAMP_CHTWO = 3;
-	public static final int GEAR_GRASP_CHONE = 4;
-	public static final int GEAR_GRASP_CHTWO = 5;
-
-	public static final int GEAR_GRASP_S2_FORWARD = 1;
-	public static final int GEAR_GRASP_S2_BACKWARD = 0;
+	public static final int GEAR_DOOR_F = 3;
+	public static final int GEAR_DOOR_R = 2;
+	public static final int GEAR_RAMP_F = 5;
+	public static final int GEAR_RAMP_R = 4;
 
 	// conveyer
 	public static final int CONVEYER_M = 14;

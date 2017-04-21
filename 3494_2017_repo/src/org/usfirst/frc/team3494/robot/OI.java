@@ -1,15 +1,13 @@
 package org.usfirst.frc.team3494.robot;
 
-import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
 import org.usfirst.frc.team3494.robot.commands.climb.Climb;
-import org.usfirst.frc.team3494.robot.commands.climb.ClimberToggle;
+import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
-import org.usfirst.frc.team3494.robot.commands.gears.HoldInState_Forward;
-import org.usfirst.frc.team3494.robot.commands.gears.SetReverse;
+import org.usfirst.frc.team3494.robot.commands.gears.SetHolderState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
-import org.usfirst.frc.team3494.robot.commands.turret.Shoot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -52,7 +50,7 @@ public class OI {
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
 	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 
-	public JoystickButton xbox_lt = new JoystickButton(xbox, 5);
+	public JoystickButton xbox_lt_2 = new JoystickButton(xbox_2, 5);
 
 	public JoystickButton xbox_rt = new JoystickButton(xbox, 6);
 	public JoystickButton xbox_rt_2 = new JoystickButton(xbox_2, 6);
@@ -71,22 +69,19 @@ public class OI {
 
 	public OI() {
 		// Ready Player One
-		xbox_a.whenPressed(new DistanceDrive(-12, UnitTypes.INCHES));
 		// Ready Player Two
 		// Climb controls
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
 		xbox_a_2.whenReleased(new StopClimber());
 
-		xbox_b_2.whenPressed(new SetReverse());
+		xbox_b_2.whileHeld(new HoldDriveTrain());
 
-		xbox_x_2.whileHeld(new HoldInState_Forward());
+		xbox_x_2.whenPressed(new SetHolderState(Value.kForward));
+		xbox_x_2.whenReleased(new SetHolderState(Value.kReverse));
 
 		xbox_y_2.whenPressed(new ToggleGearRamp());
 
-		xbox_rt_2.whenPressed(new Shoot());
-		xbox_rt_2.whenReleased(new Shoot(0));
-
-		xbox_select_2.whenPressed(new ClimberToggle());
-		xbox_start_2.whileHeld(new HoldDriveTrain());
+		xbox_lt_2.whenPressed(new ClimberPTOSetter(true));
+		xbox_rt_2.whenPressed(new ClimberPTOSetter(false));
 	}
 }

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Command for climbing. Climbs both up and down.
- * 
+ *
  * @see org.usfirst.frc.team3494.robot.subsystems.Climber
  */
 public class Climb extends Command {
@@ -18,7 +18,7 @@ public class Climb extends Command {
 
 	/**
 	 * Constructor for Climb.
-	 * 
+	 *
 	 * @param dir
 	 *            The direction to climb in. If this is not
 	 *            {@link DriveDirections#UP} or {@link DriveDirections#DOWN},
@@ -63,6 +63,6 @@ public class Climb extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		Robot.climber.stopAll();
+		end();
 	}
 }
