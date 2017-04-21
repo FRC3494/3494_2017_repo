@@ -178,6 +178,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		// reset gyro
+		Robot.ahrs.reset();
 		// set ramps
 		for (CANTalon t : Robot.driveTrain.leftSide) {
 			t.setVoltageRampRate(0);
