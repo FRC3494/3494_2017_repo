@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
+import org.usfirst.frc.team3494.robot.sensors.Linebreak;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -17,15 +18,21 @@ public class GearTake_2 extends Subsystem {
 	// Ramp and state
 	/**
 	 * The solenoid that controls the ramp on the gear intake. Should stay
-	 * forward most of the time.
+	 * retracted most of the time.
 	 */
 	private DoubleSolenoid rampenoid;
+	/**
+	 * Solenoid that opens and closes the door on the gear holder. Typically in
+	 * kReverse.
+	 */
 	private DoubleSolenoid doornoid;
+	public Linebreak lb;
 
 	public GearTake_2() {
-		super();
+		super("Gear holder");
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
+		this.lb = new Linebreak(0);
 	}
 
 	@Override
