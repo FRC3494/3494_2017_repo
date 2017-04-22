@@ -2,6 +2,8 @@ package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,15 +19,24 @@ public class GearTake_2 extends Subsystem {
 	// Ramp and state
 	/**
 	 * The solenoid that controls the ramp on the gear intake. Should stay
-	 * forward most of the time.
+	 * retracted most of the time.
 	 */
 	private DoubleSolenoid rampenoid;
+	/**
+	 * Solenoid that opens and closes the door on the gear holder. Typically in
+	 * kReverse.
+	 */
 	private DoubleSolenoid doornoid;
+	public AnalogInput ai;
+	public AnalogTrigger at;
 
 	public GearTake_2() {
-		super();
+		super("Gear holder");
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
+		this.ai = new AnalogInput(0);
+		this.at = new AnalogTrigger(this.ai);
+		this.at.setLimitsVoltage(3, Double.MAX_VALUE);
 	}
 
 	@Override

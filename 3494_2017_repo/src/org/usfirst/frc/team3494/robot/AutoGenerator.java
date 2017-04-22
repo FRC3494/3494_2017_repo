@@ -3,6 +3,7 @@ package org.usfirst.frc.team3494.robot;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive;
+import org.usfirst.frc.team3494.robot.commands.auto.DropGear;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive;
 import org.usfirst.frc.team3494.robot.commands.auto.SetGearGrasp;
@@ -78,7 +79,7 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> gearPassiveRight() {
 		ArrayList<Command> list = new ArrayList<>();
-		list.add(new PIDFullDrive(FIRST_PULL));
+		list.add(new PIDFullDrive(FIRST_PULL, 0, true));
 		list.add(new PIDAngleDrive(ANGLE));
 		list.add(new PIDFullDrive(SECOND_PULL));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
@@ -96,7 +97,7 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> gearPassiveLeft() {
 		ArrayList<Command> list = new ArrayList<>();
-		list.add(new PIDFullDrive(FIRST_PULL));
+		list.add(new PIDFullDrive(FIRST_PULL, 0, true));
 		list.add(new PIDAngleDrive(-ANGLE));
 		list.add(new PIDFullDrive(SECOND_PULL));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
@@ -115,9 +116,10 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> activeLeftGear() {
 		ArrayList<Command> list = AutoGenerator.gearPassiveLeft();
-		list.add(new SetGearGrasp(Value.kForward));
-		list.add(new PIDFullDrive(-10));
+		list.add(new DropGear());
+		list.add(new PIDFullDrive(-15));
 		list.add(new SetGearGrasp(Value.kReverse));
+		list.add(new PIDAngleDrive(ANGLE));
 		return list;
 	}
 
@@ -133,9 +135,10 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> activeGearRight() {
 		ArrayList<Command> list = AutoGenerator.gearPassiveRight();
-		list.add(new SetGearGrasp(Value.kForward));
-		list.add(new PIDFullDrive(-10));
+		list.add(new DropGear());
+		list.add(new PIDFullDrive(-15));
 		list.add(new SetGearGrasp(Value.kReverse));
+		list.add(new PIDAngleDrive(-ANGLE));
 		return list;
 	}
 }
