@@ -241,6 +241,9 @@ public class Robot extends IterativeRobot {
 			t.setVoltageRampRate(Drivetrain.RAMP);
 			t.enableBrakeMode(true);
 		}
+		Robot.driveTrain.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+		Robot.driveTrain.setOutputRange(-0.5, 0.5);
+		Robot.driveTrain.teleop = true;
 	}
 
 	/**

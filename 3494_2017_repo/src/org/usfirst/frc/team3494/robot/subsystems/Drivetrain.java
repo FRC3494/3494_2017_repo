@@ -76,6 +76,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	public double PIDTune;
 
+	public boolean teleop;
+
 	public Drivetrain() {
 		super("Drivetrain", 0.035, 0, 0);
 		// int maxAmps = 50;
@@ -125,6 +127,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
 		this.wpiDrive.setExpiration(Integer.MAX_VALUE);
 		this.wpiDrive.setSafetyEnabled(false);
+
+		this.teleop = false;
 
 		/*
 		 * this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A,
@@ -395,7 +399,11 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		return Robot.ahrs.getYaw();
+		if (!this.teleop) {
+			return Robot.ahrs.getYaw();
+		} else {
+			return Robot.ahrs.getAngle();
+		}
 	}
 
 	@Override
