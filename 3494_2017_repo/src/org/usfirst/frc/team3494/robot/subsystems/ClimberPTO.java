@@ -19,9 +19,9 @@ public class ClimberPTO extends Subsystem {
 
 	public ClimberPTO() {
 		super("Climber PTO");
-		this.pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
-		this.pto.set(Value.kForward);
-		this.driveTrainMode = false;
+		pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
+		pto.set(Value.kForward);
+		driveTrainMode = false;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class ClimberPTO extends Subsystem {
 	}
 
 	public boolean getState() {
-		return this.driveTrainMode;
+		return driveTrainMode;
 	}
 
 	/**
@@ -44,20 +44,20 @@ public class ClimberPTO extends Subsystem {
 	 *            The state to set the PTO piston in.
 	 */
 	public void setPTO(Value value) {
-		this.pto.set(value);
+		pto.set(value);
 		if (value.equals(Value.kOff) || value.equals(Value.kReverse)) {
-			this.driveTrainMode = true;
+			driveTrainMode = true;
 		} else {
-			this.driveTrainMode = false;
+			driveTrainMode = false;
 		}
 	}
 
 	public void disengagePTO() {
-		this.setPTO(Value.kForward);
+		setPTO(Value.kForward);
 	}
 
 	public void engagePTO() {
-		this.setPTO(Value.kReverse);
+		setPTO(Value.kReverse);
 	}
 
 }

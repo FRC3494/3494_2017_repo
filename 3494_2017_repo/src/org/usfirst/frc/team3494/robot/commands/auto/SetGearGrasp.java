@@ -15,8 +15,8 @@ public class SetGearGrasp extends Command {
 	public SetGearGrasp(Value val) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.requires(Robot.gearTake);
-		this.v = val;
+		requires(Robot.gearTake);
+		v = val;
 	}
 
 	// Called just before this Command runs the first time

@@ -43,6 +43,6 @@ public class HoldInState_Forward extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

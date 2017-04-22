@@ -49,7 +49,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public JoystickButton lstick_3 = new JoystickButton(stick_l, 3);
-	
+
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
 	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 

@@ -31,8 +31,8 @@ public class DistanceDrive extends Command {
 		// eg. requires(chassis);
 		super("DistanceDrive");
 		requires(Robot.driveTrain);
-		this.dist = distance;
-		this.unit = unitType;
+		dist = distance;
+		unit = unitType;
 	}
 
 	/**
@@ -56,26 +56,26 @@ public class DistanceDrive extends Command {
 			System.out.println("ah crap");
 			e.printStackTrace();
 		}
-		System.out.println("Driving " + this.dist + " " + this.unit.toString() + "(s)");
+		System.out.println("Driving " + dist + " " + unit.toString() + "(s)");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (this.dist > 0) {
+		if (dist > 0) {
 			Robot.driveTrain.adjustedTankDrive(0.185, 0.2);
-		} else if (this.dist < 0) {
+		} else if (dist < 0) {
 			Robot.driveTrain.adjustedTankDrive(-0.185, -0.2);
 		} else {
 			return;
 		}
-		System.out.println("Average distance: " + Robot.driveTrain.getAvgDistance(this.unit));
+		System.out.println("Average distance: " + Robot.driveTrain.getAvgDistance(unit));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Robot.driveTrain.getAvgDistance(unit)) >= Math.abs(this.dist);
+		return Math.abs(Robot.driveTrain.getAvgDistance(unit)) >= Math.abs(dist);
 	}
 
 	// Called once after isFinished returns true

@@ -39,9 +39,9 @@ public class PIDFullDrive extends Command {
 	 */
 	public PIDFullDrive(double dist, double angle, boolean f) {
 		requires(Robot.driveTrain);
-		this.distance = dist;
+		distance = dist;
 		this.angle = angle;
-		this.fast = f;
+		fast = f;
 	}
 
 	// Called just before this Command runs the first time
@@ -57,7 +57,7 @@ public class PIDFullDrive extends Command {
 		}
 		Robot.ahrs.reset();
 		Robot.driveTrain.enable();
-		Robot.driveTrain.setSetpoint(this.angle);
+		Robot.driveTrain.setSetpoint(angle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -65,14 +65,14 @@ public class PIDFullDrive extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		if (!this.fast) {
-			if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+		if (!fast) {
+			if (distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
 				Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
 			} else {
 				Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
-			if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+			if (distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
 				Robot.driveTrain.ArcadeDrive(0.6, -Robot.driveTrain.PIDTune, true);
 			} else {
 				Robot.driveTrain.ArcadeDrive(-0.6, -Robot.driveTrain.PIDTune, true);
@@ -83,7 +83,7 @@ public class PIDFullDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
+		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(distance);
 	}
 
 	// Called once after isFinished returns true
@@ -98,6 +98,6 @@ public class PIDFullDrive extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

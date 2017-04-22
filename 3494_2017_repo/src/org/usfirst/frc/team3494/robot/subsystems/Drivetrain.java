@@ -82,53 +82,52 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		super("Drivetrain", 0.035, 0, 0);
 		// int maxAmps = 50;
 		// create left talons
-		this.driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
-		this.driveLeftMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		this.driveLeftMaster.configEncoderCodesPerRev(360);
-		this.driveLeftMaster.setEncPosition(0);
-		this.driveLeftMaster.enableBrakeMode(true);
-		this.driveLeftMaster.setVoltageRampRate(RAMP);
-		this.driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
-		this.driveLeftFollower_One.enableBrakeMode(true);
-		this.driveLeftFollower_One.setVoltageRampRate(RAMP);
-		this.driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
-		this.driveLeftFollower_Two.enableBrakeMode(true);
-		this.driveLeftFollower_Two.setVoltageRampRate(RAMP);
+		driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
+		driveLeftMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		driveLeftMaster.configEncoderCodesPerRev(360);
+		driveLeftMaster.setEncPosition(0);
+		driveLeftMaster.enableBrakeMode(true);
+		driveLeftMaster.setVoltageRampRate(RAMP);
+		driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
+		driveLeftFollower_One.enableBrakeMode(true);
+		driveLeftFollower_One.setVoltageRampRate(RAMP);
+		driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
+		driveLeftFollower_Two.enableBrakeMode(true);
+		driveLeftFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
 		// this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
 		// this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
 		// this.driveLeftFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
 		// this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
 		// create list
-		this.leftSide = new CANTalon[] { this.driveLeftMaster, this.driveLeftFollower_One, this.driveLeftFollower_Two };
+		leftSide = new CANTalon[] { driveLeftMaster, driveLeftFollower_One, driveLeftFollower_Two };
 
-		this.driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
-		this.driveRightMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		this.driveRightMaster.reverseSensor(true);
-		this.driveRightMaster.setEncPosition(0);
-		this.driveRightMaster.configEncoderCodesPerRev(360);
-		this.driveRightMaster.enableBrakeMode(true);
-		this.driveRightMaster.setVoltageRampRate(RAMP);
-		this.driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
-		this.driveRightFollower_One.enableBrakeMode(true);
-		this.driveRightFollower_One.setVoltageRampRate(RAMP);
-		this.driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
-		this.driveRightFollower_Two.enableBrakeMode(true);
-		this.driveRightFollower_Two.setVoltageRampRate(RAMP);
+		driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
+		driveRightMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		driveRightMaster.reverseSensor(true);
+		driveRightMaster.setEncPosition(0);
+		driveRightMaster.configEncoderCodesPerRev(360);
+		driveRightMaster.enableBrakeMode(true);
+		driveRightMaster.setVoltageRampRate(RAMP);
+		driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
+		driveRightFollower_One.enableBrakeMode(true);
+		driveRightFollower_One.setVoltageRampRate(RAMP);
+		driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
+		driveRightFollower_Two.enableBrakeMode(true);
+		driveRightFollower_Two.setVoltageRampRate(RAMP);
 		// master follower
 		// this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
 		// this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
 		// this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
 		// this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 		// list time!
-		this.rightSide = new CANTalon[] { this.driveRightMaster, this.driveRightFollower_One,
-				this.driveLeftFollower_Two };
+		rightSide = new CANTalon[] { driveRightMaster, driveRightFollower_One, driveLeftFollower_Two };
 
-		this.wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
-		this.wpiDrive.setExpiration(Integer.MAX_VALUE);
-		this.wpiDrive.setSafetyEnabled(false);
+		wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
+		wpiDrive.setExpiration(Integer.MAX_VALUE);
+		wpiDrive.setSafetyEnabled(false);
 
-		this.teleop = false;
+		teleop = false;
 
 		/*
 		 * this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A,
@@ -142,16 +141,16 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		 * this.encLeft.setReverseDirection(true); this.encLeft.reset();
 		 */
 		// PID control
-		this.PIDTune = 0;
+		PIDTune = 0;
 		double outRange = 0.5;
-		this.disable();
-		if (this.getSetpoint() != 0) {
-			this.setSetpoint(0);
+		disable();
+		if (getSetpoint() != 0) {
+			setSetpoint(0);
 		}
-		this.setInputRange(-180, 180);
-		this.setOutputRange(-outRange, outRange);
-		this.getPIDController().setContinuous(true);
-		this.setPercentTolerance(2.5);
+		setInputRange(-180, 180);
+		setOutputRange(-outRange, outRange);
+		getPIDController().setContinuous(true);
+		setPercentTolerance(2.5);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -159,7 +158,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	@Override
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		this.setDefaultCommand(new Drive());
+		setDefaultCommand(new Drive());
 	}
 
 	/**
@@ -176,16 +175,16 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	public void TankDrive(double left, double right) {
 		double leftScale = Robot.prefs.getDouble("left side multiplier", 1.0D);
 		double rightScale = Robot.prefs.getDouble("right side multiplier", 1.0D);
-		this.driveLeftMaster.set(left * this.scaleDown * leftScale);
-		this.driveRightMaster.set(right * this.scaleDown * rightScale);
-		this.driveLeftFollower_One.set(left * this.scaleDown * leftScale);
-		this.driveRightFollower_One.set(right * this.scaleDown * rightScale);
-		this.driveLeftFollower_Two.set(left * this.scaleDown * leftScale);
-		this.driveRightFollower_Two.set(right * this.scaleDown * rightScale);
+		driveLeftMaster.set(left * scaleDown * leftScale);
+		driveRightMaster.set(right * scaleDown * rightScale);
+		driveLeftFollower_One.set(left * scaleDown * leftScale);
+		driveRightFollower_One.set(right * scaleDown * rightScale);
+		driveLeftFollower_Two.set(left * scaleDown * leftScale);
+		driveRightFollower_Two.set(right * scaleDown * rightScale);
 	}
 
 	public void TeleopTank(double left, double right) {
-		this.TankDrive(left * this.inverter, right * this.inverter);
+		TankDrive(left * inverter, right * inverter);
 	}
 
 	/**
@@ -201,7 +200,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 *            Talons.
 	 */
 	public void adjustedTankDrive(double left, double right) {
-		this.TankDrive(-left, right);
+		TankDrive(-left, right);
 	}
 
 	/**
@@ -256,7 +255,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 				rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
 			}
 		}
-		this.TankDrive(leftMotorSpeed, -rightMotorSpeed);
+		TankDrive(leftMotorSpeed, -rightMotorSpeed);
 	}
 
 	/**
@@ -268,8 +267,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 *         unit.
 	 */
 	public double getRightDistance(UnitTypes unit) {
-		double encCountsTalon = this.driveRightMaster.getPosition();
-		double inches = (Math.PI * 4) * (encCountsTalon);
+		double encCountsTalon = driveRightMaster.getPosition();
+		double inches = Math.PI * 4 * encCountsTalon;
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -279,7 +278,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
 			return inches * 2.540;
 		} else {
-			return this.driveRightMaster.getPosition();
+			return driveRightMaster.getPosition();
 		}
 	}
 
@@ -291,8 +290,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * @return The distance the left encoder has counted, in the specified unit.
 	 */
 	public double getLeftDistance(UnitTypes unit) {
-		double talonEncDist = this.driveLeftMaster.getPosition();
-		double inches = (Math.PI * 4) * (talonEncDist);
+		double talonEncDist = driveLeftMaster.getPosition();
+		double inches = Math.PI * 4 * talonEncDist;
 		if (unit.equals(UnitTypes.INCHES)) {
 			return inches;
 		} else if (unit.equals(UnitTypes.FEET)) {
@@ -302,12 +301,12 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		} else if (unit.equals(UnitTypes.CENTIMETERS)) {
 			return inches * 2.540;
 		} else {
-			return this.driveLeftMaster.getPosition();
+			return driveLeftMaster.getPosition();
 		}
 	}
 
 	public double getAvgDistance(UnitTypes unit) {
-		return (this.getLeftDistance(unit) + this.getRightDistance(unit)) / 2;
+		return (getLeftDistance(unit) + getRightDistance(unit)) / 2;
 	}
 
 	/**
@@ -315,7 +314,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void resetRight() {
 		// this.encRight.reset();
-		this.driveRightMaster.setEncPosition(0);
+		driveRightMaster.setEncPosition(0);
 	}
 
 	/**
@@ -323,17 +322,17 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 */
 	public void resetLeft() {
 		// this.encLeft.reset();
-		this.driveLeftMaster.setEncPosition(0);
+		driveLeftMaster.setEncPosition(0);
 	}
 
 	@Override
 	public void stopAll() {
-		this.TankDrive(0, 0);
+		TankDrive(0, 0);
 	}
 
 	@Override
 	public void setAll(double speed) {
-		this.TankDrive(speed, speed);
+		TankDrive(speed, speed);
 	}
 
 	/**
@@ -343,7 +342,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 * @return {@code true} if the drivetrain is inverted.
 	 */
 	public boolean getInverted() {
-		return this.inverter == -1;
+		return inverter == -1;
 	}
 
 	/**
@@ -356,50 +355,50 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	 *            The right power
 	 */
 	public void stagedTankDrive(double left, double right) {
-		this.driveLeftMaster.set(left);
-		this.driveRightMaster.set(right);
+		driveLeftMaster.set(left);
+		driveRightMaster.set(right);
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.driveLeftFollower_One.set(left);
-		this.driveRightFollower_One.set(right);
+		driveLeftFollower_One.set(left);
+		driveRightFollower_One.set(right);
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.driveLeftFollower_Two.set(left);
-		this.driveRightFollower_Two.set(right);
+		driveLeftFollower_Two.set(left);
+		driveRightFollower_Two.set(right);
 	}
 
 	public void initStaging() {
 		// change all to be percent Vbus
-		for (CANTalon t : this.leftSide) {
+		for (CANTalon t : leftSide) {
 			t.changeControlMode(TalonControlMode.PercentVbus);
 		}
-		for (CANTalon t : this.rightSide) {
+		for (CANTalon t : rightSide) {
 			t.changeControlMode(TalonControlMode.PercentVbus);
 		}
 	}
 
 	public void snapBackToReality() {
 		// left reset
-		this.driveLeftFollower_One.changeControlMode(TalonControlMode.Follower);
-		this.driveLeftFollower_Two.changeControlMode(TalonControlMode.Follower);
-		this.driveLeftFollower_One.set(this.driveLeftMaster.getDeviceID());
-		this.driveLeftFollower_Two.set(this.driveLeftMaster.getDeviceID());
+		driveLeftFollower_One.changeControlMode(TalonControlMode.Follower);
+		driveLeftFollower_Two.changeControlMode(TalonControlMode.Follower);
+		driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
+		driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
 		// right reset
-		this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
-		this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
-		this.driveRightFollower_One.set(this.driveRightMaster.getDeviceID());
-		this.driveRightFollower_Two.set(this.driveRightMaster.getDeviceID());
+		driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
+		driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
+		driveRightFollower_One.set(driveRightMaster.getDeviceID());
+		driveRightFollower_Two.set(driveRightMaster.getDeviceID());
 	}
 
 	@Override
 	protected double returnPIDInput() {
-		if (!this.teleop) {
+		if (!teleop) {
 			return Robot.ahrs.getYaw();
 		} else {
 			return Robot.ahrs.getAngle();
@@ -408,7 +407,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		this.PIDTune = output;
+		PIDTune = output;
 	}
 
 	private static double limit(double num) {

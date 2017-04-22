@@ -63,8 +63,6 @@ public class Robot extends IterativeRobot {
 	public static UsbCamera camera_0;
 	// Vision items
 	private static final int IMG_WIDTH = 320;
-	@SuppressWarnings("unused")
-	private static final int IMG_HEIGHT = 240;
 	VisionThread visionThread;
 	public double centerX = 0.0;
 	public double absolutelyAverage = 0.0;
@@ -132,7 +130,7 @@ public class Robot extends IterativeRobot {
 					average_y_one = average_y_one / firstCont.toList().size();
 					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 					synchronized (imgLock) {
-						centerX = r.x + (r.width / 2);
+						centerX = r.x + r.width / 2;
 						filteredContours = pipeline.filterContoursOutput();
 						// add averages to list
 						averages.add(average_y_one);
@@ -141,7 +139,7 @@ public class Robot extends IterativeRobot {
 				} else {
 					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 					synchronized (imgLock) {
-						centerX = r.x + (r.width / 2);
+						centerX = r.x + r.width / 2;
 						filteredContours = pipeline.filterContoursOutput();
 					}
 				}
@@ -213,10 +211,10 @@ public class Robot extends IterativeRobot {
 				centerX = this.centerX;
 				System.out.println("CenterX: " + this.centerX);
 			}
-			double turn = centerX - (Robot.IMG_WIDTH / 2);
+			double turn = centerX - Robot.IMG_WIDTH / 2;
 			// drive with turn
 			System.out.println("Turn: " + turn);
-			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
+			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, turn * 0.005 * -1);
 		}
 		Robot.putDebugInfo();
 	}
