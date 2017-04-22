@@ -4,6 +4,7 @@ import org.usfirst.frc.team3494.robot.commands.climb.Climb;
 import org.usfirst.frc.team3494.robot.commands.climb.ClimberPTOSetter;
 import org.usfirst.frc.team3494.robot.commands.climb.StopClimber;
 import org.usfirst.frc.team3494.robot.commands.drive.HoldDriveTrain;
+import org.usfirst.frc.team3494.robot.commands.drive.RecordAngle;
 import org.usfirst.frc.team3494.robot.commands.gears.SetHolderState;
 import org.usfirst.frc.team3494.robot.commands.gears.ToggleGearRamp;
 
@@ -47,6 +48,8 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	public JoystickButton lstick_3 = new JoystickButton(stick_l, 3);
+	
 	public JoystickButton xbox_a = new JoystickButton(xbox, 1);
 	public JoystickButton xbox_a_2 = new JoystickButton(xbox_2, 1);
 
@@ -69,6 +72,7 @@ public class OI {
 
 	public OI() {
 		// Ready Player One
+		lstick_3.whenPressed(new RecordAngle());
 		// Ready Player Two
 		// Climb controls
 		xbox_a_2.whileActive(new Climb(DriveDirections.UP));
