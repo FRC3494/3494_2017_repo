@@ -2,7 +2,8 @@ package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,13 +27,16 @@ public class GearTake_2 extends Subsystem {
 	 * kReverse.
 	 */
 	private DoubleSolenoid doornoid;
-	public DigitalInput lb;
+	public AnalogInput ai;
+	public AnalogTrigger at;
 
 	public GearTake_2() {
 		super("Gear holder");
 		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
 		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
-		this.lb = new DigitalInput(9);
+		this.ai = new AnalogInput(0);
+		this.at = new AnalogTrigger(this.ai);
+		this.at.setLimitsVoltage(3, Double.MAX_VALUE);
 	}
 
 	@Override

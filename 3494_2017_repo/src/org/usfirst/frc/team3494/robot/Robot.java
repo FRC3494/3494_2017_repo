@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public static PowerDistributionPanel pdp;
 
-	Command autonomousCommand;
+	private static Command autonomousCommand;
 	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
@@ -284,6 +284,10 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
 
-		SmartDashboard.putBoolean("Linebroken", Robot.gearTake.lb.get());
+		SmartDashboard.putBoolean("Linebroken", Robot.gearTake.at.getInWindow());
+	}
+
+	public static Command GetAuto() {
+		return Robot.autonomousCommand;
 	}
 }

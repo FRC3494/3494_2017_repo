@@ -15,7 +15,7 @@ public class PIDFullDrive extends Command {
 
 	private double distance;
 	private double angle;
-	private boolean uselb;
+	private boolean fast;
 
 	/**
 	 * Other constructor. Uses default angle of 0 degrees.
@@ -24,7 +24,7 @@ public class PIDFullDrive extends Command {
 	 *            The distance to drive in inches.
 	 */
 	public PIDFullDrive(double dist) {
-		this(dist, 0);
+		this(dist, 0, false);
 	}
 
 	/**
@@ -34,27 +34,14 @@ public class PIDFullDrive extends Command {
 	 *            The distance to drive, in inches.
 	 * @param angle
 	 *            The angle to turn to.
+	 * @param f
+	 *            Whether or not to be fast
 	 */
-	public PIDFullDrive(double dist, double angle) {
-		this(dist, angle, false);
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param dist
-	 *            The distance to drive, in inches.
-	 * @param angle
-	 *            The angle to turn to.
-	 * @param uselinebreaker
-	 *            Whether to use the linebreak sensor instead of encoder
-	 *            distance to stop
-	 */
-	public PIDFullDrive(double dist, double angle, boolean uselinebreaker) {
+	public PIDFullDrive(double dist, double angle, boolean f) {
 		requires(Robot.driveTrain);
 		this.distance = dist;
 		this.angle = angle;
-		this.uselb = uselinebreaker;
+		this.fast = f;
 	}
 
 	// Called just before this Command runs the first time
@@ -78,21 +65,25 @@ public class PIDFullDrive extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
-			Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+		if (!this.fast) {
+			if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+				Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+			} else {
+				Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
+			}
 		} else {
-			Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
+			if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+				Robot.driveTrain.ArcadeDrive(0.6, -Robot.driveTrain.PIDTune, true);
+			} else {
+				Robot.driveTrain.ArcadeDrive(-0.6, -Robot.driveTrain.PIDTune, true);
+			}
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if (!this.uselb) {
-			return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
-		} else {
-			return Robot.gearTake.lb.get();
-		}
+		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
 	}
 
 	// Called once after isFinished returns true
