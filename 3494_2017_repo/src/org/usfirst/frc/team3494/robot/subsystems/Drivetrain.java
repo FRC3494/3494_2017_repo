@@ -142,7 +142,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		 */
 		// PID control
 		PIDTune = 0;
-		double outRange = 0.5;
+		double outRange = 0.6;
 		disable();
 		if (getSetpoint() != 0) {
 			setSetpoint(0);
@@ -150,7 +150,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		setInputRange(-180, 180);
 		setOutputRange(-outRange, outRange);
 		getPIDController().setContinuous(true);
-		setPercentTolerance(2.5);
+		setPercentTolerance(1);
 	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
