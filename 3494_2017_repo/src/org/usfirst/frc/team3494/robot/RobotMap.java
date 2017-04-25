@@ -42,8 +42,7 @@ public class RobotMap {
 	// climber
 	public static final int CLIMBER_MOTOR = 3;
 	public static final int CLIMBER_MOTOR_PDP = RobotMap.CLIMBER_MOTOR;
-	public static final int CLIMBER_PTO_FORWARD = 6;
-	public static final int CLIMBER_PTO_BACKARD = 7;
+	public static final int CLIMBER_PTO = 6;
 	// turret
 	public static final int UNSCRAMBLER = 3;
 	public static final int TURRET_CONVEYER = 12;
@@ -59,8 +58,7 @@ public class RobotMap {
 	// gear holder pistons
 	public static final int GEAR_DOOR_F = 3;
 	public static final int GEAR_DOOR_R = 2;
-	public static final int GEAR_RAMP_F = 5;
-	public static final int GEAR_RAMP_R = 4;
+	public static final int GEAR_RAMP = 5;
 
 	// conveyer
 	public static final int CONVEYER_M = 14;

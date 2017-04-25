@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,7 +22,7 @@ public class GearTake_2 extends Subsystem {
 	 * The solenoid that controls the ramp on the gear intake. Should stay
 	 * retracted most of the time.
 	 */
-	private DoubleSolenoid rampenoid;
+	private Solenoid rampenoid;
 	/**
 	 * Solenoid that opens and closes the door on the gear holder. Typically in
 	 * kReverse.
@@ -33,7 +34,7 @@ public class GearTake_2 extends Subsystem {
 	public GearTake_2() {
 		super("Gear holder");
 		doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
-		rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
+		rampenoid = new Solenoid(RobotMap.GEAR_RAMP);
 		ai = new AnalogInput(0);
 		at = new AnalogTrigger(ai);
 		at.setLimitsVoltage(3, Double.MAX_VALUE);
@@ -49,7 +50,7 @@ public class GearTake_2 extends Subsystem {
 	 * @param value
 	 *            The position to set the ramp to.
 	 */
-	public void setRamp(Value value) {
+	public void setRamp(boolean value) {
 		rampenoid.set(value);
 	}
 
@@ -84,7 +85,7 @@ public class GearTake_2 extends Subsystem {
 	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
-	public Value getRampState() {
+	public boolean getRampState() {
 		return rampenoid.get();
 	}
 

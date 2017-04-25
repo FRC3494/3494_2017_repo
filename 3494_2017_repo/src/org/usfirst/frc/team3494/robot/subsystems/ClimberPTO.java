@@ -2,8 +2,7 @@ package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,12 +14,12 @@ public class ClimberPTO extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	private boolean driveTrainMode;
-	private DoubleSolenoid pto; // zarya named it
+	private Solenoid pto; // zarya named it
 
 	public ClimberPTO() {
 		super("Climber PTO");
-		pto = new DoubleSolenoid(RobotMap.CLIMBER_PTO_FORWARD, RobotMap.CLIMBER_PTO_BACKARD);
-		pto.set(Value.kForward);
+		pto = new Solenoid(RobotMap.CLIMBER_PTO);
+		pto.set(true);
 		driveTrainMode = false;
 	}
 
@@ -43,21 +42,17 @@ public class ClimberPTO extends Subsystem {
 	 * @param value
 	 *            The state to set the PTO piston in.
 	 */
-	public void setPTO(Value value) {
+	public void setPTO(boolean value) {
 		pto.set(value);
-		if (value.equals(Value.kOff) || value.equals(Value.kReverse)) {
-			driveTrainMode = true;
-		} else {
-			driveTrainMode = false;
-		}
+		driveTrainMode = value;
 	}
 
 	public void disengagePTO() {
-		setPTO(Value.kForward);
+		setPTO(false);
 	}
 
 	public void engagePTO() {
-		setPTO(Value.kReverse);
+		setPTO(true);
 	}
 
 }
