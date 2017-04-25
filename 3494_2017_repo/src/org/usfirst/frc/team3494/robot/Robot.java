@@ -106,7 +106,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Passive Gear Placer - Robot turn left",
 				new ConstructedAuto(AutoGenerator.gearPassiveLeft()));
 		chooser.addObject("Do nothing", new NullAuto());
-		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
+		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeGearLeft()));
 		chooser.addObject("Active Gear placer - Robot turn right",
 				new ConstructedAuto(AutoGenerator.activeGearRight()));
 		// put chooser on DS

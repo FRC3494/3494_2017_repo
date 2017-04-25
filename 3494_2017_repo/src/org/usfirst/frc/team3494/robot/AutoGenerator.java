@@ -114,7 +114,7 @@ public class AutoGenerator {
 	 *         {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto
 	 *         ConstructedAuto}
 	 */
-	public static ArrayList<Command> activeLeftGear() {
+	public static ArrayList<Command> activeGearLeft() {
 		ArrayList<Command> list = AutoGenerator.gearPassiveLeft();
 		list.add(new DropGear());
 		list.add(new PIDFullDrive(-15));
@@ -139,6 +139,21 @@ public class AutoGenerator {
 		list.add(new PIDFullDrive(-15));
 		list.add(new SetGearGrasp(Value.kReverse));
 		list.add(new PIDAngleDrive(-ANGLE));
+		return list;
+	}
+	
+	public static ArrayList<Command> fullBlueRight() {
+		ArrayList<Command> list = AutoGenerator.activeGearRight();
+		list.add(new PIDFullDrive(300));
+		return list;
+	}
+	
+	public static ArrayList<Command> fullBlueLeft() {
+		ArrayList<Command> list = AutoGenerator.activeGearLeft();
+		list.add(new PIDFullDrive(102));
+		list.add(new PIDAngleDrive(40));
+		list.add(new PIDFullDrive(250));
+		list.add(new PIDFullDrive(-40));
 		return list;
 	}
 }
