@@ -79,7 +79,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 	public boolean teleop;
 
 	public Drivetrain() {
-		super("Drivetrain", 0.035, 0, 0);
+		super("Drivetrain", 0.034, 0, 0);
 		// int maxAmps = 50;
 		// create left talons
 		driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
@@ -142,7 +142,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		 */
 		// PID control
 		PIDTune = 0;
-		double outRange = 0.6;
+		double outRange = 0.55;
 		disable();
 		if (getSetpoint() != 0) {
 			setSetpoint(0);
