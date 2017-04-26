@@ -112,13 +112,13 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeGearLeft()));
 		chooser.addObject("Active Gear placer - Robot turn right",
 				new ConstructedAuto(AutoGenerator.activeGearRight()));
-		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, right side",
+		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, robot turn right",
 				new ConstructedAuto(AutoGenerator.fullRedRight()));
-		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, left side",
+		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, robot turn left",
 				new ConstructedAuto(AutoGenerator.fullRedLeft()));
-		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, right side",
+		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, robot turn right",
 				new ConstructedAuto(AutoGenerator.fullBlueRight()));
-		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, left side",
+		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, robot turn left",
 				new ConstructedAuto(AutoGenerator.fullBlueLeft()));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
