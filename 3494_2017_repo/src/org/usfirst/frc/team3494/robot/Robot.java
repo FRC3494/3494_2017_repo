@@ -20,7 +20,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
@@ -92,9 +91,6 @@ public class Robot extends IterativeRobot {
 		climber = new Climber();
 		kompressor = new Kompressor();
 		gearTake = new GearTake_2();
-		gearTake.setRamp(true);
-		gearTake.setGrasp(Value.kReverse);
-		gearTake.closeHolder();
 		pto = new ClimberPTO();
 		pto.disengagePTO();
 		// Non subsystem software init
