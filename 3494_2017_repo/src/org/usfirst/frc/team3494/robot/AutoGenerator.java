@@ -79,7 +79,7 @@ public class AutoGenerator {
 	 */
 	public static ArrayList<Command> gearPassiveRight() {
 		ArrayList<Command> list = new ArrayList<>();
-		list.add(new PIDFullDrive(FIRST_PULL - 2, 0, true));
+		list.add(new PIDFullDrive(FIRST_PULL, 0, true));
 		list.add(new PIDAngleDrive(ANGLE));
 		list.add(new PIDFullDrive(SECOND_PULL));
 		// list.add(new DistanceDrive(-60, UnitTypes.INCHES));
