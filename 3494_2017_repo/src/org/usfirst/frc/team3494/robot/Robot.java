@@ -84,6 +84,9 @@ public class Robot extends IterativeRobot {
 		// Init hardware
 		pdp = new PowerDistributionPanel();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		while(ahrs.isCalibrating()) {
+			continue;
+		}
 		ahrs.reset();
 		camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
 		camera_0.setExposureManual(20);
