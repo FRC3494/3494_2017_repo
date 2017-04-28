@@ -69,7 +69,6 @@ public class DistanceDrive extends Command {
 		} else {
 			return;
 		}
-		System.out.println("Average distance: " + Robot.driveTrain.getAvgDistance(unit));
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
