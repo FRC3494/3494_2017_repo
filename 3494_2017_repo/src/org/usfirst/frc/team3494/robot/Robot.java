@@ -8,6 +8,7 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto;
 import org.usfirst.frc.team3494.robot.commands.auto.NullAuto;
+import org.usfirst.frc.team3494.robot.commands.auto.PIDAngleDrive;
 import org.usfirst.frc.team3494.robot.subsystems.Climber;
 import org.usfirst.frc.team3494.robot.subsystems.ClimberPTO;
 import org.usfirst.frc.team3494.robot.subsystems.Drivetrain;
@@ -84,7 +85,7 @@ public class Robot extends IterativeRobot {
 		// Init hardware
 		pdp = new PowerDistributionPanel();
 		ahrs = new AHRS(SerialPort.Port.kMXP);
-		while(ahrs.isCalibrating()) {
+		while (ahrs.isCalibrating()) {
 			continue;
 		}
 		ahrs.reset();
@@ -122,6 +123,7 @@ public class Robot extends IterativeRobot {
 				new ConstructedAuto(AutoGenerator.fullBlueRight()));
 		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, robot turn left",
 				new ConstructedAuto(AutoGenerator.fullBlueLeft()));
+		chooser.addObject("Test - turn 60 degrees", new PIDAngleDrive(90));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// Create and start vision thread
