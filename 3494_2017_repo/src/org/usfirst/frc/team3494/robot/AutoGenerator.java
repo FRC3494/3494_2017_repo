@@ -64,7 +64,7 @@ public class AutoGenerator {
 
 	public static ArrayList<Command> placeCenterGear() {
 		ArrayList<Command> list = new ArrayList<>();
-		list.add(new PIDFullDrive(110.75));
+		list.add(new PIDFullDrive(75));
 		list.add(new DropGear());
 		list.add(new PIDFullDrive(-15));
 		return list;
