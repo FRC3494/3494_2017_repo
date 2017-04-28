@@ -142,14 +142,14 @@ public class AutoGenerator {
 		return list;
 	}
 
-	public static ArrayList<Command> fullBlueRight() {
-		ArrayList<Command> list = AutoGenerator.activeGearRight();
+	public static ArrayList<Command> fullBlueLeft() {
+		ArrayList<Command> list = AutoGenerator.activeGearLeft();
 		list.add(new PIDFullDrive(300));
 		return list;
 	}
 
-	public static ArrayList<Command> fullBlueLeft() {
-		ArrayList<Command> list = AutoGenerator.activeGearLeft();
+	public static ArrayList<Command> fullBlueRight() {
+		ArrayList<Command> list = AutoGenerator.activeGearRight();
 		list.add(new PIDFullDrive(102));
 		list.add(new PIDAngleDrive(40));
 		list.add(new PIDFullDrive(250));
@@ -157,8 +157,8 @@ public class AutoGenerator {
 		return list;
 	}
 
-	public static ArrayList<Command> fullRedRight() {
-		ArrayList<Command> list = AutoGenerator.activeGearRight();
+	public static ArrayList<Command> fullRedLeft() {
+		ArrayList<Command> list = AutoGenerator.activeGearLeft();
 		list.add(new PIDFullDrive(102));
 		list.add(new PIDAngleDrive(-40));
 		list.add(new PIDFullDrive(250));
@@ -166,8 +166,8 @@ public class AutoGenerator {
 		return list;
 	}
 
-	public static ArrayList<Command> fullRedLeft() {
-		ArrayList<Command> list = AutoGenerator.activeGearLeft();
+	public static ArrayList<Command> fullRedRight() {
+		ArrayList<Command> list = AutoGenerator.activeGearRight();
 		list.add(new PIDFullDrive(300));
 		return list;
 	}
