@@ -83,7 +83,9 @@ public class PIDFullDrive extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(distance);
+		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(distance)
+				|| Math.abs(Robot.driveTrain.getLeftDistance(UnitTypes.INCHES)) >= Math.abs(distance)
+				|| Math.abs(Robot.driveTrain.getRightDistance(UnitTypes.INCHES)) >= Math.abs(distance);
 	}
 
 	// Called once after isFinished returns true
