@@ -15,7 +15,7 @@ public class SetHolderState extends Command {
 	public SetHolderState(Value v) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		this.value = v;
+		value = v;
 		requires(Robot.gearTake);
 	}
 

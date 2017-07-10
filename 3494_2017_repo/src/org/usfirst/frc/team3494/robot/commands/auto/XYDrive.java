@@ -43,8 +43,8 @@ public class XYDrive extends CommandGroup {
 	public XYDrive(double rise, double run, boolean PID) {
 		double run2 = run * run;
 		double rise2 = rise * rise;
-		this.hypot = Math.sqrt(run2 + rise2);
-		this.angle = Math.toDegrees(Math.atan2(rise, run));
+		hypot = Math.sqrt(run2 + rise2);
+		angle = Math.toDegrees(Math.atan2(rise, run));
 		if (PID) {
 			addSequential(new PIDAngleDrive(angle));
 			addSequential(new PIDFullDrive(hypot));

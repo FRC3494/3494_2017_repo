@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Command to run drivetrain. Only takes input in the form of joysticks.
+ * Command to run drivetrain. Only takes input from joysticks.
  *
  * @see org.usfirst.frc.team3494.robot.subsystems.Drivetrain Drivetrain
  * @see org.usfirst.frc.team3494.robot.commands.auto.DistanceDrive Distance
@@ -49,9 +49,10 @@ public class Drive extends Command {
 		boolean useX = Robot.prefs.getBoolean("xbone", false);
 		if (useX) {
 			if (Robot.prefs.getBoolean("arcade", false)) {
+				// XBox controller with arcade
 				Drive.driveArcade();
 			} else if (!Robot.prefs.getBoolean("betapid", false)) {
-				// 10 gbp to whoever can reduce this to one call
+				// Tank drive via XBox controller
 				if (!Robot.driveTrain.getInverted()) {
 					Robot.driveTrain.adjustedTankDrive(-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter,
 							-Robot.oi.xbox.getY(Hand.kLeft) * Robot.driveTrain.inverter);
@@ -60,22 +61,27 @@ public class Drive extends Command {
 							-Robot.oi.xbox.getY(Hand.kRight) * Robot.driveTrain.inverter);
 				}
 			} else {
-				// BETA - steer using Drivetrain PID
+				// BETA - steer using Drivetrain PID off XBox split arcade
 				if (!Robot.driveTrain.getPIDController().isEnabled()) {
 					Robot.driveTrain.enable(); // enable only if disabled
 				}
 				if (Math.abs(Robot.oi.xbox.getX(Hand.kRight)) > 0.1) {
-					Robot.driveTrain
-							.setSetpoint(Robot.driveTrain.getSetpoint() + (3 * Robot.oi.xbox.getX(Hand.kRight)));
+					Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + 3 * Robot.oi.xbox.getX(Hand.kRight));
 				}
 				Robot.driveTrain.ArcadeDrive(Robot.oi.xbox.getY(Hand.kLeft), -Robot.driveTrain.PIDTune, true);
 			}
 		} else {
-			// Same reward here.
+			// Tank drive from flight sticks
 			if (Robot.driveTrain.getInverted()) {
 				Robot.driveTrain.TankDrive(-Robot.oi.stick_l.getY(), Robot.oi.stick_r.getY());
 			} else {
 				Robot.driveTrain.TankDrive(Robot.oi.stick_r.getY(), -Robot.oi.stick_l.getY());
+			}
+			if (Robot.oi.stick_l.getRawButton(3)) {
+				Robot.driveTrain.enable();
+				Robot.driveTrain.ArcadeDrive(Robot.oi.stick_l.getY(), -Robot.driveTrain.PIDTune, true);
+			} else {
+				Robot.driveTrain.disable();
 			}
 		}
 	}

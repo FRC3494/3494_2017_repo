@@ -19,7 +19,7 @@ public class Conveyer extends Subsystem implements IMotorizedSubsystem {
 	private Talon convey;
 
 	public Conveyer() {
-		this.convey = new Talon(RobotMap.CONVEYER_M);
+		convey = new Talon(RobotMap.CONVEYER_M);
 	}
 
 	@Override
@@ -30,12 +30,12 @@ public class Conveyer extends Subsystem implements IMotorizedSubsystem {
 
 	@Override
 	public void stopAll() {
-		this.convey.stopMotor();
+		convey.stopMotor();
 	}
 
 	@Override
 	public void setAll(double speed) {
-		this.convey.set(speed);
+		convey.set(speed);
 	}
 
 	/**
@@ -51,11 +51,11 @@ public class Conveyer extends Subsystem implements IMotorizedSubsystem {
 	 */
 	public void runConveyer(DriveDirections dir) {
 		if (dir.equals(DriveDirections.FORWARD)) {
-			this.setAll(0.5);
+			setAll(0.5);
 		} else if (dir.equals(DriveDirections.BACKWARD)) {
-			this.setAll(-0.5);
+			setAll(-0.5);
 		} else {
-			this.stopAll();
+			stopAll();
 		}
 	}
 }

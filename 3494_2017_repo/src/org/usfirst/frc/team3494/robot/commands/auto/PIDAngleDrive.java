@@ -30,7 +30,7 @@ public class PIDAngleDrive extends Command {
 	protected void initialize() {
 		Robot.ahrs.reset();
 		Robot.driveTrain.enable();
-		Robot.driveTrain.setSetpoint(this.angle);
+		Robot.driveTrain.setSetpoint(angle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

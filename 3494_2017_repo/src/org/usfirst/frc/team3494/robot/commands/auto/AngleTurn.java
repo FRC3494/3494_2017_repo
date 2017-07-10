@@ -45,11 +45,11 @@ public class AngleTurn extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (!((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance))) {
-			if (this.angle > 0) {
+		if (!(Robot.ahrs.getAngle() > angle - tolerance && Robot.ahrs.getAngle() < angle + tolerance)) {
+			if (angle > 0) {
 				Robot.driveTrain.adjustedTankDrive(-0.4, 0.4);
 				return;
-			} else if (this.angle < 0) {
+			} else if (angle < 0) {
 				Robot.driveTrain.adjustedTankDrive(0.4, -0.4);
 				return;
 			} else {
@@ -61,7 +61,7 @@ public class AngleTurn extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return ((Robot.ahrs.getAngle() > this.angle - tolerance) && (Robot.ahrs.getAngle() < this.angle + tolerance));
+		return Robot.ahrs.getAngle() > angle - tolerance && Robot.ahrs.getAngle() < angle + tolerance;
 	}
 
 	// Called once after isFinished returns true

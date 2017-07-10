@@ -15,21 +15,7 @@ public class PIDFullDrive extends Command {
 
 	private double distance;
 	private double angle;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param dist
-	 *            The distance to drive, in inches.
-	 * @param angle
-	 *            The angle to turn to.
-	 */
-	public PIDFullDrive(double dist, double angle) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.driveTrain);
-		this.distance = dist;
-	}
+	private boolean fast;
 
 	/**
 	 * Other constructor. Uses default angle of 0 degrees.
@@ -38,7 +24,24 @@ public class PIDFullDrive extends Command {
 	 *            The distance to drive in inches.
 	 */
 	public PIDFullDrive(double dist) {
-		this(dist, 0);
+		this(dist, 0, false);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param dist
+	 *            The distance to drive, in inches.
+	 * @param angle
+	 *            The angle to turn to.
+	 * @param f
+	 *            Whether or not to be fast
+	 */
+	public PIDFullDrive(double dist, double angle, boolean f) {
+		requires(Robot.driveTrain);
+		distance = dist;
+		this.angle = angle;
+		fast = f;
 	}
 
 	// Called just before this Command runs the first time
@@ -54,7 +57,7 @@ public class PIDFullDrive extends Command {
 		}
 		Robot.ahrs.reset();
 		Robot.driveTrain.enable();
-		Robot.driveTrain.setSetpoint(this.angle);
+		Robot.driveTrain.setSetpoint(angle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -62,18 +65,25 @@ public class PIDFullDrive extends Command {
 	protected void execute() {
 		SmartDashboard.putNumber("angle", Robot.ahrs.getAngle());
 		// System.out.println(Robot.driveTrain.PIDTune);
-		if (this.distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
-			Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+		if (!fast) {
+			if (distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+				Robot.driveTrain.ArcadeDrive(0.5, -Robot.driveTrain.PIDTune, true);
+			} else {
+				Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
+			}
 		} else {
-			Robot.driveTrain.ArcadeDrive(-0.5, -Robot.driveTrain.PIDTune, true);
+			if (distance < Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) {
+				Robot.driveTrain.ArcadeDrive(0.6, -Robot.driveTrain.PIDTune, true);
+			} else {
+				Robot.driveTrain.ArcadeDrive(-0.6, -Robot.driveTrain.PIDTune, true);
+			}
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		// return false;
-		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(this.distance);
+		return Math.abs(Robot.driveTrain.getAvgDistance(UnitTypes.INCHES)) >= Math.abs(distance);
 	}
 
 	// Called once after isFinished returns true
@@ -88,6 +98,6 @@ public class PIDFullDrive extends Command {
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-		this.end();
+		end();
 	}
 }

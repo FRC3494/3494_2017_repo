@@ -15,8 +15,8 @@ public class Kompressor extends Subsystem {
 	// here. Call these from Commands.
 	public Kompressor() {
 		super("Kompressor");
-		this.compress = new Compressor(RobotMap.COMPRESSOR);
-		this.compress.setClosedLoopControl(true);
+		compress = new Compressor(RobotMap.COMPRESSOR);
+		compress.setClosedLoopControl(true);
 	}
 
 	@Override

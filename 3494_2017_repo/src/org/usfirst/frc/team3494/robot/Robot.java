@@ -56,15 +56,13 @@ public class Robot extends IterativeRobot {
 	 */
 	public static PowerDistributionPanel pdp;
 
-	Command autonomousCommand;
+	private static Command autonomousCommand;
 	public static SendableChooser<Command> chooser;
 	public static Preferences prefs;
 
 	public static UsbCamera camera_0;
 	// Vision items
 	private static final int IMG_WIDTH = 320;
-	@SuppressWarnings("unused")
-	private static final int IMG_HEIGHT = 240;
 	VisionThread visionThread;
 	public double centerX = 0.0;
 	public double absolutelyAverage = 0.0;
@@ -108,9 +106,17 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Passive Gear Placer - Robot turn left",
 				new ConstructedAuto(AutoGenerator.gearPassiveLeft()));
 		chooser.addObject("Do nothing", new NullAuto());
-		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeLeftGear()));
+		chooser.addObject("Active Gear placer - Robot turn left", new ConstructedAuto(AutoGenerator.activeGearLeft()));
 		chooser.addObject("Active Gear placer - Robot turn right",
 				new ConstructedAuto(AutoGenerator.activeGearRight()));
+		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, right side",
+				new ConstructedAuto(AutoGenerator.fullRedRight()));
+		chooser.addObject("Full auto (active gear + drive to loading station) - Red alliance, left side",
+				new ConstructedAuto(AutoGenerator.fullRedLeft()));
+		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, right side",
+				new ConstructedAuto(AutoGenerator.fullBlueRight()));
+		chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, left side",
+				new ConstructedAuto(AutoGenerator.fullBlueLeft()));
 		// put chooser on DS
 		SmartDashboard.putData("AUTO CHOOSER", chooser);
 		// Create and start vision thread
@@ -132,7 +138,7 @@ public class Robot extends IterativeRobot {
 					average_y_one = average_y_one / firstCont.toList().size();
 					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 					synchronized (imgLock) {
-						centerX = r.x + (r.width / 2);
+						centerX = r.x + r.width / 2;
 						filteredContours = pipeline.filterContoursOutput();
 						// add averages to list
 						averages.add(average_y_one);
@@ -141,7 +147,7 @@ public class Robot extends IterativeRobot {
 				} else {
 					Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 					synchronized (imgLock) {
-						centerX = r.x + (r.width / 2);
+						centerX = r.x + r.width / 2;
 						filteredContours = pipeline.filterContoursOutput();
 					}
 				}
@@ -213,10 +219,10 @@ public class Robot extends IterativeRobot {
 				centerX = this.centerX;
 				System.out.println("CenterX: " + this.centerX);
 			}
-			double turn = centerX - (Robot.IMG_WIDTH / 2);
+			double turn = centerX - Robot.IMG_WIDTH / 2;
 			// drive with turn
 			System.out.println("Turn: " + turn);
-			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, (turn * 0.005) * -1);
+			Robot.driveTrain.wpiDrive.arcadeDrive(0.5, turn * 0.005 * -1);
 		}
 		Robot.putDebugInfo();
 	}
@@ -241,6 +247,9 @@ public class Robot extends IterativeRobot {
 			t.setVoltageRampRate(Drivetrain.RAMP);
 			t.enableBrakeMode(true);
 		}
+		Robot.driveTrain.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+		Robot.driveTrain.setOutputRange(-0.5, 0.5);
+		Robot.driveTrain.teleop = true;
 	}
 
 	/**
@@ -283,5 +292,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Motor 15", Robot.pdp.getCurrent(15));
 
 		SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
+
+		SmartDashboard.putBoolean("Linebroken", Robot.gearTake.at.getInWindow());
+	}
+
+	public static Command GetAuto() {
+		return Robot.autonomousCommand;
 	}
 }

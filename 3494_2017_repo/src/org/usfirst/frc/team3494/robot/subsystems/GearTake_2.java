@@ -2,8 +2,11 @@ package org.usfirst.frc.team3494.robot.subsystems;
 
 import org.usfirst.frc.team3494.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,15 +20,24 @@ public class GearTake_2 extends Subsystem {
 	// Ramp and state
 	/**
 	 * The solenoid that controls the ramp on the gear intake. Should stay
-	 * forward most of the time.
+	 * retracted most of the time.
 	 */
-	private DoubleSolenoid rampenoid;
+	private Solenoid rampenoid;
+	/**
+	 * Solenoid that opens and closes the door on the gear holder. Typically in
+	 * kReverse.
+	 */
 	private DoubleSolenoid doornoid;
+	public AnalogInput ai;
+	public AnalogTrigger at;
 
 	public GearTake_2() {
-		super();
-		this.doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
-		this.rampenoid = new DoubleSolenoid(RobotMap.GEAR_RAMP_F, RobotMap.GEAR_RAMP_R);
+		super("Gear holder");
+		doornoid = new DoubleSolenoid(RobotMap.GEAR_DOOR_F, RobotMap.GEAR_DOOR_R);
+		rampenoid = new Solenoid(RobotMap.GEAR_RAMP);
+		ai = new AnalogInput(0);
+		at = new AnalogTrigger(ai);
+		at.setLimitsVoltage(3, Double.MAX_VALUE);
 	}
 
 	@Override
@@ -38,8 +50,8 @@ public class GearTake_2 extends Subsystem {
 	 * @param value
 	 *            The position to set the ramp to.
 	 */
-	public void setRamp(Value value) {
-		this.rampenoid.set(value);
+	public void setRamp(boolean value) {
+		rampenoid.set(value);
 	}
 
 	/**
@@ -49,21 +61,21 @@ public class GearTake_2 extends Subsystem {
 	 *            The position to set the holder to.
 	 */
 	public void setGrasp(Value value) {
-		this.doornoid.set(value);
+		doornoid.set(value);
 	}
 
 	/**
 	 * Releases the gear with a call to {@link GearTake_2#setGrasp}.
 	 */
 	public void releaseGear() {
-		this.setGrasp(Value.kForward);
+		setGrasp(Value.kForward);
 	}
 
 	/**
 	 * Closes the gear holder with a call to {@link GearTake_2#setGrasp}.
 	 */
 	public void closeHolder() {
-		this.setGrasp(Value.kReverse);
+		setGrasp(Value.kReverse);
 	}
 
 	/**
@@ -73,8 +85,8 @@ public class GearTake_2 extends Subsystem {
 	 *
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
-	public Value getRampState() {
-		return this.rampenoid.get();
+	public boolean getRampState() {
+		return rampenoid.get();
 	}
 
 	/**
@@ -85,6 +97,6 @@ public class GearTake_2 extends Subsystem {
 	 * @return The value of {@code this.rampenoid.get()}.
 	 */
 	public Value getGearState() {
-		return this.doornoid.get();
+		return doornoid.get();
 	}
 }

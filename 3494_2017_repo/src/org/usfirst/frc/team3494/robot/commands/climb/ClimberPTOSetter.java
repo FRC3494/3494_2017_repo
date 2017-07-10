@@ -20,7 +20,7 @@ public class ClimberPTOSetter extends Command {
 		requires(Robot.pto);
 		requires(Robot.kompressor);
 		requires(Robot.driveTrain);
-		this.b = engage;
+		b = engage;
 	}
 
 	// Called just before this Command runs the first time
@@ -31,8 +31,8 @@ public class ClimberPTOSetter extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		SmartDashboard.putBoolean("PTO Engaged", this.b);
-		if (this.b) {
+		SmartDashboard.putBoolean("PTO Engaged", b);
+		if (b) {
 			Robot.pto.engagePTO();
 			Robot.kompressor.compress.stop();
 			for (CANTalon c : Robot.driveTrain.leftSide) {

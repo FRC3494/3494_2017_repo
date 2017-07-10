@@ -2,7 +2,6 @@ package org.usfirst.frc.team3494.robot.commands.gears;
 
 import org.usfirst.frc.team3494.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -22,11 +21,7 @@ public class ToggleGearRamp extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Robot.gearTake.getRampState().equals(Value.kForward)) {
-			Robot.gearTake.setRamp(Value.kReverse);
-		} else {
-			Robot.gearTake.setRamp(Value.kForward);
-		}
+		Robot.gearTake.setRamp(!Robot.gearTake.getRampState());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

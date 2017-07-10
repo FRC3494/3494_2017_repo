@@ -30,9 +30,9 @@ public class Climb extends Command {
 		requires(Robot.climber);
 		if (dir != null) {
 			if (dir.equals(DriveDirections.DOWN) || dir.equals(DriveDirections.UP)) {
-				this.direction = dir;
+				direction = dir;
 			} else {
-				this.direction = DriveDirections.UP;
+				direction = DriveDirections.UP;
 			}
 		}
 	}
