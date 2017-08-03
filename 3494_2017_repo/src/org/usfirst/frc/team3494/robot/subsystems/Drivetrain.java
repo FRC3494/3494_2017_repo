@@ -105,8 +105,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
 		driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
 		driveRightMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		driveRightMaster.reverseSensor(true);
-		driveRightMaster.setEncPosition(0);
 		driveRightMaster.configEncoderCodesPerRev(360);
+		driveRightMaster.setEncPosition(0);
 		driveRightMaster.enableBrakeMode(true);
 		driveRightMaster.setVoltageRampRate(RAMP);
 		driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
