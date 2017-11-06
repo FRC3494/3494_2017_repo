@@ -56,12 +56,27 @@ public class AutoGenerator {
         return list;
     }
 
+    /**
+     * Passively places the center gear (drives to peg and stops.)
+     *
+     * @return A list of commands suitable for use with
+     * {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto}.
+     * @see org.usfirst.frc.team3494.robot.commands.auto.PIDFullDrive
+     */
     static ArrayList<Command> placeCenterGear() {
         ArrayList<Command> list = new ArrayList<>();
         list.add(new PIDFullDrive(110.75 - 34.0D)); // shh
         return list;
     }
 
+
+    /**
+     * Actively places the center gear. Drops peg on gear and backs away.
+     *
+     * @return A list of commands suitable for use with
+     * {@link org.usfirst.frc.team3494.robot.commands.auto.ConstructedAuto}.
+     * @see org.usfirst.frc.team3494.robot.commands.auto.PegDrive
+     */
     static ArrayList<Command> activeCenterGear() {
         ArrayList<Command> list = new ArrayList<>();
         list.add(new PegDrive(0, false));
