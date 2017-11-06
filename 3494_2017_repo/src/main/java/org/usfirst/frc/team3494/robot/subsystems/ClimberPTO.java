@@ -45,10 +45,16 @@ public class ClimberPTO extends Subsystem {
         driveTrainMode = value;
     }
 
+    /**
+     * Shortcut method, equivalent to setPTO(false).
+     */
     public void disengagePTO() {
         setPTO(false);
     }
 
+    /**
+     * Shortcut method, equivalent to setPTO(true).
+     */
     public void engagePTO() {
         setPTO(true);
     }

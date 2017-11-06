@@ -12,10 +12,6 @@ import org.usfirst.frc.team3494.robot.RobotMap;
  * holder.
  */
 public class GearTake_2 extends Subsystem {
-
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-    // Ramp and state
     /**
      * The solenoid that controls the ramp on the gear intake. Should stay
      * retracted most of the time.
@@ -26,7 +22,14 @@ public class GearTake_2 extends Subsystem {
      * kReverse.
      */
     private DoubleSolenoid doornoid;
+    // analog linebreak sensor
+    /**
+     * AnalogInput object to represent the linebreak sensor on the gear holder.
+     */
     public AnalogInput ai;
+    /**
+     * AnalogTrigger object to represent the linebreak sensor on the gear holder (more abstract.)
+     */
     public AnalogTrigger at;
 
     public GearTake_2() {

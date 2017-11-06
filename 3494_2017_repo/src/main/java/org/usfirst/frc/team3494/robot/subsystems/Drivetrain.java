@@ -12,8 +12,8 @@ import org.usfirst.frc.team3494.robot.commands.drive.Drive;
 
 /**
  * Drivetrain subsystem. Contains all methods for controlling the robot's
- * drivetrain. Also has in instance of RobotDrive (wpiDrive) if you want to use
- * that.
+ * drivetrain. Also has an instance of RobotDrive (wpiDrive) if you want to use
+ * that. PID control is built in with {@link edu.wpi.first.wpilibj.command.PIDSubsystem PIDSubsystem}.
  *
  * @since 0.0.0
  */
@@ -178,10 +178,6 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         driveRightFollower_Two.set(right * scaleDown * rightScale);
     }
 
-    public void TeleopTank(double left, double right) {
-        TankDrive(left * inverter, right * inverter);
-    }
-
     /**
      * Drives the drivetrain, with the value passed in for left inverted. This
      * corrects for the left side being inverted hardware side.<br>
@@ -293,6 +289,12 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         }
     }
 
+    /**
+     * Gets the average distance the encoders have counted in the specified unit.
+     *
+     * @param unit The unit type to get the distance in.
+     * @return The average distance the encoders have counted, in the specified unit.
+     */
     public double getAvgDistance(UnitTypes unit) {
         return (getLeftDistance(unit) + getRightDistance(unit)) / 2;
     }
@@ -336,6 +338,8 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
     /**
      * Stage-sets the drivetrain. Please, for the love of all that is holy call
      * {@link Drivetrain#snapBackToReality()} after this.
+     * <br>
+     * On second thought, please don't use this at all.
      *
      * @param left  The left power
      * @param right The right power
@@ -359,8 +363,10 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         driveRightFollower_Two.set(right);
     }
 
+    /**
+     * Sets all motors on the drivetrain to PercentVbus control (for staged drivetrain mode.)
+     */
     public void initStaging() {
-        // change all to be percent Vbus
         for (CANTalon t : leftSide) {
             t.changeControlMode(TalonControlMode.PercentVbus);
         }
@@ -369,6 +375,9 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         }
     }
 
+    /**
+     * Resets the drivetrain to "master/follower" control mode.
+     */
     public void snapBackToReality() {
         // left reset
         driveLeftFollower_One.changeControlMode(TalonControlMode.Follower);

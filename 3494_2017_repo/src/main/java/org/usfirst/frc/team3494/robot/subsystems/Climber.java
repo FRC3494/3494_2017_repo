@@ -58,6 +58,9 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
         motor.set(speed);
     }
 
+    /**
+     * Gets current draw of the climb motor.
+     */
     public double getMotorCurrent() {
         return Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP);
     }
