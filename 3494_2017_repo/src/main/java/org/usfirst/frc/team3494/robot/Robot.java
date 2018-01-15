@@ -4,11 +4,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -54,7 +55,7 @@ public class Robot extends IterativeRobot {
     private static UsbCamera camera_0;
     // Vision items
     private static final int IMG_WIDTH = 320;
-    VisionThread visionThread;
+    private VisionThread visionThread;
     public double centerX = 0.0;
     public double absolutelyAverage = 0.0;
     @SuppressWarnings("unused")
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         System.out.println("Hello FTAs, how are you doing?");
         System.out.println("Because I'm a (very annoyed) QUADRANGLE.");
-        table = NetworkTable.getTable("limelight");
+        table = NetworkTableInstance.getDefault().getTable("limelight");
         // Init hardware
         pdp = new PowerDistributionPanel();
         ahrs = new AHRS(SPI.Port.kMXP);
@@ -222,9 +223,16 @@ public class Robot extends IterativeRobot {
             System.out.println("Turn: " + turn);
             Robot.driveTrain.ArcadeDrive(0.5, turn * 0.005 * -1, true);
             */
-            double tx = table.getNumber("tx", 0); // horizontal offset in degrees
-            double adjust = tx * 0.02;
-            Robot.driveTrain.adjustedTankDrive(-adjust, adjust);
+            SmartDashboard.putNumberArray("Limelight Values", new double[]{
+                    table.getEntry("tx").getDouble(0),
+                    table.getEntry("ty").getDouble(0),
+                    table.getEntry("ta").getDouble(0)
+            });
+            double tx = table.getEntry("tx").getDouble(0); // horizontal offset in degrees
+            Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + tx);
+            Robot.driveTrain.ArcadeDrive(0.25, Robot.driveTrain.PIDTune, true);
+            // double adjust = tx * 0.02;
+            // Robot.driveTrain.adjustedTankDrive(-adjust, adjust);
         }
         Robot.putDebugInfo();
     }
@@ -271,10 +279,10 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
-        LiveWindow.run();
+        LiveWindow.updateValues();
     }
 
-    public static void putDebugInfo() {
+    private static void putDebugInfo() {
         SmartDashboard.putNumber("Trigger voltage", Robot.gearTake.ai.getVoltage());
         SmartDashboard.putNumber("[left] distance", Robot.driveTrain.getLeftDistance(UnitTypes.RAWCOUNT));
         SmartDashboard.putNumber("[left] distance inches", Robot.driveTrain.getLeftDistance(UnitTypes.INCHES));
@@ -299,9 +307,5 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
         SmartDashboard.putNumber("Drive PID setpoint", Robot.driveTrain.getSetpoint());
-    }
-
-    public static Command GetAuto() {
-        return Robot.autonomousCommand;
     }
 }
