@@ -118,10 +118,6 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         // list time!
         rightSide = new TalonSRX[]{driveRightMaster, driveRightFollower_One, driveLeftFollower_Two};
 
-        wpiDrive = new DifferentialDrive((WPI_TalonSRX) driveLeftMaster, (WPI_TalonSRX) driveRightMaster);
-        wpiDrive.setExpiration(Integer.MAX_VALUE);
-        wpiDrive.setSafetyEnabled(false);
-
         teleop = false;
 
         this.encRight = new Encoder(RobotMap.ENCODER_RIGHT_A, RobotMap.ENCODER_RIGHT_B);
