@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot;
 
-import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -253,8 +252,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         /*
          * if (Robot.climber.getMotorCurrent() > 10.0D) {
-		 * Robot.climber.engagePTO(); }
-		 */
+         * Robot.climber.engagePTO(); }
+         */
         Scheduler.getInstance().run();
         Robot.putDebugInfo();
     }

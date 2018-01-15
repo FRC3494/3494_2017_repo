@@ -108,7 +108,7 @@ public class GripPipeline implements VisionPipeline {
      * Sets the values of pixels in a binary image to their distance to the
      * nearest black pixel.
      *
-     * @param input    The image on which to perform the Distance Transform.
+     * @param input The image on which to perform the Distance Transform.
      */
     private void findContours(Mat input, boolean externalOnly, List<MatOfPoint> contours) {
         Mat hierarchy = new Mat();

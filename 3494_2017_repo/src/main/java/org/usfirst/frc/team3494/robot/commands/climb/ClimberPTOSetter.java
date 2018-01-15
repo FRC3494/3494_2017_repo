@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot.commands.climb;
 
-import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
