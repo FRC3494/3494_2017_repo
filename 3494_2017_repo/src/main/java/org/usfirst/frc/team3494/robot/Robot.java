@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot {
         table = NetworkTable.getTable("limelight");
         // Init hardware
         pdp = new PowerDistributionPanel();
-        ahrs = new AHRS(SerialPort.Port.kMXP);
+        ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
         camera_0 = CameraServer.getInstance().startAutomaticCapture("Gear View", 0);
         camera_0.setExposureManual(20);
@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser<>();
         oi = new OI();
         // Auto programs come after all subsystems are created
-        chooser.addDefault("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
+        chooser.addObject("Drive to the baseline", new ConstructedAuto(AutoGenerator.crossBaseLine()));
         chooser.addObject("Passive Center Gear Placer", new ConstructedAuto(AutoGenerator.placeCenterGear()));
         chooser.addObject("Active Center Gear Placer", new ConstructedAuto(AutoGenerator.activeCenterGear()));
         chooser.addObject("Passive Gear Placer - Robot turn right",
@@ -112,6 +112,7 @@ public class Robot extends IterativeRobot {
                 new ConstructedAuto(AutoGenerator.fullBlueRight()));
         chooser.addObject("Full auto (active gear + drive to loading station) - Blue alliance, left side",
                 new ConstructedAuto(AutoGenerator.fullBlueLeft()));
+        chooser.addDefault("Camera test", null);
         // put chooser on DS
         SmartDashboard.putData("Auto Chooser", chooser);
         // Create and start vision thread
@@ -195,6 +196,7 @@ public class Robot extends IterativeRobot {
             autonomousCommand.start();
         } else {
             System.out.println("Defaulting to track the shiny");
+            Robot.driveTrain.enable();
         }
         driveTrain.resetLeft();
         driveTrain.resetRight();
@@ -209,6 +211,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             Scheduler.getInstance().run();
         } else {
+            /*
             double centerX;
             synchronized (imgLock) {
                 centerX = this.centerX;
@@ -217,7 +220,11 @@ public class Robot extends IterativeRobot {
             double turn = centerX - Robot.IMG_WIDTH / 2;
             // drive with turn
             System.out.println("Turn: " + turn);
-            Robot.driveTrain.wpiDrive.arcadeDrive(0.5, turn * 0.005 * -1);
+            Robot.driveTrain.ArcadeDrive(0.5, turn * 0.005 * -1, true);
+            */
+            double tx = table.getNumber("tx", 0); // horizontal offset in degrees
+            double adjust = tx * 0.02;
+            Robot.driveTrain.adjustedTankDrive(-adjust, adjust);
         }
         Robot.putDebugInfo();
     }
@@ -242,6 +249,7 @@ public class Robot extends IterativeRobot {
         Robot.driveTrain.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
         Robot.driveTrain.setOutputRange(-0.5, 0.5);
         Robot.driveTrain.teleop = true;
+        Robot.driveTrain.disable();
         Robot.gearTake.closeHolder();
     }
 
@@ -288,6 +296,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Climber Motor", Robot.pdp.getCurrent(RobotMap.CLIMBER_MOTOR_PDP));
 
         SmartDashboard.putBoolean("Linebroken", Robot.gearTake.at.getInWindow());
+
+        SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
+        SmartDashboard.putNumber("Drive PID setpoint", Robot.driveTrain.getSetpoint());
     }
 
     public static Command GetAuto() {
