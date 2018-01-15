@@ -1,12 +1,15 @@
 package org.usfirst.frc.team3494.robot;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -27,7 +30,6 @@ import java.util.ArrayList;
  * documentation.
  */
 public class Robot extends IterativeRobot {
-
     public static OI oi;
     public static Drivetrain driveTrain;
     public static Climber climber;
@@ -47,10 +49,10 @@ public class Robot extends IterativeRobot {
     public static PowerDistributionPanel pdp;
 
     private static Command autonomousCommand;
-    public static SendableChooser<Command> chooser;
+    private static SendableChooser<Command> chooser;
     public static Preferences prefs;
 
-    public static UsbCamera camera_0;
+    private static UsbCamera camera_0;
     // Vision items
     private static final int IMG_WIDTH = 320;
     VisionThread visionThread;
@@ -62,6 +64,8 @@ public class Robot extends IterativeRobot {
 
     private final Object imgLock = new Object();
 
+    NetworkTable table;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -70,6 +74,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         System.out.println("Hello FTAs, how are you doing?");
         System.out.println("Because I'm a (very annoyed) QUADRANGLE.");
+        table = NetworkTable.getTable("limelight");
         // Init hardware
         pdp = new PowerDistributionPanel();
         ahrs = new AHRS(SerialPort.Port.kMXP);
@@ -178,13 +183,11 @@ public class Robot extends IterativeRobot {
         // reset gyro
         Robot.ahrs.reset();
         // set ramps
-        for (CANTalon t : Robot.driveTrain.leftSide) {
-            t.setVoltageRampRate(0);
-            t.enableBrakeMode(true);
+        for (TalonSRX t : Robot.driveTrain.leftSide) {
+            t.setNeutralMode(NeutralMode.Brake);
         }
-        for (CANTalon t : Robot.driveTrain.rightSide) {
-            t.setVoltageRampRate(0);
-            t.enableBrakeMode(true);
+        for (TalonSRX t : Robot.driveTrain.rightSide) {
+            t.setNeutralMode(NeutralMode.Brake);
         }
         autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
@@ -231,13 +234,11 @@ public class Robot extends IterativeRobot {
         }
         camera_0.setExposureManual(50);
         // set ramps
-        for (CANTalon t : Robot.driveTrain.leftSide) {
-            t.setVoltageRampRate(Drivetrain.RAMP);
-            t.enableBrakeMode(true);
+        for (TalonSRX t : Robot.driveTrain.leftSide) {
+            t.setNeutralMode(NeutralMode.Brake);
         }
-        for (CANTalon t : Robot.driveTrain.rightSide) {
-            t.setVoltageRampRate(Drivetrain.RAMP);
-            t.enableBrakeMode(true);
+        for (TalonSRX t : Robot.driveTrain.rightSide) {
+            t.setNeutralMode(NeutralMode.Brake);
         }
         Robot.driveTrain.setInputRange(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
         Robot.driveTrain.setOutputRange(-0.5, 0.5);
@@ -274,8 +275,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("[right] distance", Robot.driveTrain.getRightDistance(UnitTypes.RAWCOUNT));
         SmartDashboard.putNumber("[right] distance inches", Robot.driveTrain.getRightDistance(UnitTypes.INCHES));
 
-        SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getPosition());
-        SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getPosition());
+        SmartDashboard.putNumber("Talon Distance Right", Robot.driveTrain.rightSide[0].getSensorCollection().getQuadraturePosition());
+        SmartDashboard.putNumber("Talon Distance Left", Robot.driveTrain.leftSide[0].getSensorCollection().getQuadraturePosition());
 
         SmartDashboard.putNumber("Motor 0", Robot.pdp.getCurrent(0));
         SmartDashboard.putNumber("Motor 1", Robot.pdp.getCurrent(1));

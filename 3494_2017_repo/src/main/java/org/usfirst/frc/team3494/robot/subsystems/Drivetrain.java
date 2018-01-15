@@ -1,10 +1,13 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import org.usfirst.frc.team3494.robot.Robot;
 import org.usfirst.frc.team3494.robot.RobotMap;
 import org.usfirst.frc.team3494.robot.UnitTypes;
@@ -27,53 +30,53 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
      *
      * @since 0.0.0
      */
-    private CANTalon driveLeftMaster;
+    private TalonSRX driveLeftMaster;
     /**
      * Follower talon on left side.
      *
      * @since 0.0.0
      */
-    private CANTalon driveLeftFollower_One;
+    private TalonSRX driveLeftFollower_One;
     /**
      * Follower talon on left side.
      *
      * @since 0.0.0
      */
-    private CANTalon driveLeftFollower_Two;
+    private TalonSRX driveLeftFollower_Two;
     /**
      * Master drive talon, right side. Setting this should set all the talons on
      * the left side of the drive train.
      *
      * @since 0.0.0
      */
-    private CANTalon driveRightMaster;
+    private TalonSRX driveRightMaster;
     /**
      * Follower talon on right side.
      *
      * @since 0.0.0
      */
-    private CANTalon driveRightFollower_One;
+    private TalonSRX driveRightFollower_One;
     /**
      * Follower talon on right side.
      *
      * @since 0.0.0
      */
-    private CANTalon driveRightFollower_Two;
+    private TalonSRX driveRightFollower_Two;
     /**
      * Instance of wpiDrive for using WPI's driving code. Should <em>not</em> be
      * used for tank driving (use {@link Drivetrain#TankDrive} instead.)
      *
      * @since 0.0.0
      */
-    public RobotDrive wpiDrive;
+    public DifferentialDrive wpiDrive;
 
     public static final double RAMP = 0;
 
     public int inverter = 1;
     public double scaleDown = 1;
 
-    public CANTalon[] leftSide;
-    public CANTalon[] rightSide;
+    public TalonSRX[] leftSide;
+    public TalonSRX[] rightSide;
 
     public double PIDTune;
 
@@ -83,45 +86,39 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         super("Drivetrain", 0.4, 0, 0.5);
         // int maxAmps = 50;
         // create left talons
-        driveLeftMaster = new CANTalon(RobotMap.leftTalonOne);
-        driveLeftMaster.enableBrakeMode(true);
-        driveLeftMaster.setVoltageRampRate(RAMP);
+        driveLeftMaster = new TalonSRX(RobotMap.leftTalonOne);
+        driveLeftMaster.setNeutralMode(NeutralMode.Brake);
 
-        driveLeftFollower_One = new CANTalon(RobotMap.leftTalonTwo);
-        driveLeftFollower_One.enableBrakeMode(true);
-        driveLeftFollower_One.setVoltageRampRate(RAMP);
+        driveLeftFollower_One = new TalonSRX(RobotMap.leftTalonTwo);
+        driveLeftFollower_One.setNeutralMode(NeutralMode.Brake);
 
         driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
-        driveLeftFollower_Two.enableBrakeMode(true);
-        driveLeftFollower_Two.setVoltageRampRate(RAMP);
+        driveLeftFollower_Two.setNeutralMode(NeutralMode.Brake);
         // master follower
         // this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
         // this.driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
         // this.driveLeftFollower_Two.changeControlMode(CANTalon.TalonControlMode.Follower);
         // this.driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
         // create list
-        leftSide = new CANTalon[]{driveLeftMaster, driveLeftFollower_One, driveLeftFollower_Two};
+        leftSide = new TalonSRX[]{driveLeftMaster, driveLeftFollower_One, driveLeftFollower_Two};
 
-        driveRightMaster = new CANTalon(RobotMap.rightTalonOne);
-        driveRightMaster.enableBrakeMode(true);
-        driveRightMaster.setVoltageRampRate(RAMP);
+        driveRightMaster = new TalonSRX(RobotMap.rightTalonOne);
+        driveRightMaster.setNeutralMode(NeutralMode.Brake);
 
-        driveRightFollower_One = new CANTalon(RobotMap.rightTalonTwo);
-        driveRightFollower_One.enableBrakeMode(true);
-        driveRightFollower_One.setVoltageRampRate(RAMP);
+        driveRightFollower_One = new TalonSRX(RobotMap.rightTalonTwo);
+        driveRightFollower_One.setNeutralMode(NeutralMode.Brake);
 
-        driveRightFollower_Two = new CANTalon(RobotMap.rightTalonThree);
-        driveRightFollower_Two.enableBrakeMode(true);
-        driveRightFollower_Two.setVoltageRampRate(RAMP);
+        driveRightFollower_Two = new TalonSRX(RobotMap.rightTalonThree);
+        driveRightFollower_Two.setNeutralMode(NeutralMode.Brake);
         // master follower
         // this.driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
         // this.driveRightFollower_One.set(driveRightMaster.getDeviceID());
         // this.driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
         // this.driveRightFollower_Two.set(driveRightMaster.getDeviceID());
         // list time!
-        rightSide = new CANTalon[]{driveRightMaster, driveRightFollower_One, driveLeftFollower_Two};
+        rightSide = new TalonSRX[]{driveRightMaster, driveRightFollower_One, driveLeftFollower_Two};
 
-        wpiDrive = new RobotDrive(driveLeftMaster, driveRightMaster);
+        wpiDrive = new DifferentialDrive((WPI_TalonSRX) driveLeftMaster, (WPI_TalonSRX) driveRightMaster);
         wpiDrive.setExpiration(Integer.MAX_VALUE);
         wpiDrive.setSafetyEnabled(false);
 
@@ -170,12 +167,12 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
     public void TankDrive(double left, double right) {
         double leftScale = Robot.prefs.getDouble("left side multiplier", 1.0D);
         double rightScale = Robot.prefs.getDouble("right side multiplier", 1.0D);
-        driveLeftMaster.set(left * scaleDown * leftScale);
-        driveRightMaster.set(right * scaleDown * rightScale);
-        driveLeftFollower_One.set(left * scaleDown * leftScale);
-        driveRightFollower_One.set(right * scaleDown * rightScale);
-        driveLeftFollower_Two.set(left * scaleDown * leftScale);
-        driveRightFollower_Two.set(right * scaleDown * rightScale);
+        driveLeftMaster.set(ControlMode.PercentOutput, left * scaleDown * leftScale);
+        driveRightMaster.set(ControlMode.PercentOutput, right * scaleDown * rightScale);
+        driveLeftFollower_One.set(ControlMode.PercentOutput, left * scaleDown * leftScale);
+        driveRightFollower_One.set(ControlMode.PercentOutput, right * scaleDown * rightScale);
+        driveLeftFollower_Two.set(ControlMode.PercentOutput, left * scaleDown * leftScale);
+        driveRightFollower_Two.set(ControlMode.PercentOutput, right * scaleDown * rightScale);
     }
 
     /**
@@ -304,7 +301,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
      */
     public void resetRight() {
         this.encRight.reset();
-        driveRightMaster.setEncPosition(0);
+        driveRightMaster.getSensorCollection().setQuadraturePosition(0, 10);
     }
 
     /**
@@ -312,7 +309,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
      */
     public void resetLeft() {
         this.encLeft.reset();
-        driveLeftMaster.setEncPosition(0);
+        driveLeftMaster.getSensorCollection().setQuadraturePosition(0, 10);
     }
 
     @Override
@@ -333,62 +330,6 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
      */
     public boolean getInverted() {
         return inverter == -1;
-    }
-
-    /**
-     * Stage-sets the drivetrain. Please, for the love of all that is holy call
-     * {@link Drivetrain#snapBackToReality()} after this.
-     * <br>
-     * On second thought, please don't use this at all.
-     *
-     * @param left  The left power
-     * @param right The right power
-     */
-    public void stagedTankDrive(double left, double right) {
-        driveLeftMaster.set(left);
-        driveRightMaster.set(right);
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        driveLeftFollower_One.set(left);
-        driveRightFollower_One.set(right);
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        driveLeftFollower_Two.set(left);
-        driveRightFollower_Two.set(right);
-    }
-
-    /**
-     * Sets all motors on the drivetrain to PercentVbus control (for staged drivetrain mode.)
-     */
-    public void initStaging() {
-        for (CANTalon t : leftSide) {
-            t.changeControlMode(TalonControlMode.PercentVbus);
-        }
-        for (CANTalon t : rightSide) {
-            t.changeControlMode(TalonControlMode.PercentVbus);
-        }
-    }
-
-    /**
-     * Resets the drivetrain to "master/follower" control mode.
-     */
-    public void snapBackToReality() {
-        // left reset
-        driveLeftFollower_One.changeControlMode(TalonControlMode.Follower);
-        driveLeftFollower_Two.changeControlMode(TalonControlMode.Follower);
-        driveLeftFollower_One.set(driveLeftMaster.getDeviceID());
-        driveLeftFollower_Two.set(driveLeftMaster.getDeviceID());
-        // right reset
-        driveRightFollower_One.changeControlMode(TalonControlMode.Follower);
-        driveRightFollower_Two.changeControlMode(TalonControlMode.Follower);
-        driveRightFollower_One.set(driveRightMaster.getDeviceID());
-        driveRightFollower_Two.set(driveRightMaster.getDeviceID());
     }
 
     @Override

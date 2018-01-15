@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3494.robot.DriveDirections;
 import org.usfirst.frc.team3494.robot.Robot;
@@ -13,15 +14,14 @@ import org.usfirst.frc.team3494.robot.RobotMap;
  */
 public class Climber extends Subsystem implements IMotorizedSubsystem {
 
-    private CANTalon motor;
+    private TalonSRX motor;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public Climber() {
         super("Climber");
-        motor = new CANTalon(RobotMap.CLIMBER_MOTOR);
+        motor = new TalonSRX(RobotMap.CLIMBER_MOTOR);
         motor.setInverted(true);
-        motor.enableBrakeMode(false);
     }
 
     @Override
@@ -39,23 +39,23 @@ public class Climber extends Subsystem implements IMotorizedSubsystem {
      */
     public void climb(DriveDirections dir) {
         if (dir.equals(DriveDirections.UP) && !Robot.pto.getState()) {
-            motor.set(1);
+            motor.set(ControlMode.PercentOutput, 1);
         } else if (dir.equals(DriveDirections.DOWN) && !Robot.pto.getState()) {
-            motor.set(-1);
+            motor.set(ControlMode.PercentOutput, -1);
         } else {
             // stop the climber
-            motor.set(0);
+            motor.set(ControlMode.PercentOutput, 0);
         }
     }
 
     @Override
     public void stopAll() {
-        motor.set(0);
+        motor.set(ControlMode.PercentOutput, 0);
     }
 
     @Override
     public void setAll(double speed) {
-        motor.set(speed);
+        motor.set(ControlMode.PercentOutput, speed);
     }
 
     /**

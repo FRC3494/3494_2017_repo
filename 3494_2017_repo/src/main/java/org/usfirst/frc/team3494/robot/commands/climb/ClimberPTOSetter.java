@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3494.robot.commands.climb;
 
 import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team3494.robot.Robot;
@@ -33,13 +34,13 @@ public class ClimberPTOSetter extends Command {
         if (b) {
             Robot.pto.engagePTO();
             Robot.kompressor.compress.stop();
-            for (CANTalon c : Robot.driveTrain.leftSide) {
-                c.setCurrentLimit(35);
-                c.EnableCurrentLimit(true);
+            for (TalonSRX c : Robot.driveTrain.leftSide) {
+                c.configPeakCurrentLimit(35, 10);
+                c.enableCurrentLimit(true);
             }
-            for (CANTalon c : Robot.driveTrain.rightSide) {
-                c.setCurrentLimit(35);
-                c.EnableCurrentLimit(true);
+            for (TalonSRX c : Robot.driveTrain.rightSide) {
+                c.configPeakCurrentLimit(35, 10);
+                c.enableCurrentLimit(true);
             }
         } else {
             Robot.pto.disengagePTO();
