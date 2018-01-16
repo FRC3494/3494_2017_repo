@@ -1,10 +1,8 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
-import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -92,7 +90,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         driveLeftFollower_One = new TalonSRX(RobotMap.leftTalonTwo);
         driveLeftFollower_One.setNeutralMode(NeutralMode.Brake);
 
-        driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
+        driveLeftFollower_Two = new TalonSRX(RobotMap.leftTalonThree);
         driveLeftFollower_Two.setNeutralMode(NeutralMode.Brake);
         // master follower
         // this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -140,7 +138,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         setInputRange(-180, 180);
         setOutputRange(-outRange, outRange);
         getPIDController().setContinuous(true);
-        setPercentTolerance(0.5);
+        setPercentTolerance(1);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -186,55 +184,55 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
     }
 
     /**
-     * Arcade drive implements single stick driving. This function lets you
-     * directly provide joystick values from any source.
+     * Arcade drive method for differential drive platform.
      *
-     * @param moveValue     The value to use for forwards/backwards
-     * @param rotateValue   The value to use for the rotate right/left
-     * @param squaredInputs If set, decreases the sensitivity at low speeds
+     * @param xSpeed        The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
+     * @param zRotation     The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is
+     *                      positive.
+     * @param squaredInputs If set, decreases the input sensitivity at low speeds.
      * @author Worcester Polytechnic Institute
      */
-    public void ArcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
-        double leftMotorSpeed;
-        double rightMotorSpeed;
+    public void ArcadeDrive(double xSpeed, double zRotation, boolean squaredInputs) {
+        xSpeed = limit(xSpeed);
+        xSpeed = applyDeadband(xSpeed, 0.02);
 
-        moveValue = limit(moveValue);
-        rotateValue = limit(rotateValue);
+        zRotation = limit(zRotation);
+        zRotation = applyDeadband(zRotation, 0.02);
 
+        // Square the inputs (while preserving the sign) to increase fine control
+        // while permitting full power.
         if (squaredInputs) {
-            // square the inputs (while preserving the sign) to increase fine
-            // control
-            // while permitting full power
-            if (moveValue >= 0.0) {
-                moveValue = moveValue * moveValue;
-            } else {
-                moveValue = -(moveValue * moveValue);
-            }
-            if (rotateValue >= 0.0) {
-                rotateValue = rotateValue * rotateValue;
-            } else {
-                rotateValue = -(rotateValue * rotateValue);
-            }
+            xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
+            zRotation = Math.copySign(zRotation * zRotation, zRotation);
         }
 
-        if (moveValue > 0.0) {
-            if (rotateValue > 0.0) {
-                leftMotorSpeed = moveValue - rotateValue;
-                rightMotorSpeed = Math.max(moveValue, rotateValue);
+        double leftMotorOutput;
+        double rightMotorOutput;
+
+        double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
+
+        if (xSpeed >= 0.0) {
+            // First quadrant, else second quadrant
+            if (zRotation >= 0.0) {
+                leftMotorOutput = maxInput;
+                rightMotorOutput = xSpeed - zRotation;
             } else {
-                leftMotorSpeed = Math.max(moveValue, -rotateValue);
-                rightMotorSpeed = moveValue + rotateValue;
+                leftMotorOutput = xSpeed + zRotation;
+                rightMotorOutput = maxInput;
             }
         } else {
-            if (rotateValue > 0.0) {
-                leftMotorSpeed = -Math.max(-moveValue, rotateValue);
-                rightMotorSpeed = moveValue + rotateValue;
+            // Third quadrant, else fourth quadrant
+            if (zRotation >= 0.0) {
+                leftMotorOutput = xSpeed + zRotation;
+                rightMotorOutput = maxInput;
             } else {
-                leftMotorSpeed = moveValue - rotateValue;
-                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+                leftMotorOutput = maxInput;
+                rightMotorOutput = xSpeed - zRotation;
             }
         }
-        TankDrive(leftMotorSpeed, -rightMotorSpeed);
+
+        driveLeftMaster.set(ControlMode.PercentOutput, limit(leftMotorOutput));
+        driveRightMaster.set(ControlMode.PercentOutput, -limit(rightMotorOutput));
     }
 
     /**
@@ -350,5 +348,25 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
             return -1.0;
         }
         return num;
+    }
+
+    /**
+     * Returns 0.0 if the given value is within the specified range around zero. The remaining range
+     * between the deadband and 1.0 is scaled from 0.0 to 1.0.
+     *
+     * @param value    value to clip
+     * @param deadband range around zero
+     * @author Worcester Polytechnic Institute
+     */
+    protected double applyDeadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0.0) {
+                return (value - deadband) / (1.0 - deadband);
+            } else {
+                return (value + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
     }
 }
