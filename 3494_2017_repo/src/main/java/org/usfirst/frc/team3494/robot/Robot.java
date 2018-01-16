@@ -198,6 +198,8 @@ public class Robot extends IterativeRobot {
         } else {
             System.out.println("Defaulting to track the shiny");
             Robot.driveTrain.enable();
+            double tx = table.getEntry("tx").getDouble(0); // horizontal offset in degrees
+            Robot.driveTrain.setSetpoint(tx);
         }
         driveTrain.resetLeft();
         driveTrain.resetRight();
@@ -228,9 +230,9 @@ public class Robot extends IterativeRobot {
                     table.getEntry("ty").getDouble(0),
                     table.getEntry("ta").getDouble(0)
             });
+            Robot.driveTrain.ArcadeDrive(0.75, Robot.driveTrain.PIDTune, true);
             double tx = table.getEntry("tx").getDouble(0); // horizontal offset in degrees
-            Robot.driveTrain.setSetpoint(Robot.driveTrain.getSetpoint() + tx);
-            Robot.driveTrain.ArcadeDrive(0.25, Robot.driveTrain.PIDTune, true);
+            Robot.driveTrain.setSetpoint(Robot.ahrs.getYaw() + tx);
             // double adjust = tx * 0.02;
             // Robot.driveTrain.adjustedTankDrive(-adjust, adjust);
         }
@@ -307,5 +309,6 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putBoolean("Drive PID enabled", Robot.driveTrain.getPIDController().isEnabled());
         SmartDashboard.putNumber("Drive PID setpoint", Robot.driveTrain.getSetpoint());
+        SmartDashboard.putNumber("Drive PID actual", ahrs.getYaw());
     }
 }
