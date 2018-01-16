@@ -214,6 +214,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             Scheduler.getInstance().run();
         } else {
+            // vision test auto
             /*
             double centerX;
             synchronized (imgLock) {
@@ -233,8 +234,6 @@ public class Robot extends IterativeRobot {
             Robot.driveTrain.ArcadeDrive(0.75, Robot.driveTrain.PIDTune, true);
             double tx = table.getEntry("tx").getDouble(0); // horizontal offset in degrees
             Robot.driveTrain.setSetpoint(Robot.ahrs.getYaw() + tx);
-            // double adjust = tx * 0.02;
-            // Robot.driveTrain.adjustedTankDrive(-adjust, adjust);
         }
         Robot.putDebugInfo();
     }
