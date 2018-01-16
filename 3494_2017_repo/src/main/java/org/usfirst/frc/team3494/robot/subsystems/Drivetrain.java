@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3494.robot.subsystems;
 
-import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -91,7 +90,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         driveLeftFollower_One = new TalonSRX(RobotMap.leftTalonTwo);
         driveLeftFollower_One.setNeutralMode(NeutralMode.Brake);
 
-        driveLeftFollower_Two = new CANTalon(RobotMap.leftTalonThree);
+        driveLeftFollower_Two = new TalonSRX(RobotMap.leftTalonThree);
         driveLeftFollower_Two.setNeutralMode(NeutralMode.Brake);
         // master follower
         // this.driveLeftFollower_One.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -139,7 +138,7 @@ public class Drivetrain extends PIDSubsystem implements IMotorizedSubsystem {
         setInputRange(-180, 180);
         setOutputRange(-outRange, outRange);
         getPIDController().setContinuous(true);
-        setPercentTolerance(0.5);
+        setPercentTolerance(1);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
